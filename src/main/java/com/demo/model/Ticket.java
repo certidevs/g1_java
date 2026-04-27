@@ -23,7 +23,8 @@ public class Ticket {
     private Integer seatNumber;
     private Double price;
     private LocalDateTime sessionTime;
-    private LocalDateTime buyTime;
+    private LocalDateTime purchaseTime;
+
 
 
 }
