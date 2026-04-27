@@ -11,6 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Table(name = "movies")
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +22,7 @@ public class Movie {
     @Enumerated(EnumType.STRING)
     private Director director = Director.UNKNOWN;
 
-    private Integer year; // LocalDate.now().getYear();
+    private Integer releaseYear; // LocalDate.now().getYear();
 
     @Enumerated(EnumType.STRING)
     private MinAge minAge = MinAge.ALL;
