@@ -10,6 +10,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @ToString
 @Table(name = "movies")
 public class Movie {
@@ -22,12 +23,20 @@ public class Movie {
     @Enumerated(EnumType.STRING)
     private Director director = Director.UNKNOWN;
 
-    private Integer releaseYear; // LocalDate.now().getYear();
+    private Integer releaseYear;
 
     @Enumerated(EnumType.STRING)
     private MinAge minAge = MinAge.ALL;
 
-    private Integer duration; // Duration.ofMinutes();
+    private Integer duration;
     private String trailerUrl;
     private String imageUrl;
+
+    @Column (length = 500)
+    private String sinopsis;
+
+    @ToString.Exclude
+    @ManyToOne
+    private Session session;
+
 }
