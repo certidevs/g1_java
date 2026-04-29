@@ -1,5 +1,6 @@
 package com.demo.model;
 
+import com.demo.model.enums.ScreenType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,6 +23,9 @@ public class Room {
     private Integer capacity; // número de butacas
 
     private String screenType; // tipo de pantalla o formato de proyección
+
+    @Enumerated(EnumType.STRING)
+    private ScreenType screentype = ScreenType.STANDARD;
 }
 
 
