@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Builder
 @Table(name = "sessions")
 public class Session {
 
@@ -20,8 +21,14 @@ public class Session {
     private Long id;
     private LocalDateTime startTime;
     private Double price;
-    private Integer numAbs;
+    private Integer numAds;
 
     @Enumerated(EnumType.STRING)
     private Language language = Language.ESP;
+
+    @ManyToOne
+    private Room room;
+
+    @ManyToOne
+    private Movie movie;
 }
