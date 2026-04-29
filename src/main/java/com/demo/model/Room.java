@@ -25,6 +25,7 @@ public class Room {
 
     // private String screenType; // tipo de pantalla o formato de proyección
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     private ScreenType screentype = ScreenType.STANDARD;
 }
