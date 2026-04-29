@@ -23,6 +23,7 @@ public class Session {
     private Double price;
     private Integer numAds;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     private Language language = Language.ESP;
 
