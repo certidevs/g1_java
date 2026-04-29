@@ -13,6 +13,7 @@ public class TicketController {
      // Inyectar TicketRepository
     private final TicketRepository ticketRepository;
 
+    //GetMapping para tickets
     @GetMapping("tickets")
     public String tickets(Model model) {
         return "";
