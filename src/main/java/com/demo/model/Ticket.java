@@ -28,7 +28,7 @@ public class Ticket {
     @Builder.Default
     private LocalDateTime purchaseTime = LocalDateTime.now();
 
-
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     private TicketType ticketType = TicketType.STANDARD;
 
