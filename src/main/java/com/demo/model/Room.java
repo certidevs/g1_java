@@ -10,6 +10,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @ToString
 
 public class Room {
@@ -22,7 +23,7 @@ public class Room {
 
     private Integer capacity; // número de butacas
 
-    private String screenType; // tipo de pantalla o formato de proyección
+    // private String screenType; // tipo de pantalla o formato de proyección
 
     @Enumerated(EnumType.STRING)
     private ScreenType screentype = ScreenType.STANDARD;
