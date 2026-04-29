@@ -20,11 +20,13 @@ public class Movie {
 
     private String title;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     private Director director = Director.UNKNOWN;
 
     private Integer releaseYear;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     private MinAge minAge = MinAge.ALL;
 
