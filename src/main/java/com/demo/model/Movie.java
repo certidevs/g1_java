@@ -6,6 +6,9 @@ import com.demo.model.enums.MinAge;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.EnumSet;
+import java.util.Set;
+
 @Entity
 @Getter
 @Setter
@@ -23,7 +26,7 @@ public class Movie {
 
     @Builder.Default
     @Enumerated(EnumType.STRING)
-    private Genre genre = Genre.UNSPECIFIED;
+    private Set<Genre> genres = EnumSet.noneOf(Genre.class);
 
     @Builder.Default
     @Enumerated(EnumType.STRING)
