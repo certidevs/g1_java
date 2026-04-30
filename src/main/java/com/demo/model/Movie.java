@@ -1,6 +1,7 @@
 package com.demo.model;
 
 import com.demo.model.enums.Director;
+import com.demo.model.enums.Genre;
 import com.demo.model.enums.MinAge;
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,7 +23,11 @@ public class Movie {
 
     @Builder.Default
     @Enumerated(EnumType.STRING)
-    private Director director = Director.UNKNOWN;
+    private Genre genre = Genre.UNSPECIFIED;
+
+    @Builder.Default
+    @Enumerated(EnumType.STRING)
+    private Director director = Director.UNSPECIFIED;
 
     private Integer releaseYear;
 
