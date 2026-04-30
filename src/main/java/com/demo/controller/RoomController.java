@@ -9,8 +9,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 @AllArgsConstructor
 public class RoomController {
+
+    // inyectar el room repository
     private final RoomRepository roomRepository;
+
+    //getmapping rooms
     @GetMapping("/rooms")
     public String roomsList(Model model){
-        return "room/room-list";}
+        model.addAttribute("rooms", roomRepository.findAll());
+        return "rooms/room-list";}
 }
