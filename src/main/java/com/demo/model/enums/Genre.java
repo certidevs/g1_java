@@ -17,5 +17,6 @@ public enum Genre {
     SCI_FI,
     THRILLER,
     WESTERN,
+    SPANISH,
     UNSPECIFIED
 }
