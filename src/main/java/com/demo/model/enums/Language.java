@@ -6,10 +6,10 @@ public enum Language {
 
 //VO --> Version original (sin sibtitulo)
 //VOS --> Version original subtitulada
-//VOSE --> Version original subtitulada en spanish
+//VOSE --> Version original subtitulada en español
 //VOSI --> Version original subtitulada en ingles
 //DOB --> Doblada
 //SUB --> Subtitulada
-//CAST --> Castellano (spanish de Spain)
+//CAST --> Castellano (Español de España)
 //LAT ---> Latino
-//ESP ---> spanish (generico)
+//ESP ---> Español (Generico)
