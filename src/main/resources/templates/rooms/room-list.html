@@ -1,10 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/head :: head('Listado Salas')}"></head>
+
+<body class="d-flex flex-column min-vh-100">
+
+<nav th:replace="~{layout/navbar :: navbar}"></nav>
+
+<main class="container flex-grow-1">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mb-0" th:text="${title}">Salas</h1>
+        <span class="badge bg-secondary fs-6" th:text="|${numRooms} resultados|"></span>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
+        <div class="col" th:each="room : ${rooms}">
+            <div class="card card-room h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${room.name}">Nombre de la sala</h5>
+                    <p class="card-text">
+                        <strong>Capacidad:</strong> <span th:text="${room.capacity}"></span> butacas
+                    </p>
+                    <p class="card-text">
+                        <strong>Tipo de pantalla:</strong> <span th:text="${room.screentype}">STANDARD</span>
+                    </p>
+                    <div class="card-footer bg-transparent border-0 pt-0">
+                        <a th:href="@{/rooms/{id}(id=${room.id})}"
+                           class="btn btn-outline-primary btn-sm w-100">
+                            <i class="fa-regular fa-eye me-1"></i> Ver sala
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{layout/footer :: footer}"></footer>
+<script th:replace="~{layout/footer :: scripts}"></script>
 
 </body>
 </html>
