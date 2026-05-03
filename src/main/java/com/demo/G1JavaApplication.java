@@ -1,11 +1,9 @@
 package com.demo;
 
 import com.demo.model.Movie;
+import com.demo.model.Room;
 import com.demo.model.Session;
-import com.demo.model.enums.Director;
-import com.demo.model.enums.Genre;
-import com.demo.model.enums.Language;
-import com.demo.model.enums.MinAge;
+import com.demo.model.enums.*;
 import com.demo.repository.MovieRepository;
 import com.demo.repository.RoomRepository;
 import com.demo.repository.SessionRepository;
@@ -25,7 +23,7 @@ public class G1JavaApplication {
         var context = SpringApplication.run(G1JavaApplication.class, args);
 
         MovieRepository movieRepository = context.getBean(MovieRepository.class);
-        RoomRepository RoomRepository = context.getBean(RoomRepository.class);
+        RoomRepository roomRepository = context.getBean(RoomRepository.class);
         SessionRepository sessionRepository = context.getBean(SessionRepository.class);
         TicketRepository ticketRepository = context.getBean(TicketRepository.class);
 
@@ -113,7 +111,28 @@ public class G1JavaApplication {
 
         sessionRepository.saveAll(List.of(l1s1m1,l1s2m1,m1s1m1,m1s2m1,x1s1m1,x1s2m1,j1s1m1,j1s2m1,v1s1m1,v1s2m1,sa1s1m1,sa1s2m1, sa1s3m1,su1s1m1,su1s2m1,su1s3m1,l2s1m1,l2s2m1,m2s1m1,m2s2m1,x2s1m1,x2s2m1,j2s1m1,j2s2m1,v2s1m1,v2s2m1));
 
+        Room r1 = new Room();
+        r1.setName("Sala 1");
+        r1.setCapacity(100);
+        r1.setScreentype(ScreenType.IMAX);
 
+        Room r2 = new Room();
+        r2.setName("Sala 2");
+        r2.setCapacity(60);
+        r2.setScreentype(ScreenType.STANDARD);
+
+        Room r3 = new Room();
+        r3.setName("Sala 3");
+        r3.setCapacity(30);
+        r3.setScreentype(ScreenType.THREE_D);
+
+        Room r4 = new Room();
+        r4.setName("Sala VIP");
+        r4.setCapacity(20);
+        r4.setScreentype(ScreenType.VIP);
+
+        // Guardar en la base de datos
+        roomRepository.saveAll(List.of(r1, r2, r3, r4));
     }
 
 }
