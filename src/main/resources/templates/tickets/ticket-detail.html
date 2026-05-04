@@ -1,10 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/head :: head('Detalle Ticket')}"></head>
+
+<body class="d-flex flex-column min-vh-100">
+
+<nav th:replace="~{layout/navbar :: navbar}"></nav>
+
+<main class="container flex-grow-1">
+    <div class="d-flex justify-content-between align-items-start mb-3">
+        <h1 th:text="${ticket.id}">Numero de Ticket</h1>
+        <a th:href="@{/tickets}" class="btn btn-outline-secondary">
+            <i class="fa-solid fa-arrow-left me-1"></i> Volver a tickets
+        </a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title">Detalles del ticket</h5>
+            <p class="card-text">
+                <strong>ID:</strong> <span th:text="${ticket.id}">0</span>
+            </p>
+            <p class="card-text">
+                <strong>Fila:</strong> <span th:text="${ticket.seatRow}">Fila</span>
+            </p>
+            <p class="card-text">
+                <strong>Número de Asiento:</strong> <span th:text="${ticket.seatNumber}">0</span>
+            </p>
+            <p class="card-text">
+                <strong>Tipo de Ticket:</strong> <span th:text="${ticket.ticketType}">STANDARD</span>
+            </p>
+        </div>
+    </div>
+
+</main>
+
+<footer th:replace="~{layout/footer :: footer}"></footer>
+<script th:replace="~{layout/footer :: scripts}"></script>
 
 </body>
 </html>
