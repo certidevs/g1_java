@@ -42,7 +42,7 @@ public class TicketController {
 
        // model.addAttribute("tickets", ticketRepository.findAll());
         // En caso de que no exista lo envia a movie
-        return "redirect:/movie";
+        return "redirect:/movies";
     }
 
 
