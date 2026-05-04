@@ -3,6 +3,7 @@ package com.demo;
 import com.demo.model.Movie;
 import com.demo.model.Room;
 import com.demo.model.Session;
+import com.demo.model.Ticket;
 import com.demo.model.enums.*;
 import com.demo.repository.MovieRepository;
 import com.demo.repository.RoomRepository;
@@ -133,6 +134,35 @@ public class G1JavaApplication {
         Session v2s2m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.of(2026, 4, 17, 18, 25)).price(9.0).language(Language.VOSE).room(r2).numAds(4).build());
 
         sessionRepository.saveAll(List.of(l1s1m1,l1s2m1,m1s1m1,m1s2m1,x1s1m1,x1s2m1,j1s1m1,j1s2m1,v1s1m1,v1s2m1,sa1s1m1,sa1s2m1, sa1s3m1,su1s1m1,su1s2m1,su1s3m1,l2s1m1,l2s2m1,m2s1m1,m2s2m1,x2s1m1,x2s2m1,j2s1m1,j2s2m1,v2s1m1,v2s2m1));
+
+
+        // Tickets de prueba
+        var ticket1 = Ticket.builder()
+                .seatRow("A")
+                .seatNumber(1)
+                .price(7.0)
+                .ticketType(TicketType.STANDARD)
+                .session(l1s1m1)  // Primera sesión del lunes
+                .build();
+
+        var ticket2 = Ticket.builder()
+                .seatRow("B")
+                .seatNumber(5)
+                .price(7.0)
+                .ticketType(TicketType.STANDARD)
+                .session(sa1s1m1)  // Primera sesión del sábado (más cara)
+                .build();
+
+        var ticket3 = Ticket.builder()
+                .seatRow("C")
+                .seatNumber(10)
+                .price(10.5)
+                .ticketType(TicketType.VIP)
+                .session(su1s2m1)  // Sesión VIP del domingo
+                .build();
+
+        ticketRepository.saveAll(List.of(ticket1, ticket2, ticket3));
+
 
 
 
