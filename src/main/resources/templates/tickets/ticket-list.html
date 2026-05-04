@@ -1,10 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/head :: head('Tickets')}"></head>
+<body class="d-flex flex-column min-vh-100">
+
+<nav th:replace="~{layout/navbar :: navbar}"></nav>
+
+<main class="container flex-grow-1">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Mis Tickets</h2>
+    </div>
+
+    <!-- Si no hay tickets -->
+    <div th:if="${tickets.isEmpty()}" class="alert alert-info">
+        <i class="fa-solid fa-info-circle me-2"></i>
+        No hay tickets disponibles.
+    </div>
+
+    <!-- Lista de tickets -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3" th:unless="${tickets.isEmpty()}">
+        <div class="col" th:each="ticket : ${tickets}">
+            <div class="card card-restaurant h-100 shadow-sm">
+                <div class="card-body">
+                    <!-- Título de la película -->
+                    <h5 class="card-title">
+                        <i class="fa-solid fa-film text-primary me-2"></i>
+                        <span th:text="${ticket.session.movie.title}">Título de película</span>
+                    </h5>
+
+                    <!-- Hora de la sesión -->
+                    <p class="card-text">
+                        <strong>
+                            <i class="fa-solid fa-clock me-1"></i>Sesión:
+                        </strong>
+                        <span th:text="${#temporals.format(ticket.session.startTime, 'dd/MM/yyyy HH:mm')}">Fecha y hora</span>
+                    </p>
+
+                    <!-- Sala -->
+                    <p class="card-text">
+                        <strong>
+                            <i class="fa-solid fa-door-open me-1"></i>Sala:
+                        </strong>
+                        <span th:text="${ticket.session.room.name}">Sala</span>
+                    </p>
+
+                    <!-- Fila y Asiento -->
+                    <p class="card-text">
+                        <strong>
+                            <i class="fa-solid fa-chair me-1"></i>Asiento:
+                        </strong>
+                        <span th:text="${ticket.seatRow + ticket.seatNumber}">A1</span>
+                    </p>
+
+                    <!-- Precio -->
+                    <p class="card-text">
+                        <span class="badge bg-success">
+                            <i class="fa-solid fa-euro-sign me-1"></i>
+                            <span th:text="${#numbers.formatDecimal(ticket.price, 1, 2)}">Precio</span>
+                        </span>
+                    </p>
+
+                    <!-- Tipo de ticket -->
+                    <p class="card-text">
+                        <span class="badge" th:classappend="${ticket.ticketType == 'VIP' ? 'bg-warning' : 'bg-secondary'}">
+                            <i class="fa-solid fa-star me-1"></i>
+                            <span th:text="${ticket.ticketType}">Standard</span>
+                        </span>
+                    </p>
+
+                    <!-- Fecha de compra -->
+                    <p class="card-text text-muted small">
+                        <i class="fa-solid fa-receipt me-1"></i>
+                        <strong>Comprado:</strong>
+                        <span th:text="${#temporals.format(ticket.purchaseTime, 'dd/MM/yyyy HH:mm')}">Fecha compra</span>
+                    </p>
+                </div>
+                <div class="card-footer bg-transparent border-0 pt-0">
+                    <a th:href="@{/tickets/{id}(id=${ticket.id})}"
+                       class="btn btn-outline-primary btn-sm w-100">
+                        <i class="fa-regular fa-eye me-1"></i> Ver detalles
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Botón para crear nuevo ticket (cuando esté implementado)-->
+    <div class="mt-4">
+        <a th:href="@{/tickets/create}" class="btn btn-success">
+            <i class="fa-solid fa-plus me-1"></i> Crear ticket
+        </a>
+    </div>
+</main>
+
+<footer th:replace="~{layout/footer :: footer}"></footer>
+<script th:replace="~{layout/footer :: scripts}"></script>
 
 </body>
 </html>
