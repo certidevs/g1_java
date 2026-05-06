@@ -18,17 +18,29 @@
             <div class="card card-room h-100 shadow-sm">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${room.name}">Nombre de la sala</h5>
+
                     <p class="card-text">
                         <strong>Capacidad:</strong> <span th:text="${room.capacity}"></span> butacas
                     </p>
+
                     <p class="card-text">
                         <strong>Tipo de pantalla:</strong> <span th:text="${room.screentype.label}">STANDARD</span>
                     </p>
+
                     <div class="card-footer bg-transparent border-0 pt-0">
+
+                        <!-- Botón de Ver sala que lleva al room-detail.html -->
                         <a th:href="@{/rooms/{id}(id=${room.id})}"
                            class="btn btn-outline-primary btn-sm w-100">
                             <i class="fa-regular fa-eye me-1"></i> Ver sala
                         </a>
+
+                        <!-- Botón de Editar restaurante que lleva al restaurante-detail.html -->
+                        <a th:href="@{/rooms/edit/{id}(id=${room.id})}"
+                           class="btn btn-success btn-sm w-100 mt-2">
+                            <i class="fa-solid fa-pencil me-1"></i> Editar sala
+                        </a>
+
                     </div>
                 </div>
             </div>

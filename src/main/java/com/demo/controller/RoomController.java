@@ -64,6 +64,14 @@ public class RoomController {
         return "rooms/room-form";
     }
 
+    // Editar una sala existente
+    @GetMapping("rooms/edit/{id}")
+    public String editRoom(@PathVariable Long id, Model model) {
+        model.addAttribute("room", roomRepository.findById(id).orElseThrow());
+        model.addAttribute("screenTypes", ScreenType.values());
+        return "rooms/room-form";
+    }
+
     @PostMapping("rooms")
     public String createRoom(@ModelAttribute Room room) {
         System.out.println("Sala recibida: " + room);
