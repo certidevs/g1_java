@@ -22,7 +22,7 @@
                         <strong>Capacidad:</strong> <span th:text="${room.capacity}"></span> butacas
                     </p>
                     <p class="card-text">
-                        <strong>Tipo de pantalla:</strong> <span th:text="${room.screentype}">STANDARD</span>
+                        <strong>Tipo de pantalla:</strong> <span th:text="${room.screentype.label}">STANDARD</span>
                     </p>
                     <div class="card-footer bg-transparent border-0 pt-0">
                         <a th:href="@{/rooms/{id}(id=${room.id})}"
