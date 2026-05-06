@@ -7,7 +7,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -50,6 +52,15 @@ public class RoomController {
         model.addAttribute("numRooms", rooms.size());
         model.addAttribute("title", "Salas con tipo de pantalla " + screenType);
         return "rooms/room-list";
+    }
 
+    // Crear una nueva sala desde cero
+    @GetMapping("/rooms/new")
+    public String newRoom(Model model) {
+        // añadir objeto Room vacío para rellenarlo desde el formulario
+        model.addAttribute("room", new Room());
+        model.addAttribute("screenTypes", ScreenType.values());
+        // datos para el formulario
+        return "rooms/room-form";
     }
 }

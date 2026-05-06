@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/head :: head('Formulario Sala')}"></head>
+
+<body class="d-flex flex-column min-vh-100">
+
+<nav th:replace="~{layout/navbar :: navbar}"></nav>
+
+<main class="container flex-grow-1">
+    <h1 class="mb-4">
+        <i class="fa-solid fa-film text-primary me-2"></i>Formulario sala
+    </h1>
+
+    <!-- TODO formulario para crear o editar una sala -->
+    <form th:action="@{/rooms}" method="post" th:object="${room}">
+        <input type="hidden" th:field="*{id}">
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Sala 1">
+        </div>
+
+        <div class="mb-3">
+            <label for="capacity" class="form-label">Capacidad</label>
+            <input type="number" class="form-control" id="capacity" th:field="*{capacity}" step="1" min="0">
+        </div>
+
+        <div class="mb-3">
+            <label for="screentype" class="form-label">Tipo de pantalla</label>
+            <select class="form-select" id="screentype" th:field="*{screentype.label}">
+                <option value=""></option>
+
+                <option
+                        th:each="screentype : ${screenTypes}"
+                        th:value="${screentype}"
+                        th:text="${screentype.label}">
+                </option>
+
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            <i class="fa-solid fa-floppy-disk"></i>Guardar
+        </button>
+
+        <a th:href="@{/rooms}" class="btn btn-secondary">
+            <i class="fa-solid fa-xmark"></i>Cancelar
+        </a>
+
+    </form>
+</main>
+
+<footer th:replace="~{layout/footer :: footer}"></footer>
+<script th:replace="~{layout/footer :: scripts}"></script>
+
+</body>
+</html>
