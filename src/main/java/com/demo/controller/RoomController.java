@@ -63,4 +63,12 @@ public class RoomController {
         // datos para el formulario
         return "rooms/room-form";
     }
+
+    @PostMapping("rooms")
+    public String createRoom(@ModelAttribute Room room) {
+        System.out.println("Sala recibida: " + room);
+        roomRepository.save(room);
+        return "redirect:/rooms/" + room.getId();
+    }
+
 }
