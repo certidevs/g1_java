@@ -31,6 +31,19 @@ public class SessionController {
         return "sessions/session-list";
     }
 
+    @GetMapping("sesions/{id}")
+    public String sessionDetail(@PathVariable Long id, Model model){
+        Optional <Session> sessionOptional = sessionRepository.findById(id);
+        if (sessionOptional.isPresent()){
+            Session session = sessionOptional.get();
+            model.addAttribute("session", session);
+            return "sessions/session-detail";
+        }
+        else {
+            return "redirect:/sessions";
+        }
+    }
+
     //El detalle de la session
     //Las sesiones que tienen UN lenguaje especifico, por ejemplo VOSE
     //Las sesiones que tengan UN tipo de pantalla por ejemplo 3D
