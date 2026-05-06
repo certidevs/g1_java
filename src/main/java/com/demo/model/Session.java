@@ -28,8 +28,10 @@ public class Session {
     private Language language = Language.ESP;
 
     @ManyToOne
+    @JoinColumn(name = "room_id", nullable = false)
     private Room room;
 
     @ManyToOne
+    @JoinColumn(name = "movie_id", nullable = false)
     private Movie movie;
 }
