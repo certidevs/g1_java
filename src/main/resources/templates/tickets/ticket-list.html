@@ -21,64 +21,23 @@
         <div class="col" th:each="ticket : ${tickets}">
             <div class="card card-restaurant h-100 shadow-sm">
                 <div class="card-body">
-                    <!-- Título de la película -->
-                    <h5 class="card-title">
-                        <i class="fa-solid fa-film text-primary me-2"></i>
-                        <span th:text="${ticket.session.movie.title}">Título de película</span>
-                    </h5>
-
-                    <!-- Hora de la sesión -->
-                    <p class="card-text">
-                        <strong>
-                            <i class="fa-solid fa-clock me-1"></i>Sesión:
-                        </strong>
-                        <span th:text="${#temporals.format(ticket.session.startTime, 'dd/MM/yyyy HH:mm')}">Fecha y hora</span>
-                    </p>
-
-                    <!-- Sala -->
-                    <p class="card-text">
-                        <strong>
-                            <i class="fa-solid fa-door-open me-1"></i>Sala:
-                        </strong>
-                        <span th:text="${ticket.session.room.name}">Sala</span>
-                    </p>
-
-                    <!-- Fila y Asiento -->
-                    <p class="card-text">
-                        <strong>
-                            <i class="fa-solid fa-chair me-1"></i>Asiento:
-                        </strong>
-                        <span th:text="${ticket.seatRow + ticket.seatNumber}">A1</span>
-                    </p>
-
-                    <!-- Precio -->
-                    <p class="card-text">
-                        <span class="badge bg-success">
-                            <i class="fa-solid fa-euro-sign me-1"></i>
-                            <span th:text="${#numbers.formatDecimal(ticket.price, 1, 2)}">Precio</span>
-                        </span>
-                    </p>
-
-                    <!-- Tipo de ticket -->
-                    <p class="card-text">
-                        <span class="badge" th:classappend="${ticket.ticketType == 'VIP' ? 'bg-warning' : 'bg-secondary'}">
-                            <i class="fa-solid fa-star me-1"></i>
-                            <span th:text="${ticket.ticketType}">Standard</span>
-                        </span>
-                    </p>
-
-                    <!-- Fecha de compra -->
-                    <p class="card-text text-muted small">
-                        <i class="fa-solid fa-receipt me-1"></i>
-                        <strong>Comprado:</strong>
-                        <span th:text="${#temporals.format(ticket.purchaseTime, 'dd/MM/yyyy HH:mm')}">Fecha compra</span>
-                    </p>
-                </div>
-                <div class="card-footer bg-transparent border-0 pt-0">
-                    <a th:href="@{/tickets/{id}(id=${ticket.id})}"
-                       class="btn btn-outline-primary btn-sm w-100">
-                        <i class="fa-regular fa-eye me-1"></i> Ver detalles
-                    </a>
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">Detalles del ticket</h5>
+                            <p class="card-text">
+                                <strong>ID:</strong> <span th:text="${ticket.id}">0</span>
+                            </p>
+                            <p class="card-text">
+                                <strong>Fila:</strong> <span th:text="${ticket.seatRow}">Fila</span>
+                            </p>
+                            <p class="card-text">
+                                <strong>Número de Asiento:</strong> <span th:text="${ticket.seatNumber}">0</span>
+                            </p>
+                            <p class="card-text">
+                                <strong>Tipo de Ticket:</strong> <span th:text="${ticket.ticketType}">STANDARD</span>
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
