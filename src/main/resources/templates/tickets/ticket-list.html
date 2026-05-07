@@ -36,6 +36,19 @@
                             <p class="card-text">
                                 <strong>Tipo de Ticket:</strong> <span th:text="${ticket.ticketType}">STANDARD</span>
                             </p>
+                            <p class="card-text">
+                                <strong>Precio:</strong> <span class="fw-bold text-success">
+                                <span th:if="${ticket.price != null}"
+                                      th:text="|${#numbers.formatDecimal(ticket.price, 1, 2)} €|">0,00 €</span>
+                                <span th:unless="${ticket.price != null}" class="text-muted small">Sin precio</span>
+                            </span>
+                            </p>
+                        </div>
+                        <div class="card-footer bg-transparent border-0 pt-0">
+                            <a th:href="@{/tickets/{id}(id=${ticket.id})}"
+                               class="btn btn-outline-primary btn-sm w-100">
+                                <i class="fa-regular fa-eye me-1"></i> Ver detalles
+                            </a>
                         </div>
                     </div>
                 </div>
