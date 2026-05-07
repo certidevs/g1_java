@@ -31,14 +31,20 @@
 
                         <!-- Botón de Ver sala que lleva al room-detail.html -->
                         <a th:href="@{/rooms/{id}(id=${room.id})}"
-                           class="btn btn-outline-primary btn-sm w-100">
+                           class="btn btn-outline-primary btn-sm w-100 mt-2">
                             <i class="fa-regular fa-eye me-1"></i> Ver sala
                         </a>
 
-                        <!-- Botón de Editar restaurante que lleva al restaurante-detail.html -->
+                        <!-- Botón de Editar sala -->
                         <a th:href="@{/rooms/edit/{id}(id=${room.id})}"
                            class="btn btn-success btn-sm w-100 mt-2">
                             <i class="fa-solid fa-pencil me-1"></i> Editar sala
+                        </a>
+
+                        <!-- Botón de Desactivar sala -->
+                        <a th:href="@{/rooms/deactivate/{id}(id=${room.id})}"
+                           class="btn btn-warning btn-sm w-100 mt-2">
+                            <i class="fa-solid fa-ban me-1"></i> Desactivar sala
                         </a>
 
                     </div>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
@@ -21,8 +22,9 @@ public class RoomController {
     // Lista todas las salas
     @GetMapping("/rooms")
     public String roomsList(Model model) {
-        List<Room> rooms = roomRepository.findAll();
-        model.addAttribute("rooms", roomRepository.findAll());
+        // List<Room> rooms = roomRepository.findAll();
+        List<Room> rooms = roomRepository.findByActiveTrue();
+        model.addAttribute("rooms", rooms);
         model.addAttribute("numRooms", rooms.size());
         model.addAttribute("title", "Lista de salas");
         return "rooms/room-list";
@@ -70,6 +72,19 @@ public class RoomController {
         model.addAttribute("room", roomRepository.findById(id).orElseThrow());
         model.addAttribute("screenTypes", ScreenType.values());
         return "rooms/room-form";
+    }
+
+    // Desactivar una sala
+    @GetMapping("rooms/deactivate/{id}")
+    public String roomDeactivate(@PathVariable Long id, Model model) {
+        // Optional<Room> roomOptional = roomRepository.findById(id);
+        Optional<Room> roomOptional = roomRepository.findByIdAndActiveTrue(id);
+        if(roomOptional.isPresent()) {
+            Room room = roomOptional.get();
+            room.setActive(false);
+            roomRepository.save(room);
+        }
+        return "redirect:/rooms";
     }
 
     @PostMapping("rooms")

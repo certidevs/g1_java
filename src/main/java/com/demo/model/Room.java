@@ -28,6 +28,9 @@ public class Room {
     @Builder.Default
     @Enumerated(EnumType.STRING)
     private ScreenType screentype = ScreenType.STANDARD;
+
+    @Column(columnDefinition = "BOOLEAN DEFAULT true")
+    private Boolean active = true;
 }
 
 
