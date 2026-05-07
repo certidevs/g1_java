@@ -1,10 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/head :: head('Detalle de sesion')}"></head>
+
+<body class="d-flex flex-column min-vh-100">
+
+<nav th:replace="~{layout/navbar :: navbar}"></nav>
+
+<main class="container flex-grow-1">
+
+    <!-- Cabecera de la session -->
+    <div class="d-flex justify-content-between align-items-start mb-3">
+        <div>
+            <a th:href="@{/sessions/edit/{id}(id=${session.id})}"
+               class="btn btn-success btn-sm mt-2">
+                <i class="fa-solid fa-pencil me-1"></i> Editar
+            </a>
+        </div>
+    </div>
+
+    <hr>
+    <h2 class="mt-4">
+        <i class="fa-solid fa-film text-primary me-2"></i> Info session
+    </h2>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead class="table-dark">
+            <tr>
+                <th>Id</th>
+                <th>Pelicula</th>
+                <th>Hora de la funcion</th>
+                <th>Sala</th>
+                <th>Duracion</th>
+                <th>Precio</th>
+                <th>Idioma</th>
+                <th>Cantidad de anuncios</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${session.id}"></td>
+                <td class="fw-semibold" th:text="${session.movie != null ? session.movie.title : 'Sin película'}"></td>
+                <td class="text-muted small" th:text="${session.startTime != null ? #temporals.format(session.startTime, 'dd/MM/yyyy HH:mm') : 'Sin horario'}"></td>
+                <td class="text-muted small" th:text="${session.room != null ? session.room.name : 'Sin sala'}"></td>
+                <td class="text-muted small" th:text="${session.movie != null ? session.movie.duration : 'N/A'}"></td>
+                <td>
+                    <span class="badge bg-success" th:text="${session.price} + ' €'"></span>
+                </td>
+                <td>
+                    <span class="badge bg-light text-dark border" th:text="${session.language}"></span>
+                </td>
+                <td class="text-muted small" th:text="${session.numAds != null ? session.numAds : '-'}"></td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<footer th:replace="~{layout/footer :: footer}"></footer>
+<script th:replace="~{layout/footer :: scripts}"></script>
 
 </body>
 </html>

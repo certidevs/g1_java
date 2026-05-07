@@ -28,12 +28,15 @@
                 <strong>Capacidad:</strong> <span th:text="${room.capacity}">0</span> butacas
             </p>
             <p class="card-text">
-                <strong>Tipo de pantalla:</strong> <span th:text="${room.screentype}">STANDARD</span>
+                <strong>Tipo de pantalla:</strong> <span th:text="${room.screentype.label}">STANDARD</span>
             </p>
         </div>
     </div>
 
-    <!-- Opcional: Si quieres agregar más, como sesiones en esta sala, necesitarías modificar el controlador para pasarlas -->
+    <a th:href="@{/rooms/edit/{id}(id=${room.id})}"
+       class="btn btn-success btn-sm mt-2">
+        <i class="fa-solid fa-pencil me-1"></i> Editar sala
+    </a>
 </main>
 
 <footer th:replace="~{layout/footer :: footer}"></footer>
