@@ -9,10 +9,10 @@
 
 <main class="container flex-grow-1">
 
-    <!-- Cabecera de la session -->
+    <!-- Cabecera de la proyeccion -->
     <div class="d-flex justify-content-between align-items-start mb-3">
         <div>
-            <a th:href="@{/sessions/edit/{id}(id=${session.id})}"
+            <a th:href="@{/sessions/edit/{id}(id=${proyeccion.id})}"
                class="btn btn-success btn-sm mt-2">
                 <i class="fa-solid fa-pencil me-1"></i> Editar
             </a>
@@ -21,7 +21,7 @@
 
     <hr>
     <h2 class="mt-4">
-        <i class="fa-solid fa-film text-primary me-2"></i> Info session
+        <i class="fa-solid fa-film text-primary me-2"></i> Info proyeccion
     </h2>
 
     <div class="table-responsive">
@@ -40,18 +40,18 @@
             </thead>
             <tbody>
             <tr>
-                <td th:text="${session.id}"></td>
-                <td class="fw-semibold" th:text="${session.movie != null ? session.movie.title : 'Sin película'}"></td>
-                <td class="text-muted small" th:text="${session.startTime != null ? #temporals.format(session.startTime, 'dd/MM/yyyy HH:mm') : 'Sin horario'}"></td>
-                <td class="text-muted small" th:text="${session.room != null ? session.room.name : 'Sin sala'}"></td>
-                <td class="text-muted small" th:text="${session.movie != null ? session.movie.duration : 'N/A'}"></td>
+                <td th:text="${proyeccion.id}"></td>
+                <td class="fw-semibold" th:text="${proyeccion.movie != null ? proyeccion.movie.title : 'Sin película'}"></td>
+                <td class="text-muted small" th:text="${proyeccion.startTime != null ? #temporals.format(proyeccion.startTime, 'dd/MM/yyyy HH:mm') : 'Sin horario'}"></td>
+                <td class="text-muted small" th:text="${proyeccion.room != null ? proyeccion.room.name : 'Sin sala'}"></td>
+                <td class="text-muted small" th:text="${proyeccion.movie != null ? proyeccion.movie.duration : 'N/A'}"></td>
                 <td>
-                    <span class="badge bg-success" th:text="${session.price} + ' €'"></span>
+                    <span class="badge bg-success" th:text="${proyeccion.price} + ' €'"></span>
                 </td>
                 <td>
-                    <span class="badge bg-light text-dark border" th:text="${session.language}"></span>
+                    <span class="badge bg-light text-dark border" th:text="${proyeccion.language}"></span>
                 </td>
-                <td class="text-muted small" th:text="${session.numAds != null ? session.numAds : '-'}"></td>
+                <td class="text-muted small" th:text="${proyeccion.numAds != null ? proyeccion.numAds : '-'}"></td>
 
             </tr>
             </tbody>
