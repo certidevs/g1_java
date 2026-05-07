@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/head :: head('Formulario Restaurante')}"></head>
+<body class="d-flex flex-column min-vh-100 bg-light">
+<nav th:replace="~{layout/navbar :: navbar}"></nav>
+<main class="container flex-grow-1 my-4">
+    <h1 class="mb-0">
+        <i class="fa-solid fa-film"></i></i>Formulario de session
+    </h1>
+    <form th:action="@{/sessions}" method="post" th:object="${session}">
+        <input type="hidden" th:field="*{id}">
+
+<!--        Campos de session-->
+        <div class="mb-3">
+            <label for="language" class="form-label">Idioma</label>
+            <select class="form-select" id="language" th:field="*{language}" required>
+                <option value=""></option>
+                <option
+                        th:each="language : ${languages}"
+                        th:value="${language}"
+                        th:text="${language.label}">
+
+                </option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            <i class="fa-solid fa-floppy-disk"></i> Guardar
+        </button>
+        <a th:href="@{/sessions}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</main>
+<footer th:replace="~{layout/footer :: footer}"></footer>
+<script th:replace="~{layout/footer :: scripts}"></script>
+</body>
+</html>

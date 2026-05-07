@@ -10,7 +10,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 import java.util.Optional;
@@ -41,7 +43,7 @@ public class SessionController {
         Optional <Session> sessionOptional = sessionRepository.findById(id);
         if (sessionOptional.isPresent()){
             Session session = sessionOptional.get();
-            model.addAttribute("session", session);
+            model.addAttribute("proyeccion", session);
             return "sessions/session-detail";
         }
         else {
@@ -63,10 +65,25 @@ public class SessionController {
     //El detalle de la session
     //Las sesiones que tienen UN lenguaje especifico, por ejemplo VOSE
     //Las sesiones que tengan UN tipo de pantalla por ejemplo 3D
+
+    //REEMPLAZAR SESSION
     @GetMapping("sessions/edit/{id}")
     public String editSession(@PathVariable Long id, Model model){
         model.addAttribute("session", sessionRepository.findById(id).orElseThrow());
         return"sessions/session-form";
+    }
+    //REEMPLAZAR SESSION
+    @GetMapping("session/create")
+    public String createSessions(Model model){
+        model.addAttribute("session", new Session());
+        model.addAttribute("languages", Language.values());
+    return "sessions/session-form";
+    }
+    //NO USAR SESSION
+    @PostMapping("sessions")
+    public String saveSession(@ModelAttribute Session session){
+        sessionRepository.save(session);
+        return "redirect:/sessions";
     }
 
 
