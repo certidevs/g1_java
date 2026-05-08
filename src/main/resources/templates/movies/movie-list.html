@@ -11,10 +11,17 @@
 		<span class="badge bg-secondary fs-6" th:text="|${numMovies} resultados|">0 resultados</span>
 	</div>
 
+	<a th:href="@{/movies/new}" class="btn btn-primary btn-sm mb-2">
+		<i class="fa-solid fa-plus"></i>
+		Crear película
+	</a>
+
 	<div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
 		<div class="col" th:each="movie : ${movies}">
 			<div class="card card-movie h-100 shadow-sm">
-				<img style="height: 24rem" th:src="${movie.getImageUrl}" class="card-img-top" alt="Film card">
+				<div>
+					<img style="height: 24rem" th:src="${movie.getImageUrl}" class="card-img-top" alt="Film card">
+				</div>
 				<div class="card-body">
 					<h5 class="card-title" th:text="${movie.title}">Nombre</h5>
 					<p class="card-text">
@@ -52,6 +59,10 @@
 						<a th:href="@{/movies/{id}(id=${movie.id})}"
 						   class="btn btn-outline-primary btn-sm w-100">
 							<i class="fa-regular fa-eye me-1"></i> Ver película
+						</a>
+						<a th:href="@{/movies/edit/{id}(id=${movie.id})}"
+						   class="btn btn-sm btn-outline-primary flex-shrink-0">
+							<i class="fa-solid fa-pencil me-1"></i>Editar
 						</a>
 					</div>
 				</div>

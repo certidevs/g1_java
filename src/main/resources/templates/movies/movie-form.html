@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head lang="en" th:replace="~{layout/head :: head('Formulario Película')}"></head>
+<body class="d-flex flex-column min-vh-100">
+
+<header th:replace="~{layout/navbar :: navbar}"></header>
+
+<main class="container flex-grow-1">
+
+	<h1 class="mb-0">
+		<i class="fa-solid fa-utensils text-primary me-2"></i>Formulario película
+	</h1>
+
+	<form th:action="@{/movies}" method="post" th:object="${movie}">
+
+		<input type="hidden" th:field="*{id}">
+
+		<div class="mb-3">
+			<label for="title" class="form-label">Título</label>
+			<input type="text" class="form-control" id="title"
+			       th:field="*{title}" placeholder="El Padrino" required>
+		</div>
+
+		<div class="mb-3">
+			<label class="form-label" for="genreSet">Géneros</label>
+			<select class="form-select" id="genreSet" th:field="*{genreSet}" multiple required>
+				<option value=""></option>
+
+				<option
+						th:each="genreSet : ${genres}"
+						th:value="${genreSet}"
+						th:text="${genreSet.label}">
+				</option>
+
+			</select>
+		</div>
+
+		<div class="mb-3">
+			<label class="form-label" for="director">Director</label>
+			<select class="form-select" id="director" th:field="*{director}" required>
+				<option value=""></option>
+
+				<option
+						th:each="director : ${directors}"
+						th:value="${director}"
+						th:text="${director.label}">
+				</option>
+
+			</select>
+		</div>
+
+		<div class="mb-3">
+			<label for="releaseYear" class="form-label">Año de lanzamiento</label>
+			<input type="text" class="form-control" id="releaseYear"
+			       th:field="*{releaseYear}" placeholder="1985" required>
+		</div>
+
+		<div class="mb-3">
+			<label class="form-label" for="minAge">Edad mínima</label>
+			<select class="form-select" id="minAge" th:field="*{minAge}" required>
+				<option value=""></option>
+
+				<option
+						th:each="minAge : ${minAges}"
+						th:value="${minAge}"
+						th:text="${minAge.label}">
+				</option>
+
+			</select>
+		</div>
+
+		<div class="mb-3">
+			<label for="duration" class="form-label">Duración</label>
+			<input type="number" class="form-control" id="duration"
+			       th:field="*{duration}" min="30" required>
+		</div>
+
+		<div class="mb-3">
+			<label for="trailerUrl" class="form-label">Enlace del trailer</label>
+			<input type="text" class="form-control" id="trailerUrl"
+			       th:field="*{trailerUrl}" required>
+		</div>
+
+		<div class="mb-3">
+			<label for="imageUrl" class="form-label">Enlace de la imagen</label>
+			<input type="text" class="form-control" id="imageUrl"
+			       th:field="*{imageUrl}" placeholder="IMDB..." required>
+		</div>
+
+		<div class="mb-3">
+			<label for="sinopsis" class="form-label">Sinopsis</label>
+			<textarea class="form-control" id="sinopsis" th:field="*{sinopsis}"
+			          rows="3" maxlength="500" placeholder="Año 1941. Las tropas alemanas..." required>
+			</textarea>
+		</div>
+
+		<button type="submit" class="btn btn-success">
+			<i class="fa-solid fa-floppy-disk"></i> Guardar
+		</button>
+
+		<a th:href="@{/movies}" class="btn btn-secondary">Cancelar</a>
+
+
+	</form>
+
+</main>
+
+<footer th:replace="~{layout/footer :: footer}"></footer>
+<script th:replace="~{layout/footer :: scripts}"></script>
+
+</body>
+</html>
