@@ -27,7 +27,7 @@ public class MovieController {
 
 
     @GetMapping("movies/{id}")
-    public String order(Model model, @PathVariable Long id){
+    public String movie(Model model, @PathVariable Long id){
         model.addAttribute("movie", movieRepository.findById(id).orElseThrow());
         return "movies/movie-detail";
     }
