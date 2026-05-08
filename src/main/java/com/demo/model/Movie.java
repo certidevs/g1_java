@@ -44,9 +44,4 @@ public class Movie {
 
     @Column (length = 500)
     private String sinopsis;
-
-    @ToString.Exclude
-    @ManyToOne
-    private Session session;
-
 }
