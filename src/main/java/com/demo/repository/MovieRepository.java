@@ -13,7 +13,7 @@ import java.util.Set;
 public interface MovieRepository extends JpaRepository<Movie, Long> {
     List<Movie> findBySession_StartTime(LocalDateTime startTime);
 
-    List<Movie> findByGenres(Set<Genre> genres);
+    List<Movie> findByGenreSet(Set<Genre> genres);
 
     List<Movie> findByDirector(Director director);
 

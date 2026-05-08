@@ -30,7 +30,7 @@ public class G1JavaApplication {
 
         Movie movie1 = new Movie();
         movie1.setTitle("Super Mario Galaxy");
-        movie1.setGenres(EnumSet.of(Genre.COMEDY, Genre.ANIMATION));
+        movie1.setGenreSet(EnumSet.of(Genre.COMEDY, Genre.ANIMATION));
         movie1.setDirector(Director.HORVATH);
         movie1.setReleaseYear(2026);
         movie1.setMinAge(MinAge.AGE_7);
@@ -45,7 +45,7 @@ public class G1JavaApplication {
 
         Movie movie2 = new Movie();
         movie2.setTitle("El diablo viste de Prada 2");
-        movie2.setGenres(EnumSet.of(Genre.COMEDY, Genre.DRAMA));
+        movie2.setGenreSet(EnumSet.of(Genre.COMEDY, Genre.DRAMA));
         movie2.setDirector(Director.FRANKEL);
         movie2.setReleaseYear(2026);
         movie2.setMinAge(MinAge.AGE_7);
@@ -59,7 +59,7 @@ public class G1JavaApplication {
 
         Movie movie3 = new Movie();
         movie3.setTitle("Michael");
-        movie3.setGenres(EnumSet.of(Genre.DRAMA, Genre.DOCUMENTARY));
+        movie3.setGenreSet(EnumSet.of(Genre.DRAMA, Genre.DOCUMENTARY));
         movie3.setDirector(Director.FUQUA);
         movie3.setReleaseYear(2026);
         movie3.setMinAge(MinAge.AGE_12);
@@ -73,7 +73,7 @@ public class G1JavaApplication {
 
         Movie movie4 = new Movie();
         movie4.setTitle("La familia Benetón + 2");
-        movie4.setGenres(EnumSet.of(Genre.COMEDY, Genre.SPANISH));
+        movie4.setGenreSet(EnumSet.of(Genre.COMEDY, Genre.SPANISH));
         movie4.setDirector(Director.MAZON);
         movie4.setReleaseYear(2026);
         movie4.setMinAge(MinAge.ALL);

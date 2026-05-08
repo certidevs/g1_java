@@ -26,7 +26,7 @@ public class Movie {
 
     @Builder.Default
     @Enumerated(EnumType.STRING)
-    private Set<Genre> genres = EnumSet.noneOf(Genre.class);
+    private Set<Genre> genreSet = EnumSet.noneOf(Genre.class);
 
     @Builder.Default
     @Enumerated(EnumType.STRING)
