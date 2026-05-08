@@ -35,7 +35,7 @@ public class G1JavaApplication {
         movie1.setReleaseYear(2026);
         movie1.setMinAge(MinAge.AGE_7);
         movie1.setDuration(98);
-        movie1.setTrailerUrl("https://youtu.be/ipzEY7c7it8");
+        movie1.setTrailerUrl("https://www.youtube.com/embed/ipzEY7c7it8");
         movie1.setImageUrl(
                 "https://m.media-amazon.com/images/M/MV5BNTRkODc0MmItYzQ2NS00MGU3LTkwMTUtMGRmZjMwODNiNmI0XkEyXkFqcGc@._V1_.jpg"
         );
@@ -50,7 +50,7 @@ public class G1JavaApplication {
         movie2.setReleaseYear(2026);
         movie2.setMinAge(MinAge.AGE_7);
         movie2.setDuration(119);
-        movie2.setTrailerUrl("https://youtu.be/IQD3qh7te2o");
+        movie2.setTrailerUrl("https://www.youtube.com/embed/IQD3qh7te2o");
         movie2.setImageUrl(
                 "https://m.media-amazon.com/images/M/MV5BOGEyNGU5YzItY2VhMy00NTRmLWI5MmYtZDYxZTczMjcwN2E3XkEyXkFqcGc@._V1_.jpg"
         );
@@ -64,7 +64,7 @@ public class G1JavaApplication {
         movie3.setReleaseYear(2026);
         movie3.setMinAge(MinAge.AGE_12);
         movie3.setDuration(127);
-        movie3.setTrailerUrl("https://youtu.be/iVJaujA54Y8");
+        movie3.setTrailerUrl("https://www.youtube.com/embed/iVJaujA54Y8");
         movie3.setImageUrl(
                 "https://m.media-amazon.com/images/M/MV5BYmMzNTNkOGYtYWViYy00ZmI2LWJjZDQtODhhNTA4NmRjNmE0XkEyXkFqcGc@._V1_.jpg"
         );
@@ -78,9 +78,9 @@ public class G1JavaApplication {
         movie4.setReleaseYear(2026);
         movie4.setMinAge(MinAge.ALL);
         movie4.setDuration(87);
-        movie4.setTrailerUrl("https://youtu.be/O9kD-WhRNus");
+        movie4.setTrailerUrl("https://www.youtube.com/embed/O9kD-WhRNus");
         movie4.setImageUrl(
-                "https://m.media-amazon.com/images/M/MV5BYTFlNmEyOTItYjI4NS00MDA1LWFkNjItMWU4NTM5ODFjOTNjXkEyXkFqcGc@._V1_.jpg"
+                "https://m.media-amazon.com/images/M/MV5BZDFiYmZhNjEtNDJlMS00ZDdmLTg3YjktOTFlZjJkY2Q3NGQ5XkEyXkFqcGc@._V1_.jpg"
         );
         movie4.setSinopsis("Cuando Toni Benetón cree que tiene todo bajo control en su entrañable y divertida " +
                 "familia multicultural, la llegada de dos nuevos bebés pondrá patas arriba la casa y a toda la familia. " +
