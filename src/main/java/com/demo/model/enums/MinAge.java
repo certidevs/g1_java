@@ -1,9 +1,19 @@
 package com.demo.model.enums;
 
 public enum MinAge {
-    AGE_7,
-    AGE_12,
-    AGE_16,
-    AGE_18,
-    ALL
+    AGE_7("+7"),
+    AGE_12("+12"),
+    AGE_16("+16"),
+    AGE_18("+18"),
+    ALL("All audiences");
+
+    private final String label;
+
+    MinAge(String label) {
+        this.label = label;
+    }
+
+    public String getLabel() {
+        return label;
+    }
 }
