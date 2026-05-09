@@ -3,6 +3,8 @@ package com.demo.repository;
 import com.demo.model.Room;
 import com.demo.model.enums.ScreenType;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +17,20 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     // filtrar por tipo de pantalla
     List<Room> findByScreentype(ScreenType screentype);
 
-    List<Room> findByActiveTrue();
+    // List<Room> findByActiveTrue();
     Optional<Room> findByIdAndActiveTrue(Long id);
+
+    // Query con filtros:
+    @Query("""
+        SELECT r from Room r
+        WHERE r.active = true
+        AND (:screenType IS NULL OR r.screentype = :screenType)
+        AND (:capacity IS NULL OR r.capacity >= :capacity)
+        AND (:title IS NULL OR LOWER(r.name) LIKE LOWER(CONCAT('%', :title, '%')))
+        """)
+    List<Room> findActiveFiltering(
+            @Param("screenType") ScreenType screenType,
+            @Param("capacity") Integer capacity,
+            @Param("title") String title
+    );
 }
