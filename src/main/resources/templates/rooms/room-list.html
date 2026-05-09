@@ -13,6 +13,66 @@
         <span class="badge bg-secondary fs-6" th:text="|${numRooms} resultados|"></span>
     </div>
 
+    <a th:href="@{/rooms/new}" class="btn btn-primary btn-sm mb-2">
+        <i class="fa-solid fa-plus"></i>
+        Crear sala
+    </a>
+
+    <div class="mb-3">
+        <h5>Filtros rápidos</h5>
+        <a th:href="@{/rooms}" class="btn btn-sm btn-primary">Todos</a>
+        <a th:href="@{/rooms(screenType='2D')}" class="btn btn-sm btn-secondary">Pantalla 2D</a>
+        <a th:href="@{/rooms(screenType='3D')}" class="btn btn-sm btn-secondary">Pantalla 3d</a>
+        <a th:href="@{/rooms(capacity=15)}" class="btn btn-sm btn-success">Hasta 20 butacas</a>
+        <a th:href="@{/rooms(capactiy=50)}" class="btn btn-sm btn-success">Hasta 50 butacas</a>
+        <a th:href="@{/rooms(title='sala')}" class="btn btn-sm btn-warning">Sala</a>
+        <a th:href="@{/rooms(title='VIP')}" class="btn btn-sm btn-warning">VIP</a>
+    </div>
+
+<!--    <div class="mb-3">-->
+<!--        <h5>Búsqueda avanzada</h5>-->
+<!--        <form th:action="@{/rooms}" method="get" class="row align-items-end">-->
+
+<!--            &lt;!&ndash; Filtro por palabra en título &ndash;&gt;-->
+<!--            <div class="col-auto">-->
+<!--                <label class="form-label form-label-sm">Título</label>-->
+<!--                <input type="text" name="title" class="form-control form-control-sm"-->
+<!--                       placeholder="Busca por título..." th:value="${param.title}">-->
+<!--            </div>-->
+<!--            &lt;!&ndash; Filtro por capacidad &ndash;&gt;-->
+<!--            <div class="col-auto">-->
+<!--                <label class="form-label form-label-sm">Capacidad máx.</label>-->
+<!--                <input type="number" min="10" step="5" name="capacity"-->
+<!--                       class="form-control form-control-sm" th:value="${param.capacity}">-->
+<!--            </div>-->
+
+<!--            &lt;!&ndash; Filtro por screenType con selector &ndash;&gt;-->
+<!--            <div class="col-auto">-->
+<!--                <label class="form-label form-label-sm">Tipo pantalla</label>-->
+<!--                <select name="screenType" class="form-select form-select-sm">-->
+<!--                    <option value="" th:selected="${param.screenType == null}">Todas</option>-->
+<!--                    <option value="STANDARD" th:selected="${param.screenType != null and param.screenType[0] == 'STANDARD'}">Estándar</option>-->
+<!--                    <option value="IMAX" th:selected="${param.screenType != null and param.screenType[0] == 'IMAX'}">2D</option>-->
+<!--                    <option value="THREE_D" th:selected="${param.screenType != null and param.screenType[0] == 'THREE_D'}">3D</option>-->
+<!--                    <option value="VIP" th:selected="${param.screenType != null and param.screenType[0] == 'VIP'}">VIP</option>-->
+<!--                </select>-->
+<!--            </div>-->
+
+<!--            <div class="col-auto">-->
+<!--                <button type="submit" class="btn btn-primary btn-sm">-->
+<!--                    <i class="fa-solid fa-magnifying-glass"></i>-->
+<!--                    Buscar-->
+<!--                </button>-->
+<!--                <a th:href="@{/rooms}" class="btn btn-danger btn-sm">-->
+<!--                    <i class="fa-solid fa-broom"></i>-->
+<!--                    Limpiar filtros-->
+<!--                </a>-->
+<!--            </div>-->
+
+<!--        </form>-->
+
+<!--    </div>-->
+
     <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
         <div class="col" th:each="room : ${rooms}">
             <div class="card card-room h-100 shadow-sm">
@@ -32,19 +92,19 @@
                         <!-- Botón de Ver sala que lleva al room-detail.html -->
                         <a th:href="@{/rooms/{id}(id=${room.id})}"
                            class="btn btn-outline-primary btn-sm w-100 mt-2">
-                            <i class="fa-regular fa-eye me-1"></i> Ver sala
+                            <i class="fa-regular fa-eye me-1"></i> Ver
                         </a>
 
                         <!-- Botón de Editar sala -->
                         <a th:href="@{/rooms/edit/{id}(id=${room.id})}"
                            class="btn btn-success btn-sm w-100 mt-2">
-                            <i class="fa-solid fa-pencil me-1"></i> Editar sala
+                            <i class="fa-solid fa-pencil me-1"></i> Editar
                         </a>
 
                         <!-- Botón de Desactivar sala -->
                         <a th:href="@{/rooms/deactivate/{id}(id=${room.id})}"
                            class="btn btn-warning btn-sm w-100 mt-2">
-                            <i class="fa-solid fa-ban me-1"></i> Desactivar sala
+                            <i class="fa-solid fa-ban me-1"></i> Desactivar
                         </a>
 
                     </div>

@@ -6,10 +6,7 @@ import com.demo.repository.RoomRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,10 +17,25 @@ public class RoomController {
         private final RoomRepository roomRepository;
 
     // Lista todas las salas
+//    @GetMapping("/rooms")
+//    public String roomsList(Model model) {
+//        // List<Room> rooms = roomRepository.findAll();
+//        List<Room> rooms = roomRepository.findByActiveTrue();
+//        model.addAttribute("rooms", rooms);
+//        model.addAttribute("numRooms", rooms.size());
+//        model.addAttribute("title", "Lista de salas");
+//        return "rooms/room-list";
+//    }
+
+
     @GetMapping("/rooms")
-    public String roomsList(Model model) {
-        // List<Room> rooms = roomRepository.findAll();
-        List<Room> rooms = roomRepository.findByActiveTrue();
+    public String roomsList(
+            Model model,
+            @RequestParam(required = false) ScreenType screentype,
+            @RequestParam(required = false) Integer capacity,
+            @RequestParam(required = false) String title
+    ) {
+        List<Room> rooms = roomRepository.findActiveFiltering(screentype, capacity, title);
         model.addAttribute("rooms", rooms);
         model.addAttribute("numRooms", rooms.size());
         model.addAttribute("title", "Lista de salas");
@@ -67,7 +79,7 @@ public class RoomController {
     }
 
     // Editar una sala existente
-    @GetMapping("rooms/edit/{id}")
+    @GetMapping("/rooms/edit/{id}")
     public String editRoom(@PathVariable Long id, Model model) {
         model.addAttribute("room", roomRepository.findById(id).orElseThrow());
         model.addAttribute("screenTypes", ScreenType.values());
@@ -75,7 +87,7 @@ public class RoomController {
     }
 
     // Desactivar una sala
-    @GetMapping("rooms/deactivate/{id}")
+    @GetMapping("/rooms/deactivate/{id}")
     public String roomDeactivate(@PathVariable Long id, Model model) {
         // Optional<Room> roomOptional = roomRepository.findById(id);
         Optional<Room> roomOptional = roomRepository.findByIdAndActiveTrue(id);
@@ -87,7 +99,7 @@ public class RoomController {
         return "redirect:/rooms";
     }
 
-    @PostMapping("rooms")
+    @PostMapping("/rooms")
     public String createRoom(@ModelAttribute Room room) {
         System.out.println("Sala recibida: " + room);
         roomRepository.save(room);
