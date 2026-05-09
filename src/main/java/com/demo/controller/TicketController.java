@@ -75,7 +75,7 @@ public class TicketController {
     @PostMapping("tickets")
     public String saveTicket(@ModelAttribute Ticket ticket){
         ticketRepository.save(ticket);
-        return "redirect:/tickets" + ticket.getId();
+        return "redirect:/tickets/" + ticket.getId();
     }
 
 

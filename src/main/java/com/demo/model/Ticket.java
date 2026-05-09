@@ -3,6 +3,7 @@ package com.demo.model;
 import com.demo.model.enums.TicketType;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -37,6 +38,8 @@ public class Ticket {
    @ManyToOne
     private Session session;
 
+//    @Transient  // No se persiste en la base de datos
+//    private Long sessionId;
 
 
 
