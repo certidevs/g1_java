@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/head :: head('Formulario Ticket')}"></head>
+<body class="d-flex flex-column min-vh-100">
+
+<nav th:replace="~{layout/navbar :: navbar}"></nav>
+
+<main class="container flex-grow-1">
+
+    <h1 class="mb-0">
+        <i class="fa-solid fa-ticket text-primary me-2"></i>Formulario de ticket
+    </h1>
+
+    <!-- TODO formulario para crear o editar un ticket -->
+    <form th:action="@{/tickets}" method="post" th:object="${ticket}">
+        <input type="hidden" th:field="*{id}">
+
+        <!-- campos del ticket-->
+        <div class="mb-3">
+            <label for="session" class="form-select">Función</label>
+            <select class="form-select" id="session" th:field="*{session}">
+                <option value=""></option>
+                <option th:each="projection : ${projections}"
+                        th:value="${projection.id}"
+                        th:text="${projection.movie.title + ' - ' + projection.language + ' - ' + projection.startTime}">
+                </option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="seatRow" class="form-label">Fila</label>
+            <input type="text" class="form-control" id="seatRow"
+                   th:field="*{seatRow}" placeholder="Ejemplo: A, B, C..." required>
+        </div>
+        <div class="mb-3">
+            <label for="seatNumber" class="form-label">Numero de asiento</label>
+            <input type="number" class="form-control" id="seatNumber"
+                   th:field="*{seatNumber}" step="1" min="1" placeholder="Ejemplo: 1, 2, 3..." required>
+        </div>
+        <div class="mb-3">
+            <label for="price" class="form-label">Precio</label>
+            <input type="number" class="form-control" id="price"
+                   th:field="*{price}" step="0.01" min="0" placeholder="Precio del producto" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="ticketType" class="form-select">Tipo de ticket</label>
+            <select class="form-select" id="ticketType" th:field="*{ticketType}">
+                <option value=""></option>
+                <option th:each="ticketType : ${ticketTypes}"
+                        th:value="${ticketType}"
+                        th:text="${ticketType}">
+
+                </option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="purchaseTime" class="form-label">Fecha de compra</label>
+            <input type="date" class="form-control" id="purchaseTime"
+                   th:field="*{purchaseTime}" readonly>
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            <i class="fa-solid fa-floppy-disk"></i> Guardar
+        </button>
+
+        <a th:href="@{/tickets}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</main>
+<footer th:replace="~{layout/footer :: footer}"></footer>
+<script th:replace="~{layout/footer :: scripts}"></script>
+
+</body>
+</html>
