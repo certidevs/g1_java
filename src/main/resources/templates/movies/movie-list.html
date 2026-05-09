@@ -18,50 +18,19 @@
 
 	<div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
 		<div class="col" th:each="movie : ${movies}">
-			<div class="card card-movie h-100 shadow-sm">
+			<div class="card h-100 shadow-sm">
 				<div>
 					<img style="height: 24rem" th:src="${movie.getImageUrl}" class="card-img-top" alt="Film card">
 				</div>
 				<div class="card-body">
 					<h5 class="card-title" th:text="${movie.title}">Nombre</h5>
-					<p class="card-text">
-                        <span class="badge bg-success">
-                            <span th:text="${movie.releaseYear}">0</span>
-                        </span>
-					</p>
-					<p class="card-text">
-                        <span class="badge bg-success">
-                            <span th:text="${movie.genreSet}">0</span>
-                        </span>
-					</p>
-					<p class="card-text">
-                        <span class="badge bg-success">
-                            <span th:text="${movie.minAge}">0</span>
-                        </span>
-					</p>
-					<p class="card-text">
-                        <span class="badge bg-success">
-                            <span th:text="${movie.duration}">0</span>
-                        </span>
-					</p>
-					<p class="card-text">
-                        <span class="badge bg-success">
-                            <span th:text="${movie.trailerUrl}">0</span>
-                        </span>
-					</p>
-					<p class="card-text">
-                        <span class="badge bg-success">
-                            <span th:text="${movie.director}">0</span>
-                        </span>
-					</p>
-					<p class="card-text" th:text="${movie.sinopsis}"></p>
 					<div class="card-footer bg-transparent border-0 pt-0">
 						<a th:href="@{/movies/{id}(id=${movie.id})}"
 						   class="btn btn-outline-primary btn-sm w-100">
-							<i class="fa-regular fa-eye me-1"></i> Ver película
+							<i class="fa-regular fa-eye me-1"></i>Ver película
 						</a>
 						<a th:href="@{/movies/edit/{id}(id=${movie.id})}"
-						   class="btn btn-sm btn-outline-primary flex-shrink-0">
+						   class="btn btn-outline-primary btn-sm w-100">
 							<i class="fa-solid fa-pencil me-1"></i>Editar
 						</a>
 					</div>

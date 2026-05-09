@@ -5,48 +5,51 @@
 
 <header th:replace="~{layout/navbar :: navbar}"></header>
 
-<main class="container flex-grow-1">
-	<div class="d-flex justify-content-between align-items-start mb-3">
-		<div class="card card-movie h-100 shadow-sm">
-			<img th:src="${movie.getImageUrl}" class="card-img-top" alt="Film card">
-			<div class="card-body">
-				<h5 class="card-title" th:text="${movie.title}">Nombre</h5>
-				<p class="card-text">
-                        <span class="badge bg-success">
-                            <span th:text="${movie.releaseYear}">0</span>
-                        </span>
-				</p>
-				<p class="card-text">
-                        <span class="badge bg-success">
-                            <span th:text="${movie.genres}">0</span>
-                        </span>
-				</p>
-				<p class="card-text">
-                        <span class="badge bg-success">
-                            <span th:text="${movie.minAge}">0</span>
-                        </span>
-				</p>
-				<p class="card-text">
-                        <span class="badge bg-success">
-                            <span th:text="${movie.duration}">0</span>
-                        </span>
-				</p>
-				<p class="card-text">
-                        <span class="badge bg-success">
-                            <span th:text="${movie.trailerUrl}">0</span>
-                        </span>
-				</p>
-				<p class="card-text">
-                        <span class="badge bg-success">
-                            <span th:text="${movie.director}">0</span>
-                        </span>
-				</p>
-				<p class="card-text" th:text="${movie.sinopsis}"></p>
-				<div class="card-footer bg-transparent border-0 pt-0">
-					<a th:href="@{/movies/{id}(id=${movie.id})}"
-					   class="btn btn-outline-primary btn-sm w-100">
-						<i class="fa-regular fa-eye me-1"></i> Ver película
-					</a>
+<main class="container flex-grow-1 mb-3">
+	<div class="row">
+		<div class="col">
+			<div class="card shadow-sm mb-3">
+				<div class="row g-0">
+					<div class="col-md-4">
+						<img th:src="${movie.getImageUrl}" class="img-fluid rounded-start" alt="Film card">
+					</div>
+					<div class="col-md-8">
+						<div class="card-body m-4">
+							<div class="d-flex align-items-center gap-2">
+								<h5 class="card-title mb-3 fs-1 mb-0" th:text="${movie.title}">Título</h5>
+								<span th:text="'(' + ${movie.duration} + 'min)'">0</span>
+							</div>
+							<div class="card-text">
+								<p class="fw-bold mb-1">
+									Dirigida por:
+									<span class="fw-normal" th:text="${movie.director.label}"></span>
+								</p>
+								<p class="fw-bold mb-1">
+									Año de lanzamiento:
+									<span class="fw-normal" th:text="${movie.releaseYear}"></span>
+								</p>
+								<p class="fw-bold mb-1">
+									Edad mínima:
+									<span class="fw-normal" th:text="${movie.minAge.label}"></span>
+								</p>
+							</div>
+							<div class="mb-2">
+								<span class="badge bg-info text-black">
+	                                <span th:each="g : ${movie.genreSet}"
+	                                      th:text="${g.label} + ' '">
+									</span>
+	                            </span>
+							</div>
+							<p class="card-text" th:text="${movie.sinopsis}"></p>
+							<div class="mb-3">
+								<iframe style="height: 10rem" th:src="${movie.trailerUrl}" title="YouTube video player"
+								        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen
+								        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;
+							            picture-in-picture; web-share">
+								</iframe>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
