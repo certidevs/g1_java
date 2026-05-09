@@ -1,14 +1,8 @@
 package com.demo;
 
-import com.demo.model.Movie;
-import com.demo.model.Room;
-import com.demo.model.Session;
-import com.demo.model.Ticket;
+import com.demo.model.*;
 import com.demo.model.enums.*;
-import com.demo.repository.MovieRepository;
-import com.demo.repository.RoomRepository;
-import com.demo.repository.SessionRepository;
-import com.demo.repository.TicketRepository;
+import com.demo.repository.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -27,6 +21,8 @@ public class G1JavaApplication {
         RoomRepository roomRepository = context.getBean(RoomRepository.class);
         SessionRepository sessionRepository = context.getBean(SessionRepository.class);
         TicketRepository ticketRepository = context.getBean(TicketRepository.class);
+        ReviewRepository reviewRepository = context.getBean(ReviewRepository.class);
+
 
         Movie movie1 = new Movie();
         movie1.setTitle("Super Mario Galaxy");
@@ -174,9 +170,28 @@ public class G1JavaApplication {
         ticketRepository.saveAll(List.of(ticket1, ticket2, ticket3));
 
 
+        Review review1 = Review.builder()
+                .description("Te muestra como era la vida de Michael")
+                .movie(movie3)
+                .title("Amé cada segundo")
+                .rating(5)
+                .build();
 
+        Review review2 = Review.builder()
+                .description("Esperaba mas de esta peli, me voy a ver Michael otra vez")
+                .movie(movie1)
+                .title("Me dormí")
+                .rating(2)
+                .build();
 
+        Review review3 = Review.builder()
+                .description("Muy recomendada para ver en familia")
+                .movie(movie1)
+                .title("Me reí hasta no poder más")
+                .rating(4)
+                .build();
 
+        reviewRepository.saveAll(List.of(review1, review2, review3));
     }
 
 }
