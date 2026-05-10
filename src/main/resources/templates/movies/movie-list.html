@@ -16,6 +16,17 @@
 		Crear película
 	</a>
 
+	<div class="mb-3">
+		<h5>Filtros rápidos</h5>
+		<a th:href="@{/movies}" class="btn btn-sm btn-primary">Todos</a>
+		<a th:href="@{/movies(director='FRANKEL')}" class="btn btn-sm btn-secondary">Películas de Frankel</a>
+		<a th:href="@{/movies(genre='COMEDY')}" class="btn btn-sm btn-secondary">Películas cómicas</a>
+		<a th:href="@{/movies(genre='DRAMA')}" class="btn btn-sm btn-secondary">Películas dramáticas</a>
+		<a th:href="@{/movies(minAge=ALL)}" class="btn btn-sm btn-info">Todas las audiencias</a>
+		<a th:href="@{/movies(minAge=AGE_12)}" class="btn btn-sm btn-info">+12</a>
+		<a th:href="@{/movies(releaseYear=2026)}" class="btn btn-sm btn-info">2026</a>
+	</div>
+
 	<div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
 		<div class="col" th:each="movie : ${movies}">
 			<div class="card h-100 shadow-sm">

@@ -24,6 +24,10 @@ public class Movie {
 
     private String title;
 
+    @Column(columnDefinition = "BOOLEAN DEFAULT true")
+    private Boolean active = true;
+
+    @ElementCollection(fetch = FetchType.LAZY)
     @Builder.Default
     @Enumerated(EnumType.STRING)
     private Set<Genre> genreSet = EnumSet.noneOf(Genre.class);

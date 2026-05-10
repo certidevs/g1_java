@@ -8,13 +8,11 @@ import com.demo.repository.MovieRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @AllArgsConstructor
 @Controller
@@ -22,8 +20,15 @@ public class MovieController {
     private final MovieRepository movieRepository;
 
     @GetMapping("movies")
-    public String moviesList(Model model){
-        List<Movie> movies = movieRepository.findAll();
+    public String moviesList(
+            Model model,
+            @RequestParam(required = false) Director director,
+            @RequestParam(required = false) Genre genre,
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) MinAge minAge,
+            @RequestParam(required = false) Integer releaseYear
+    ){
+        List<Movie> movies = movieRepository.findActiveFiltering(director, genre, title, minAge, releaseYear);
         model.addAttribute("movies", movies);
         model.addAttribute("numMovies", movies.size());
         model.addAttribute("title", "Lista de películas");
