@@ -30,9 +30,6 @@ public class Ticket {
     @Builder.Default
     private LocalDateTime purchaseTime = LocalDateTime.now();
 
-//    @DateTimeFormat(iso =DateTimeFormat.ISO.DATE_TIME)
-//    private LocalDateTime creationDate = LocalDateTime.now();
-
     @Builder.Default
     @Enumerated(EnumType.STRING)
     private TicketType ticketType = TicketType.STANDARD;

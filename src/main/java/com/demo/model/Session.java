@@ -20,7 +20,7 @@ public class Session {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDateTime startTime;
-    private Double price;
+   //private Double price; // 5 euros
     private Integer numAds;
 
     @Builder.Default
