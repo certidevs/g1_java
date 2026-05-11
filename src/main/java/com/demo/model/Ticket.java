@@ -1,6 +1,5 @@
 package com.demo.model;
 
-import com.demo.model.enums.TicketType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -23,16 +22,20 @@ public class Ticket {
 
     private String seatRow;
     private Integer seatNumber;
-    private Double price;
-    //private LocalDateTime sessionTime;
+    private Double price; // session.room.price + extra comida - descuento
+
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    @Builder.Default
-    private LocalDateTime purchaseTime = LocalDateTime.now();
+    private LocalDateTime purchaseTime;  // se asigna al momento de la compra y asignación del usuario
 
-    @Builder.Default
-    @Enumerated(EnumType.STRING)
-    private TicketType ticketType = TicketType.STANDARD;
+    // comida sin necesidad de crear una entidad nueva
+    private Double priceCombo1;
+    private Double priceCombo2;
+    private Double priceCombo3;
+
+//    @Builder.Default
+//    @Enumerated(EnumType.STRING)
+//    private TicketType ticketType = TicketType.STANDARD;
 
    @ToString.Exclude
    @ManyToOne
