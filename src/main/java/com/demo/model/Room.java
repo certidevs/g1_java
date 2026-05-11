@@ -21,6 +21,8 @@ public class Room {
 
     private String name;
 
+    private Double price;
+
     private Integer capacity; // número de butacas
 
     // private String screenType; // tipo de pantalla o formato de proyección
