@@ -27,6 +27,10 @@ public class Session {
     @Enumerated(EnumType.STRING)
     private Language language = Language.ESP;
 
+    @Builder.Default
+    @Column(columnDefinition = "BOOLEAN DEFAULT true")
+    private Boolean active = true;
+
     @ManyToOne
     @JoinColumn(name = "room_id", nullable = false)
     private Room room;
