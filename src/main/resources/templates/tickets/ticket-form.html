@@ -14,6 +14,7 @@
     <!-- TODO formulario para crear o editar un ticket -->
     <form th:action="@{/tickets}" method="post" th:object="${ticket}">
         <input type="hidden" th:field="*{id}">
+<!--        <input type="hidden" th:field="*{purchaseTime}">-->
 
         <!-- campos del ticket-->
         <div class="mb-3">
