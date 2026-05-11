@@ -5,9 +5,10 @@
 <nav th:replace="~{layout/navbar :: navbar}"></nav>
 <main class="container flex-grow-1 my-4">
     <h1 class="mb-0">
-        <i class="fa-solid fa-film"></i></i>Formulario de session
+        <i class="fa-solid fa-film me-2"></i>
+        <span th:text="${proyeccion.id != null ? 'Editar función' : 'Nueva función'}">Formulario</span>
     </h1>
-    <form th:action="@{/sessions}" method="post" th:object="${session}">
+    <form th:action="@{/sessions}" method="post" th:object="${proyeccion}">
         <input type="hidden" th:field="*{id}">
 
 <!--        Campos de session-->
@@ -24,10 +25,57 @@
             </select>
         </div>
 
-        <button type="submit" class="btn btn-success">
-            <i class="fa-solid fa-floppy-disk"></i> Guardar
-        </button>
-        <a th:href="@{/sessions}" class="btn btn-secondary">Cancelar</a>
+        <!-- Película -->
+        <div class="mb-3">
+            <label for="movie" class="form-label">Película</label>
+            <select class="form-select" id="movie" th:field="*{movie}" required>
+                <option value=""></option>
+                <option th:each="movie : ${movies}"
+                        th:value="${movie.id}"
+                        th:text="${movie.title}">
+                </option>
+            </select>
+        </div>
+
+        <!-- Sala -->
+        <div class="mb-3">
+            <label for="room" class="form-label">Sala</label>
+            <select class="form-select" id="room" th:field="*{room}" required>
+                <option value=""></option>
+                <option th:each="room : ${rooms}"
+                        th:value="${room.id}"
+                        th:text="${room.name}">
+                </option>
+            </select>
+        </div>
+
+        <!-- Fecha y hora -->
+        <div class="mb-3">
+            <label for="startTime" class="form-label">Fecha y hora</label>
+            <input type="datetime-local" class="form-control" id="startTime"
+                   th:field="*{startTime}" required>
+        </div>
+
+        <!-- Precio -->
+        <div class="mb-3">
+            <label for="price" class="form-label">Precio</label>
+            <input type="number" class="form-control" id="price"
+                   th:field="*{price}" min="0" step="0.5" required>
+        </div>
+
+        <!-- Anuncios -->
+        <div class="mb-3">
+            <label for="numAds" class="form-label">Cantidad de anuncios</label>
+            <input type="number" class="form-control" id="numAds"
+                   th:field="*{numAds}" min="0">
+        </div>
+
+        <div class="d-flex justify-content-end gap-2 mt-3">
+            <button type="submit" class="btn btn-success">
+                <i class="fa-solid fa-floppy-disk"></i> Guardar
+            </button>
+            <a th:href="@{/sessions}" class="btn btn-secondary">Cancelar</a>
+        </div>
     </form>
 </main>
 <footer th:replace="~{layout/footer :: footer}"></footer>
