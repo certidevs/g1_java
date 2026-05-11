@@ -21,57 +21,58 @@
     <div class="mb-3">
         <h5>Filtros rápidos</h5>
         <a th:href="@{/rooms}" class="btn btn-sm btn-primary">Todos</a>
-        <a th:href="@{/rooms(screenType='2D')}" class="btn btn-sm btn-secondary">Pantalla 2D</a>
-        <a th:href="@{/rooms(screenType='3D')}" class="btn btn-sm btn-secondary">Pantalla 3d</a>
-        <a th:href="@{/rooms(capacity=15)}" class="btn btn-sm btn-success">Hasta 20 butacas</a>
-        <a th:href="@{/rooms(capactiy=50)}" class="btn btn-sm btn-success">Hasta 50 butacas</a>
+        <a th:href="@{/rooms/screentype/IMAX}" class="btn btn-sm btn-secondary">Pantalla 2D</a>
+        <a th:href="@{/rooms/screentype/THREE_D}" class="btn btn-sm btn-secondary">Pantalla 3D</a>
+        <a th:href="@{/rooms/capacity/30}" class="btn btn-sm btn-success">Hasta 30 butacas</a>
+        <a th:href="@{/rooms/capacity/50}" class="btn btn-sm btn-success">Hasta 50 butacas</a>
         <a th:href="@{/rooms(title='sala')}" class="btn btn-sm btn-warning">Sala</a>
         <a th:href="@{/rooms(title='VIP')}" class="btn btn-sm btn-warning">VIP</a>
     </div>
 
-<!--    <div class="mb-3">-->
-<!--        <h5>Búsqueda avanzada</h5>-->
-<!--        <form th:action="@{/rooms}" method="get" class="row align-items-end">-->
+    <div class="mb-3">
+        <h5>Búsqueda avanzada</h5>
+        <form th:action="@{/rooms}" method="get" class="row align-items-end">
 
-<!--            &lt;!&ndash; Filtro por palabra en título &ndash;&gt;-->
-<!--            <div class="col-auto">-->
-<!--                <label class="form-label form-label-sm">Título</label>-->
-<!--                <input type="text" name="title" class="form-control form-control-sm"-->
-<!--                       placeholder="Busca por título..." th:value="${param.title}">-->
-<!--            </div>-->
-<!--            &lt;!&ndash; Filtro por capacidad &ndash;&gt;-->
-<!--            <div class="col-auto">-->
-<!--                <label class="form-label form-label-sm">Capacidad máx.</label>-->
-<!--                <input type="number" min="10" step="5" name="capacity"-->
-<!--                       class="form-control form-control-sm" th:value="${param.capacity}">-->
-<!--            </div>-->
+            <!-- Filtro por palabra en título -->
+            <div class="col-auto">
+                <label class="form-label form-label-sm">Título</label>
+                <input type="text" name="title" class="form-control form-control-sm"
+                       placeholder="Busca por título..." th:value="${param.title}">
+            </div>
+            <!-- Filtro por capacidad -->
+            <div class="col-auto">
+                <label class="form-label form-label-sm">Capacidad mín.</label>
+                <input type="number" min="10" step="5" name="capacity"
+                       class="form-control form-control-sm" th:value="${param.capacity}">
+            </div>
 
-<!--            &lt;!&ndash; Filtro por screenType con selector &ndash;&gt;-->
-<!--            <div class="col-auto">-->
-<!--                <label class="form-label form-label-sm">Tipo pantalla</label>-->
-<!--                <select name="screenType" class="form-select form-select-sm">-->
-<!--                    <option value="" th:selected="${param.screenType == null}">Todas</option>-->
-<!--                    <option value="STANDARD" th:selected="${param.screenType != null and param.screenType[0] == 'STANDARD'}">Estándar</option>-->
-<!--                    <option value="IMAX" th:selected="${param.screenType != null and param.screenType[0] == 'IMAX'}">2D</option>-->
-<!--                    <option value="THREE_D" th:selected="${param.screenType != null and param.screenType[0] == 'THREE_D'}">3D</option>-->
-<!--                    <option value="VIP" th:selected="${param.screenType != null and param.screenType[0] == 'VIP'}">VIP</option>-->
-<!--                </select>-->
-<!--            </div>-->
+            <!-- Filtro por screenType con selector -->
+            <div class="col-auto">
+                <label class="form-label form-label-sm">Tipo pantalla</label>
+                <select name="screenType" class="form-select form-select-sm">
+                    <option value="" th:selected="${param.screenType == null || param.screenType == ''}">Todas</option>
+                    <option value="STANDARD" th:selected="${param.screenType == 'STANDARD'}">Estándar</option>
+                    <option value="IMAX" th:selected="${param.screenType == 'IMAX'}">2D</option>
+                    <option value="THREE_D" th:selected="${param.screenType == 'THREE_D'}">3D</option>
+                    <option value="VIP" th:selected="${param.screenType == 'VIP'}">VIP</option>
+                </select>
 
-<!--            <div class="col-auto">-->
-<!--                <button type="submit" class="btn btn-primary btn-sm">-->
-<!--                    <i class="fa-solid fa-magnifying-glass"></i>-->
-<!--                    Buscar-->
-<!--                </button>-->
-<!--                <a th:href="@{/rooms}" class="btn btn-danger btn-sm">-->
-<!--                    <i class="fa-solid fa-broom"></i>-->
-<!--                    Limpiar filtros-->
-<!--                </a>-->
-<!--            </div>-->
+            </div>
 
-<!--        </form>-->
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary btn-sm">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    Buscar
+                </button>
+                <a th:href="@{/rooms}" class="btn btn-danger btn-sm">
+                    <i class="fa-solid fa-broom"></i>
+                    Limpiar filtros
+                </a>
+            </div>
 
-<!--    </div>-->
+        </form>
+
+    </div>
 
     <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
         <div class="col" th:each="room : ${rooms}">

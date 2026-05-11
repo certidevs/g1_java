@@ -11,23 +11,23 @@ import java.util.Optional;
 
 public interface RoomRepository extends JpaRepository<Room, Long> {
 
-    // filtrar por número de butacas
-    List<Room> findByCapacityGreaterThanEqual(Integer capacity);
+    // filtrar por número de butacas (solo activas)
+    List<Room> findByCapacityGreaterThanEqualAndActiveTrue(Integer capacity);
 
-    // filtrar por tipo de pantalla
-    List<Room> findByScreentype(ScreenType screentype);
+    // filtrar por tipo de pantalla (solo activas)
+    List<Room> findByScreentypeAndActiveTrue(ScreenType screentype);
 
     // List<Room> findByActiveTrue();
     Optional<Room> findByIdAndActiveTrue(Long id);
 
     // Query con filtros:
     @Query("""
-        SELECT r from Room r
-        WHERE r.active = true
-        AND (:screenType IS NULL OR r.screentype = :screenType)
-        AND (:capacity IS NULL OR r.capacity >= :capacity)
-        AND (:title IS NULL OR LOWER(r.name) LIKE LOWER(CONCAT('%', :title, '%')))
-        """)
+           SELECT r from Room r
+           WHERE r.active = true
+           AND (:screenType IS NULL OR r.screentype = :screenType)
+           AND (:capacity IS NULL OR r.capacity >= :capacity)
+           AND (:title IS NULL OR LOWER(r.name) LIKE LOWER(CONCAT('%', :title, '%')))
+           """)
     List<Room> findActiveFiltering(
             @Param("screenType") ScreenType screenType,
             @Param("capacity") Integer capacity,
