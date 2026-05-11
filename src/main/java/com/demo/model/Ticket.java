@@ -26,7 +26,7 @@ public class Ticket {
     private Double price;
     //private LocalDateTime sessionTime;
 
-    @Column(nullable = false)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @Builder.Default
     private LocalDateTime purchaseTime = LocalDateTime.now();
 

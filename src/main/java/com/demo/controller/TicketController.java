@@ -55,7 +55,7 @@ public class TicketController {
     @GetMapping("tickets/new")
     public String newTicket(Model model){
         // añadir objeto product vacio para rellenarlo desde el formulario
-        model.addAttribute("ticket", new Ticket());
+        model.addAttribute("ticket", Ticket.builder().build());
         // datos para el ticketTypes
         model.addAttribute("ticketTypes", TicketType.values());
         //model.addAttribute("language" , Language.values());

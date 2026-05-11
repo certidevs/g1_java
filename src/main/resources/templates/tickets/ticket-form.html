@@ -38,8 +38,13 @@
         </div>
         <div class="mb-3">
             <label for="price" class="form-label">Precio</label>
-            <input type="number" class="form-control" id="price"
-                   th:field="*{price}" step="0.01" min="0" placeholder="Precio del producto" required>
+            <select class="form-select" id="price" th:field="*{price}">
+                <option value="5">5 Euro</option>
+                <option value="8">8 Euro</option>
+                <option value="15">15 Euro</option>
+            </select>
+<!--            <input type="number" class="form-control" id="price"-->
+<!--                   th:field="*{price}" step="0.01" min="0" placeholder="Precio del producto" required>-->
         </div>
 
         <div class="mb-3">
@@ -53,11 +58,11 @@
                 </option>
             </select>
         </div>
-<!--        <div class="mb-3">-->
-<!--            <label for="purchaseTime" class="form-label">Fecha de compra</label>-->
-<!--            <input type="datetime-local" class="form-control" id="purchaseTime"-->
-<!--                    th:field="*{purchaseTime}" readonly>-->
-<!--        </div>-->
+        <div class="mb-3">
+            <label for="purchaseTime" class="form-label">Fecha de compra</label>
+            <input type="datetime-local" class="form-control" id="purchaseTime"
+                    th:field="*{purchaseTime}">
+        </div>
 
         <button type="submit" class="btn btn-success">
             <i class="fa-solid fa-floppy-disk"></i> Guardar
