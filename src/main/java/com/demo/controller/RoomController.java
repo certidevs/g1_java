@@ -14,55 +14,45 @@ import java.util.Optional;
 @Controller
 @AllArgsConstructor
 public class RoomController {
-        private final RoomRepository roomRepository;
+    private final RoomRepository roomRepository;
 
-    // Lista todas las salas
-//    @GetMapping("/rooms")
-//    public String roomsList(Model model) {
-//        // List<Room> rooms = roomRepository.findAll();
-//        List<Room> rooms = roomRepository.findByActiveTrue();
-//        model.addAttribute("rooms", rooms);
-//        model.addAttribute("numRooms", rooms.size());
-//        model.addAttribute("title", "Lista de salas");
-//        return "rooms/room-list";
-//    }
-
-
+    // Lista todas las salas activas con filtros
     @GetMapping("/rooms")
     public String roomsList(
             Model model,
-            @RequestParam(required = false) ScreenType screentype,
+            @RequestParam(required = false) ScreenType screenType,
             @RequestParam(required = false) Integer capacity,
             @RequestParam(required = false) String title
     ) {
-        List<Room> rooms = roomRepository.findActiveFiltering(screentype, capacity, title);
+        List<Room> rooms = roomRepository.findActiveFiltering(screenType, capacity, title);
         model.addAttribute("rooms", rooms);
         model.addAttribute("numRooms", rooms.size());
         model.addAttribute("title", "Lista de salas");
         return "rooms/room-list";
     }
 
-    // Detalle de una sala por ID
+    // Detalle de una sala activa por ID
     @GetMapping("/rooms/{id}")
     public String roomDetail(Model model, @PathVariable Long id) {
-        model.addAttribute("room", roomRepository.findById(id).orElse(null));
+        model.addAttribute("room", roomRepository.findByIdAndActiveTrue(id).orElse(null));
         return "rooms/room-detail";
     }
 
-    // Filtrar por capacidad mayor o igual que
+    // Filtrar por capacidad mayor o igual que (solo activas)
     @GetMapping("/rooms/capacity/{capacity}")
     public String roomsListCapacity(Model model, @PathVariable Integer capacity) {
-        model.addAttribute("rooms", roomRepository.findByCapacityGreaterThanEqual(capacity));
-        model.addAttribute("numRooms", roomRepository.findByCapacityGreaterThanEqual(capacity).size());
+        List<Room> rooms = roomRepository.findByCapacityGreaterThanEqualAndActiveTrue(capacity);
+        model.addAttribute("rooms", rooms);
+        model.addAttribute("numRooms", rooms.size());
         model.addAttribute("title", "Salas con capacidad mayor o igual a " + capacity);
         return "rooms/room-list";
     }
 
-    // Filtrar por tipo de pantalla
+    // Filtrar por tipo de pantalla (solo activas)
     @GetMapping("/rooms/screentype/{screenType}")
     public String roomsListScreenType(Model model, @PathVariable ScreenType screenType) {
-        List<Room> rooms = roomRepository.findByScreentype(screenType);
-        model.addAttribute("rooms", roomRepository.findByScreentype(screenType));
+        List<Room> rooms = roomRepository.findByScreentypeAndActiveTrue(screenType);
+        model.addAttribute("rooms", rooms);
         model.addAttribute("numRooms", rooms.size());
         model.addAttribute("title", "Salas con tipo de pantalla " + screenType);
         return "rooms/room-list";
@@ -71,10 +61,8 @@ public class RoomController {
     // Crear una nueva sala desde cero
     @GetMapping("/rooms/new")
     public String newRoom(Model model) {
-        // añadir objeto Room vacío para rellenarlo desde el formulario
         model.addAttribute("room", new Room());
         model.addAttribute("screenTypes", ScreenType.values());
-        // datos para el formulario
         return "rooms/room-form";
     }
 
@@ -88,10 +76,9 @@ public class RoomController {
 
     // Desactivar una sala
     @GetMapping("/rooms/deactivate/{id}")
-    public String roomDeactivate(@PathVariable Long id, Model model) {
-        // Optional<Room> roomOptional = roomRepository.findById(id);
+    public String roomDeactivate(@PathVariable Long id) {  // Removí 'Model model' ya que no se usa
         Optional<Room> roomOptional = roomRepository.findByIdAndActiveTrue(id);
-        if(roomOptional.isPresent()) {
+        if (roomOptional.isPresent()) {
             Room room = roomOptional.get();
             room.setActive(false);
             roomRepository.save(room);
@@ -105,5 +92,4 @@ public class RoomController {
         roomRepository.save(room);
         return "redirect:/rooms/" + room.getId();
     }
-
 }
