@@ -11,18 +11,14 @@
 
     <!-- Cabecera de la proyeccion -->
     <div class="d-flex justify-content-between align-items-start mb-3">
-        <div>
-            <a th:href="@{/sessions/edit/{id}(id=${proyeccion.id})}"
-               class="btn btn-success btn-sm mt-2">
-                <i class="fa-solid fa-pencil me-1"></i> Editar
-            </a>
-        </div>
+        <h1>
+            <i class="fa-solid fa-film text-primary me-2"></i>
+            <span th:text="${proyeccion.movie != null ? proyeccion.movie.title : 'Función'}">Función</span>
+        </h1>
+        <a th:href="@{/sessions}" class="btn btn-outline-secondary">
+            <i class="fa-solid fa-arrow-left me-1"></i> Volver a funciones
+        </a>
     </div>
-
-    <hr>
-    <h2 class="mt-4">
-        <i class="fa-solid fa-film text-primary me-2"></i> Info proyeccion
-    </h2>
 
     <div class="table-responsive">
         <table class="table table-hover align-middle">
@@ -35,6 +31,7 @@
                 <th>Duracion</th>
                 <th>Precio</th>
                 <th>Idioma</th>
+                <th>Tipo de pantalla</th>
                 <th>Cantidad de anuncios</th>
             </tr>
             </thead>
@@ -51,11 +48,27 @@
                 <td>
                     <span class="badge bg-light text-dark border" th:text="${proyeccion.language}"></span>
                 </td>
+                <td>
+                    <span class="badge bg-secondary"
+                          th:text="${proyeccion.room != null ? proyeccion.room.screentype.label : 'N/A'}"></span>
+                </td>
                 <td class="text-muted small" th:text="${proyeccion.numAds != null ? proyeccion.numAds : '-'}"></td>
 
             </tr>
             </tbody>
         </table>
+        <div class="mt-3">
+            <a th:href="@{/sessions/edit/{id}(id=${proyeccion.id})}"
+               class="btn btn-success btn-sm">
+                <i class="fa-solid fa-pencil me-1"></i> Editar
+            </a>
+            <a th:href="@{/sessions/deactivate/{id}(id=${proyeccion.id})}"
+               class="btn btn-warning btn-sm"
+               onclick="return confirm('¿Estás seguro de que querés desactivar esta función?')">
+                <i class="fa-solid fa-ban me-1"></i> Desactivar
+            </a>
+        </div>
+
     </div>
 </main>
 
