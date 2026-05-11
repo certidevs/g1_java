@@ -23,20 +23,16 @@ public class Ticket {
 
     private String seatRow;
     private Integer seatNumber;
-    private Double price; // session.room.price  + extra comida - descuento
-    //private LocalDateTime session-Time;
+    private Double price;
+    //private LocalDateTime sessionTime;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime purchaseTime; // se asigna en el momento de la compra y asignacion de usuario
+    @Builder.Default
+    private LocalDateTime purchaseTime = LocalDateTime.now();
 
-    // comida sin necesidad de crear entidad:
-//    private Double priceCombo1;
-//    private Double priceCombo2;
-//    private Double priceCombo3;
-
-//    @Builder.Default
-//    @Enumerated(EnumType.STRING)
-//    private TicketType ticketType = TicketType.STANDARD;
+    @Builder.Default
+    @Enumerated(EnumType.STRING)
+    private TicketType ticketType = TicketType.STANDARD;
 
    @ToString.Exclude
    @ManyToOne
