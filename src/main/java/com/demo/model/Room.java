@@ -21,7 +21,7 @@ public class Room {
 
     private String name;
 
-    private Double price;
+    private Double price; // precio por pantalla
 
     private Integer capacity; // número de butacas
 
