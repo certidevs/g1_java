@@ -21,11 +21,12 @@
     <div class="mb-3">
         <h5>Filtros rápidos</h5>
         <a th:href="@{/rooms}" class="btn btn-sm btn-primary">Todos</a>
-        <a th:href="@{/rooms/screentype/IMAX}" class="btn btn-sm btn-secondary">Pantalla 2D</a>
-        <a th:href="@{/rooms/screentype/THREE_D}" class="btn btn-sm btn-secondary">Pantalla 3D</a>
-        <a th:href="@{/rooms/capacity/30}" class="btn btn-sm btn-success">Más 30 butacas</a>
-        <a th:href="@{/rooms/capacity/50}" class="btn btn-sm btn-success">Más 50 butacas</a>
-        <a th:href="@{/rooms(title='sala')}" class="btn btn-sm btn-warning">Sala</a>
+        <a th:href="@{/rooms(screenType='IMAX')}" class="btn btn-sm btn-secondary">Pantalla IMAX</a>
+        <a th:href="@{/rooms(screenType='THREE_D')}" class="btn btn-sm btn-secondary">Pantalla 3D</a>
+        <a th:href="@{/rooms(price=15)}" class="btn btn-sm btn-success">Hasta 15 €</a>
+        <a th:href="@{/rooms(price=20)}" class="btn btn-sm btn-success">Hasta 20 €</a>
+        <a th:href="@{/rooms(capacity=20)}" class="btn btn-sm btn-success">Hasta 20 butacas</a>
+        <a th:href="@{/rooms(capacity=40)}" class="btn btn-sm btn-success">Hasta 40 butacas</a>
         <a th:href="@{/rooms(title='VIP')}" class="btn btn-sm btn-warning">VIP</a>
     </div>
 
@@ -42,7 +43,7 @@
 
             <!-- Filtro por capacidad -->
             <div class="col-auto">
-                <label class="form-label form-label-sm">Capacidad mín.</label>
+                <label class="form-label form-label-sm">Capacidad máx.</label>
                 <input type="number" min="10" step="5" name="capacity"
                        class="form-control form-control-sm" th:value="${param.capacity}">
             </div>
@@ -93,7 +94,8 @@
                     </p>
 
                     <p class="card-text">
-                        <strong>Precio:</strong> <span th:text="${#numbers.formatDecimal(room.price, 1, 2)}"></span> €
+                        <strong>Precio:</strong> <span class="fw-bold text-success"
+                                                       th:text="|${#numbers.formatDecimal(room.price, 1, 2)} €|"></span>
                     </p>
 
                     <p class="card-text">

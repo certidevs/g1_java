@@ -25,8 +25,8 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
            SELECT r from Room r
            WHERE r.active = true
            AND (:screenType IS NULL OR r.screentype = :screenType)
-           AND (:capacity IS NULL OR r.capacity >= :capacity)
-           AND (:price IS NULL OR r.price = :price)
+           AND (:capacity IS NULL OR r.capacity <= :capacity)
+           AND (:price IS NULL OR r.price <= :price)
            AND (:title IS NULL OR LOWER(r.name) LIKE LOWER(CONCAT('%', :title, '%')))
            """)
     List<Room> findActiveFiltering(

@@ -28,7 +28,8 @@
                 <strong>Capacidad:</strong> <span th:text="${room.capacity}">0</span> butacas
             </p>
             <p class="card-text">
-                <strong>Precio:</strong> <span th:text="${#numbers.formatDecimal(room.price, 1, 2)}"></span> €
+                <strong>Precio:</strong> <span class="fw-bold text-success"
+                                               th:text="|${#numbers.formatDecimal(room.price, 1, 2)} €|">0,00 €</span>
             </p>
             <p class="card-text">
                 <strong>Tipo de pantalla:</strong> <span th:text="${room.screentype.label}">STANDARD</span>

@@ -1,8 +1,8 @@
 package com.demo.model.enums;
 
 public enum ScreenType {
-    STANDARD("Estándar"),
-    IMAX("2D"),
+    STANDARD("ESTÁNDAR"),
+    IMAX("IMAX"),
     THREE_D("3D"),
     VIP("VIP");
 
