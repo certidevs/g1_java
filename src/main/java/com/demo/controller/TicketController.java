@@ -1,8 +1,6 @@
 package com.demo.controller;
 
 import com.demo.model.Ticket;
-import com.demo.model.enums.Language;
-import com.demo.model.enums.TicketType;
 import com.demo.repository.MovieRepository;
 import com.demo.repository.SessionRepository;
 import com.demo.repository.TicketRepository;
@@ -56,8 +54,6 @@ public class TicketController {
     public String newTicket(Model model){
         // añadir objeto product vacio para rellenarlo desde el formulario
         model.addAttribute("ticket", Ticket.builder().build());
-        // datos para el ticketTypes
-        model.addAttribute("ticketTypes", TicketType.values());
         //model.addAttribute("language" , Language.values());
         model.addAttribute("projections", sessionRepository.findAll());
         return "tickets/ticket-form";
@@ -66,7 +62,6 @@ public class TicketController {
     @GetMapping("tickets/edit/{id}")
     public String editTicket(@PathVariable Long id, Model model){
         model.addAttribute("ticket", ticketRepository.findById(id).orElseThrow());
-        model.addAttribute("ticketTypes", TicketType.values());
        // model.addAttribute("language" , Language.values());
         model.addAttribute("projections", sessionRepository.findAll());
         return "tickets/ticket-form";

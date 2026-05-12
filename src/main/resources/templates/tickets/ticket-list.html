@@ -37,9 +37,6 @@
                                 <strong>Número de Asiento:</strong> <span th:text="${ticket.seatNumber}">0</span>
                             </p>
                             <p class="card-text">
-                                <strong>Tipo de Ticket:</strong> <span th:text="${ticket.ticketType}">STANDARD</span>
-                            </p>
-                            <p class="card-text">
                                 <strong>Precio:</strong> <span class="fw-bold text-success">
                                 <span th:if="${ticket.price != null}"
                                       th:text="|${#numbers.formatDecimal(ticket.price, 1, 2)} €|">0,00 €</span>
