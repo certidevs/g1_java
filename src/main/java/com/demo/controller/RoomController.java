@@ -22,9 +22,10 @@ public class RoomController {
             Model model,
             @RequestParam(required = false) ScreenType screenType,
             @RequestParam(required = false) Integer capacity,
+            @RequestParam(required = false) Double price,
             @RequestParam(required = false) String title
     ) {
-        List<Room> rooms = roomRepository.findActiveFiltering(screenType, capacity, title);
+        List<Room> rooms = roomRepository.findActiveFiltering(screenType, capacity, price, title);
         model.addAttribute("rooms", rooms);
         model.addAttribute("numRooms", rooms.size());
         model.addAttribute("title", "Lista de salas");
