@@ -8,7 +8,7 @@
 <main class="container flex-grow-1">
 
   <h1 class="mb-4">
-    <i class="fa-regular fa-comments text-primary me-2"></i> Opiniones
+    <i class="fa-regular fa-comments text-primary me-2"></i> Opiniones de los usuarios
   </h1>
 
   <div th:if="${reviews.isEmpty()}" class="alert alert-light border">
@@ -45,15 +45,17 @@
           </div>
 
           <div class="my-3">
-            <!-- Botón de borrar -->
+            <!-- Botón de ver -->
             <a class="btn btn-secondary" th:href="@{/reviews/{id}(id=${review.id})}">
               <i class="fa-solid fa-eye mr-2"></i> Ver
             </a>
 
+            <!-- Botón de editar -->
             <a class="btn btn-success" th:href="@{/reviews/edit/{id}(id=${review.id})}">
               <i class="fa-solid fa-pencil mr-2"></i> Editar
             </a>
 
+            <!-- Botón de borrar -->
             <a class="btn btn-danger" th:href="@{/reviews/delete/{id}(id=${review.id})}"
                onclick="return confirm('¿Quiere borrar esta reseña?')">
               <i class="fa-solid fa-trash mr-2"></i> Borrar
