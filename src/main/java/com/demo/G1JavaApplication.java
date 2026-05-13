@@ -180,19 +180,26 @@ public class G1JavaApplication {
 
         Review review2 = Review.builder()
                 .description("Esperaba mas de esta peli, me voy a ver Michael otra vez")
-                .movie(movie1)
+                .movie(movie3)
                 .title("Me dormí")
                 .rating(2)
                 .build();
 
         Review review3 = Review.builder()
                 .description("Muy recomendada para ver en familia")
-                .movie(movie1)
+                .movie(movie4)
                 .title("Me reí hasta no poder más")
                 .rating(4)
                 .build();
 
-        reviewRepository.saveAll(List.of(review1, review2, review3));
+        Review review4 = Review.builder()
+                .description("Comedia icónica, pero esperaba un poco más de esta secuela")
+                .movie(movie2)
+                .title("Entretenida pero no a la altura del original")
+                .rating(3)
+                .build();
+
+        reviewRepository.saveAll(List.of(review1, review2, review3, review4));
     }
 
 }
