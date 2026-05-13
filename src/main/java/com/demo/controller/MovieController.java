@@ -32,6 +32,7 @@ public class MovieController {
         model.addAttribute("movies", movies);
         model.addAttribute("numMovies", movies.size());
         model.addAttribute("title", "Lista de películas");
+        model.addAttribute("minAges", MinAge.values());
         return "movies/movie-list";
     }
 

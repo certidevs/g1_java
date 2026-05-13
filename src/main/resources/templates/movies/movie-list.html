@@ -27,6 +27,42 @@
 		<a th:href="@{/movies(releaseYear=2026)}" class="btn btn-sm btn-info">2026</a>
 	</div>
 
+	<div class="mb-3">
+		<h5>Búsqueda avanzada</h5>
+		<form th:action="@{/movies}" method="get" class="row align-items-end">
+			<div class="col-auto">
+				<label class="form-label form-label-sm">Título</label>
+				<input type="text" name="title" class="form-control form-control-sm"
+				       placeholder="Busca por título..." th:value="${param.title}">
+			</div>
+			<div class="col-auto">
+				<label class="form-label form-label-sm">Rango edad</label>
+
+				<select name="minAge" class="form-select form-select-sm">
+
+					<option value="">Restricción por edad</option>
+
+					<option th:each="minAge : ${minAges}"
+					        th:value="${minAge.name()}"
+					        th:text="${minAge.label}"
+					        th:selected="${param.minAge != null and param.minAge[0] == minAge.name()}">
+					</option>
+
+				</select>
+			</div>
+			<div class="col-auto">
+				<button type="submit" class="btn btn-primary btn-sm">
+					<i class="fa-solid fa-magnifying-glass"></i>
+					Buscar
+				</button>
+				<a th:href="@{/movies}" class="btn btn-danger btn-sm">
+					<i class="fa-solid fa-broom"></i>
+					Limpiar filtros
+				</a>
+			</div>
+		</form>
+	</div>
+
 	<div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
 		<div class="col" th:each="movie : ${movies}">
 			<div class="card h-100 shadow-sm">

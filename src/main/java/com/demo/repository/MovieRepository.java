@@ -25,7 +25,7 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
         AND (:director IS NULL OR m.director = :director)
         AND (:genre IS NULL OR :genre MEMBER OF m.genreSet)
         AND (:title IS NULL OR :title = '' OR LOWER(m.title) LIKE LOWER(CONCAT('%', :title, '%')))
-        AND (:minAge IS NULL OR m.minAge <= :minAge)
+        AND (:minAge IS NULL OR m.minAge = :minAge)
         AND (:releaseYear IS NULL OR m.releaseYear = :releaseYear)
     """)
     List<Movie> findActiveFiltering(
