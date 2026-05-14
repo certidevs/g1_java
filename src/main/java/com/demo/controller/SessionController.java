@@ -8,6 +8,7 @@ import com.demo.model.enums.ScreenType;
 import com.demo.repository.MovieRepository;
 import com.demo.repository.RoomRepository;
 import com.demo.repository.SessionRepository;
+import com.demo.repository.TicketRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,7 @@ public class SessionController {
     private final SessionRepository sessionRepository;
     private final MovieRepository movieRepository;
     private final RoomRepository roomRepository;
+    private final TicketRepository ticketRepository;
 
     //[OK]Todas las sesiones
     //Este es el CONTROLADOR
@@ -39,7 +41,7 @@ public class SessionController {
         model.addAttribute("title", "Lista de funciones");
         return "sessions/session-list";
     }
-
+//Necesitamos cargar los tickets
     @GetMapping("sessions/{id}")
     public String sessionDetail(@PathVariable Long id, Model model){
 
@@ -49,6 +51,7 @@ public class SessionController {
             model.addAttribute("proyeccion", session);
             // TODO
             // model.addAttribute("tickets" ..... )
+            //model.addAttribute("tickets", ticketRepository.findBySession_Movie_Id(id));
             return "sessions/session-detail";
         }
         else {
