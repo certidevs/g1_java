@@ -1,15 +1,15 @@
 package com.demo.model.enums;
 
 public enum Language {
-    VO("Version original (sin sibtitulo)"),
-    VOS("Version original subtitulada"),
-    VOSE("Version original subtitulada en español"),
-    VOSI("Version original subtitulada en ingles"),
-    DOB("Doblada"),
-    SUB("Subtitulada"),
-    CAST("Castellano (Español de España)"),
-    LAT("Latino"),
-    ESP("Español (Generico)");
+    VO("VO - Version original (sin subtitulo)"),
+    VOS("VOS - Version original subtitulada"),
+    VOSE("VOSE - Version original subtitulada en español"),
+    VOSI("VOSI - Version original subtitulada en ingles"),
+    DOB("DOB - Doblada"),
+    SUB("SUB - Subtitulada"),
+    CAST("CAST - Castellano (Español de España)"),
+    LAT("LAT - Latino"),
+    ESP("ESP - Español (Generico)");
 
     private final String label;
 
