@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,10 +51,15 @@ public class TicketController {
     }
 
     // Get newTicket
+    // TODO RequestParam sessionId
     @GetMapping("tickets/new")
     public String newTicket(Model model){
         // añadir objeto product vacio para rellenarlo desde el formulario
-        model.addAttribute("ticket", Ticket.builder().build());
+        Ticket ticket = Ticket.builder().build();
+        // Session session = sessionRepository.findById sessionId
+        // ticket.setSession(session)
+        // ticket.setPrice(session.getRoom().getPrice())
+        model.addAttribute("ticket", ticket);
         //model.addAttribute("language" , Language.values());
         model.addAttribute("projections", sessionRepository.findAll());
         return "tickets/ticket-form";
@@ -67,8 +73,15 @@ public class TicketController {
         return "tickets/ticket-form";
     }
     // Post saveTicket
+    // El usuario compra el ticket
     @PostMapping("tickets")
     public String saveTicket(@ModelAttribute Ticket ticket){
+        ticket.setPurchaseTime(LocalDateTime.now());
+        // TODO recalcualte total price
+        // TODO no hace falta guardarlo en base de datos pero sí mostrarlo al usuario en el HTML para que vea el total
+        // preciobase = ticket.session.room.price
+        // precio comida = ticket.priceCombo
+        // precio total = preciobase + precioComida
         ticketRepository.save(ticket);
         return "redirect:/tickets/" + ticket.getId();
     }

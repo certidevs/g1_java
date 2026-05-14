@@ -47,6 +47,8 @@ public class SessionController {
         if (sessionOptional.isPresent()){
             Session session = sessionOptional.get();
             model.addAttribute("proyeccion", session);
+            // TODO
+            // model.addAttribute("tickets" ..... )
             return "sessions/session-detail";
         }
         else {

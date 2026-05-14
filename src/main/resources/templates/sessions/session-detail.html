@@ -43,7 +43,7 @@
                 <td class="text-muted small" th:text="${proyeccion.room != null ? proyeccion.room.name : 'Sin sala'}"></td>
                 <td class="text-muted small" th:text="${proyeccion.movie != null ? proyeccion.movie.duration : 'N/A'}"></td>
                 <td>
-                    <span class="badge bg-success" th:text="${proyeccion.price} + ' €'"></span>
+                    <span class="badge bg-success" th:text="${proyeccion.room.price} + ' €'"></span>
                 </td>
                 <td>
                     <span class="badge bg-light text-dark border" th:text="${proyeccion.language}"></span>
@@ -70,8 +70,16 @@
         </div>
 
         <h2>Compra tu ticket</h2>
+
+<!--        if sesion.active true mostramos tickets a la venta-->
+<!--        if session.active false no mostramos tickets y ponemos un mensaje de disculpas -->
+
         <!-- TODO lista de tickets asociados a esta Session -->
 
+
+            <!-- TODO cada ticket tiene un botón de compra GET /tickets/new?sessionId=1 -->
+
+            <!-- purchateTime != null  entonces no hay botón de compra -->
 
     </div>
 </main>

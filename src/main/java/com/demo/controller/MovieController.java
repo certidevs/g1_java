@@ -40,6 +40,8 @@ public class MovieController {
     @GetMapping("movies/{id}")
     public String movie(Model model, @PathVariable Long id){
         model.addAttribute("movie", movieRepository.findById(id).orElseThrow());
+        // TODO
+        // model.addAttribute("sessions", sessionRepo . findByMovieId () )
         return "movies/movie-detail";
     }
 

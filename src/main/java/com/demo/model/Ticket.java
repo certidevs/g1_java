@@ -29,9 +29,10 @@ public class Ticket {
     private LocalDateTime purchaseTime;  // se asigna al momento de la compra y asignación del usuario
 
     // comida sin necesidad de crear una entidad nueva
-    private Double priceCombo1;
-    private Double priceCombo2;
-    private Double priceCombo3;
+    private Double priceCombo; // 5, 7, 10
+//    private Double priceCombo1;
+//    private Double priceCombo2;
+//    private Double priceCombo3;
 
 //    @Builder.Default
 //    @Enumerated(EnumType.STRING)

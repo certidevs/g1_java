@@ -48,21 +48,34 @@
 <!--                   th:field="*{price}" step="0.01" min="0" placeholder="Precio del producto" required>-->
         </div>
 
-        <div class="mb-3">
-            <label for="ticketType" class="form-select">Tipo de ticket</label>
-            <select class="form-select" id="ticketType" th:field="*{ticketType}">
-                <option value=""></option>
-                <option th:each="ticketType : ${ticketTypes}"
-                        th:value="${ticketType}"
-                        th:text="${ticketType}">
+<!--        <div class="mb-3">-->
+<!--            <label for="ticketType" class="form-select">Tipo de ticket</label>-->
+<!--            <select class="form-select" id="ticketType" th:field="*{ticketType}">-->
+<!--                <option value=""></option>-->
+<!--                <option th:each="ticketType : ${ticketTypes}"-->
+<!--                        th:value="${ticketType}"-->
+<!--                        th:text="${ticketType}">-->
 
-                </option>
-            </select>
-        </div>
+<!--                </option>-->
+<!--            </select>-->
+<!--        </div>-->
         <div class="mb-3">
             <label for="purchaseTime" class="form-label">Fecha de compra</label>
             <input type="datetime-local" class="form-control" id="purchaseTime"
                     th:field="*{purchaseTime}">
+        </div>
+
+        <!-- TODO combos opcionales € -->
+        <div class="mb-3">
+            <label for="priceCombo" class="form-label">Precio combo comida opcional</label>
+            <select class="form-select" id="priceCombo" th:field="*{priceCombo}">
+                <option value=""></option>
+                <option value="5">Palomitas 5 Euros</option>
+                <option value="8">Palomitas + Bebida 8 Euros</option>
+                <option value="15">Palomitas + Bebida + Lacasitos 15 Euros</option>
+            </select>
+            <!--            <input type="number" class="form-control" id="price"-->
+            <!--                   th:field="*{price}" step="0.01" min="0" placeholder="Precio del producto" required>-->
         </div>
 
         <button type="submit" class="btn btn-success">
