@@ -87,26 +87,26 @@ public class G1JavaApplication {
 
         Room r1 = new Room();
         r1.setName("Sala 1");
-        r1.setCapacity(100);
-        r1.setPrice(19.99);
-        r1.setScreentype(ScreenType.IMAX);
+        r1.setCapacity(60);
+        r1.setPrice(8.99);
+        r1.setScreentype(ScreenType.STANDARD);
 
         Room r2 = new Room();
         r2.setName("Sala 2");
         r2.setCapacity(60);
-        r2.setPrice(8.99);
-        r2.setScreentype(ScreenType.STANDARD);
+        r2.setPrice(11.95);
+        r2.setScreentype(ScreenType.THREE_D);
 
         Room r3 = new Room();
         r3.setName("Sala 3");
-        r3.setCapacity(30);
-        r3.setPrice(11.95);
-        r3.setScreentype(ScreenType.THREE_D);
+        r3.setCapacity(90);
+        r3.setPrice(14.95);
+        r3.setScreentype(ScreenType.IMAX);
 
         Room r4 = new Room();
         r4.setName("Sala VIP");
         r4.setCapacity(20);
-        r4.setPrice(29.95);
+        r4.setPrice(25.95);
         r4.setScreentype(ScreenType.VIP);
 
         // Guardar en la base de datos
