@@ -51,6 +51,21 @@
 				</select>
 			</div>
 			<div class="col-auto">
+				<label class="form-label form-label-sm">Géneros</label>
+
+				<select name="genre" class="form-select form-select-sm">
+
+					<option value="">No seleccionado</option>
+
+					<option th:each="genre : ${genres}"
+					        th:value="${genre.name()}"
+					        th:text="${genre.label}"
+					        th:selected="${param.genre != null and param.genre[0] == genre.name()}">
+					</option>
+
+				</select>
+			</div>
+			<div class="col-auto">
 				<button type="submit" class="btn btn-primary btn-sm">
 					<i class="fa-solid fa-magnifying-glass"></i>
 					Buscar
