@@ -1,14 +1,12 @@
 package com.demo.controller;
 
 import com.demo.model.Review;
+import com.demo.repository.MovieRepository;
 import com.demo.repository.ReviewRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -17,6 +15,7 @@ public class ReviewController {
 
     // Inyectar el repositorio de reviews
     private final ReviewRepository reviewRepository;
+    private final MovieRepository movieRepository;
 
     //getmapping reviews
     @GetMapping("reviews")
@@ -42,6 +41,21 @@ public class ReviewController {
     @GetMapping("reviews/edit/{id}")
     public String editReview(Model model, @PathVariable Long id) {
         model.addAttribute("review", reviewRepository.findById(id).orElseThrow());
+        return "reviews/review-form";
+    }
+
+    // @GetMapping reviews/new reviews-form.html
+    // movieId
+    @GetMapping("reviews/new")
+    public String newReview(
+            Model model,
+            @RequestParam(required = false) Long movieId) {
+        Review review = new Review();
+
+        if (movieId != null)
+            review.setMovie(movieRepository.findById(movieId).orElseThrow());
+
+        model.addAttribute("review", review);
         return "reviews/review-form";
     }
 
