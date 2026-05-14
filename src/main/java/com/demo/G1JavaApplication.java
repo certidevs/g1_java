@@ -150,21 +150,21 @@ public class G1JavaApplication {
         var ticket1 = Ticket.builder()
                 .seatRow("A")
                 .seatNumber(1)
-                .price(7.0)
+                .price(8.99) // precio base de la sala 2
                 .session(l1s1m1) // Primera sesión del lunes
                 .build();
 
         var ticket2 = Ticket.builder()
                 .seatRow("B")
                 .seatNumber(5)
-                .price(7.0)
+                .price(14.95) // precio base de la sala 2 + 3€ por ser sábado
                 .session(sa1s1m1)  // Primera sesión del sábado (más cara)
                 .build();
 
         var ticket3 = Ticket.builder()
                 .seatRow("C")
                 .seatNumber(10)
-                .price(10.6)
+                .price(28.95) // precio base sala VIP + 3€ por ser domingo
                 .session(su1s2m1)  // Sesión VIP del domingo
                 .build();
 

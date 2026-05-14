@@ -1,5 +1,6 @@
 package com.demo.controller;
 
+import com.demo.model.Session;
 import com.demo.model.Ticket;
 import com.demo.repository.MovieRepository;
 import com.demo.repository.SessionRepository;
@@ -7,10 +8,7 @@ import com.demo.repository.TicketRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -53,14 +51,16 @@ public class TicketController {
     // Get newTicket
     // TODO RequestParam sessionId
     @GetMapping("tickets/new")
-    public String newTicket(Model model){
-        // añadir objeto product vacio para rellenarlo desde el formulario
+    public String newTicket(Model model, @RequestParam (required = false) Long sessionId){
+        // añadir objeto producto vacio para rellenarlo desde el formulario
         Ticket ticket = Ticket.builder().build();
-        // Session session = sessionRepository.findById sessionId
-        // ticket.setSession(session)
-        // ticket.setPrice(session.getRoom().getPrice())
+        if(sessionId != null){
+            Session session = sessionRepository.findById(sessionId).orElseThrow();
+            ticket.setSession(session);
+            ticket.setPrice(session.getRoom().getPrice());
+        }
+
         model.addAttribute("ticket", ticket);
-        //model.addAttribute("language" , Language.values());
         model.addAttribute("projections", sessionRepository.findAll());
         return "tickets/ticket-form";
     }
@@ -75,14 +75,16 @@ public class TicketController {
     // Post saveTicket
     // El usuario compra el ticket
     @PostMapping("tickets")
-    public String saveTicket(@ModelAttribute Ticket ticket){
+    public String saveTicket(
+            @ModelAttribute Ticket ticket){
         ticket.setPurchaseTime(LocalDateTime.now());
-        // TODO recalcualte total price
+        // TODO recalculate total price
         // TODO no hace falta guardarlo en base de datos pero sí mostrarlo al usuario en el HTML para que vea el total
-        // preciobase = ticket.session.room.price
-        // precio comida = ticket.priceCombo
-        // precio total = preciobase + precioComida
-        ticketRepository.save(ticket);
+       Double precioBase = ticket.getSession().getRoom().getPrice();
+       Double precioComida = ticket.getPriceCombo() != null ? ticket.getPriceCombo() : 0.0;
+       Double precioTotal = precioBase + precioComida;
+       ticket.setPrice(precioTotal);
+       ticketRepository.save(ticket);
         return "redirect:/tickets/" + ticket.getId();
     }
 
