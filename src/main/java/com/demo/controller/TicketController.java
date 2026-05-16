@@ -25,9 +25,17 @@ public class TicketController {
 
     //GetMapping para ticket-list
     @GetMapping("tickets")
-    public String ticketsList(Model model){
-        List<Ticket> tickets = ticketRepository.findAll();
+    public String ticketsList(
+            Model model,
+            @RequestParam(required = false) Long sessionId,
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) Double price){
+
+        List<Ticket> tickets =
+                ticketRepository.filterTickets(sessionId, title, price);
+
         model.addAttribute("tickets", tickets);
+        model.addAttribute("sessions", sessionRepository.findAll()); // Agregar sessiones
         return "tickets/ticket-list";
     }
 
