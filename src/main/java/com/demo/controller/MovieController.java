@@ -5,19 +5,19 @@ import com.demo.model.enums.Director;
 import com.demo.model.enums.Genre;
 import com.demo.model.enums.MinAge;
 import com.demo.repository.MovieRepository;
+import com.demo.repository.SessionRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 @AllArgsConstructor
 @Controller
 public class MovieController {
     private final MovieRepository movieRepository;
+    private final SessionRepository sessionRepository;
 
     @GetMapping("movies")
     public String moviesList(
@@ -41,8 +41,7 @@ public class MovieController {
     @GetMapping("movies/{id}")
     public String movie(Model model, @PathVariable Long id){
         model.addAttribute("movie", movieRepository.findById(id).orElseThrow());
-        // TODO
-        // model.addAttribute("sessions", sessionRepo . findByMovieId () )
+        model.addAttribute("projections", sessionRepository.findByMovie_Id(id));
         return "movies/movie-detail";
     }
 

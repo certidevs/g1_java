@@ -7,16 +7,13 @@
 
 <main class="container flex-grow-1 mb-3">
 	<div class="row">
-		<div class="col">
+		<div class="col-md-9">
 			<div class="card shadow-sm mb-3">
 				<div class="row g-0">
-					<div class="col-md-4">
-						<img style="height: 34rem" th:src="${movie.getImageUrl}" class="img-fluid rounded-start" alt="Film card">
-					</div>
 					<div class="col-md-8">
 						<div class="card-body m-4">
 							<div class="d-flex align-items-center gap-2">
-								<h5 class="card-title mb-3 fs-1 mb-0" th:text="${movie.title}">Título</h5>
+								<h5 class="card-title mb-3 fs-1" th:text="${movie.title}">Título</h5>
 								<span th:text="'(' + ${movie.duration} + 'min)'">0</span>
 							</div>
 							<div class="card-text">
@@ -41,21 +38,41 @@
 	                            </span>
 							</div>
 							<p class="card-text" th:text="${movie.sinopsis}"></p>
-							<div class="mb-3">
-								<iframe style="height: 10rem" th:src="${movie.trailerUrl}" title="YouTube video player"
-								        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen
-								        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;
-							            picture-in-picture; web-share">
-								</iframe>
-							</div>
-							<!-- TODO poner listado de SESSION -->
-
-							<!-- mostrar grid columnas con las sessions y al pulsar una te lleva a session detail -->
-
-
-
-
 						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="p-4">
+							<img th:src="${movie.getImageUrl}" class="rounded img-fluid" alt="Film card">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<div class="m-4 p-3">
+							<iframe width="560" height="315" th:src="${movie.trailerUrl}" allowfullscreen
+							        referrerpolicy="strict-origin-when-cross-origin" title="YouTube video player"
+							        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;
+							        picture-in-picture; web-share" class="rounded">
+							</iframe>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="card">
+				<div class="card-body m-4">
+					<h5 class="card-title mb-3">Sesiones</h5>
+					<div class="card">
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item" th:each="projection : ${projections}">
+								<a th:href="@{/sessions/{id}(id=${projection.id})}" class="btn btn-white btn-sm">
+									<span th:text="${projection.room.name}"></span>
+									<span th:text="${#temporals.format(projection.startTime, 'dd/MM/yyyy HH:mm')}"></span>
+								</a>
+							</li>
+						</ul>
 					</div>
 				</div>
 			</div>
