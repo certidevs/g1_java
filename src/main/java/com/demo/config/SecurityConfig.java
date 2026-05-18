@@ -1,32 +1,29 @@
 package com.demo.config;
 
-import com.demo.model.User;
-import com.demo.repository.UserRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+
 
 import java.util.Optional;
 
-@Service
-@AllArgsConstructor
-public class SecurityConfig implements UserDetailsService {
-    private final UserRepository userRepository;
-
-    public UserRepository getUserRepository() {
-        return userRepository;
+@Configuration
+public class SecurityConfig  {
+    //PAra cifrar password
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> userOptional = userRepository.findByUsername(username);
-        if(userOptional.isPresent()){
-            return userOptional.get();
-        }
-        else {
-            throw new UsernameNotFoundException("Usuario no encontrado con username: " + username);
-        }
+    // securityFilterChain para proteger acceso a rutas
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        //Para proteger las rutas
+
+        return http.build();
     }
 }
