@@ -16,6 +16,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     // Para buscar tickets vendidos por fecha y hora
     List<Ticket> findByPurchaseTime(LocalDateTime purchaseTime);
 
+    List<Ticket> findBySession_Id(Long sessionId);
 
    // Query con filtros
     @Query("""
