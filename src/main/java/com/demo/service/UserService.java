@@ -1,6 +1,8 @@
 package com.demo.service;
 
+import com.demo.dto.RegisterForm;
 import com.demo.model.User;
+import com.demo.model.enums.Role;
 import com.demo.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,5 +29,26 @@ public class UserService implements UserDetailsService {
         else {
             throw new UsernameNotFoundException("Usuario no encontrado con username: " + username);
         }
+    }
+
+    public User register(RegisterForm form) {
+
+        if (userRepository.existsByUsername(form.getUsername()))
+            throw new IllegalArgumentException("El nombre de usuario ya existe");
+
+        if (userRepository.existsByEmail(form.getEmail()))
+            throw new IllegalArgumentException("El correo electrónico ya existe");
+
+        if (! form.getPassword().equals(form.getPasswordConfirm()))
+            throw new IllegalArgumentException("Las contraseñas no coinciden");
+
+
+        User user = new User();
+        user.setUsername(form.getUsername());
+        user.setEmail(form.getEmail());
+        // user.setPassword(form.getPassword()); // texto plano sin cifrar
+        user.setPassword(passwordEncoder.encode(form.getPassword())); // password cifrada con bcrypt
+        user.setRole(Role.ROLE_USER);
+        return userRepository.save(user);
     }
 }
