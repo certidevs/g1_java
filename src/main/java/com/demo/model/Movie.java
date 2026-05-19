@@ -1,6 +1,5 @@
 package com.demo.model;
 
-import com.demo.model.enums.Director;
 import com.demo.model.enums.Genre;
 import com.demo.model.enums.MinAge;
 import jakarta.persistence.*;
@@ -32,10 +31,6 @@ public class Movie {
     @Enumerated(EnumType.STRING)
     private Set<Genre> genreSet = EnumSet.noneOf(Genre.class);
 
-    @Builder.Default
-    @Enumerated(EnumType.STRING)
-    private Director director = Director.UNSPECIFIED;
-
     private Integer releaseYear;
 
     @Builder.Default
@@ -48,4 +43,8 @@ public class Movie {
 
     @Column (length = 500)
     private String sinopsis;
+
+    @ManyToOne
+    @JoinColumn(name = "directorId")
+    private com.demo.model.Director director;
 }
