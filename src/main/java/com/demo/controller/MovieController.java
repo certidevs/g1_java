@@ -1,11 +1,12 @@
 package com.demo.controller;
 
 import com.demo.model.Movie;
-import com.demo.model.enums.Director;
 import com.demo.model.enums.Genre;
 import com.demo.model.enums.MinAge;
+import com.demo.repository.DirectorRepository;
 import com.demo.repository.MovieRepository;
 import com.demo.repository.SessionRepository;
+import com.demo.service.MovieService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,22 +19,28 @@ import java.util.List;
 public class MovieController {
     private final MovieRepository movieRepository;
     private final SessionRepository sessionRepository;
+    private final DirectorRepository directorRepository;
+    private final MovieService movieService;
+
 
     @GetMapping("movies")
     public String moviesList(
             Model model,
-            @RequestParam(required = false) Director director,
+            @RequestParam(required = false) String directorName,
             @RequestParam(required = false) Genre genre,
             @RequestParam(required = false) String title,
             @RequestParam(required = false) MinAge minAge,
             @RequestParam(required = false) Integer releaseYear
-    ){
-        List<Movie> movies = movieRepository.findActiveFiltering(director, genre, title, minAge, releaseYear);
+    ) {
+        List<Movie> movies = movieRepository.findActiveFiltering(directorName, genre, title, minAge, releaseYear);
+
         model.addAttribute("movies", movies);
         model.addAttribute("numMovies", movies.size());
         model.addAttribute("title", "Lista de películas");
         model.addAttribute("minAges", MinAge.values());
         model.addAttribute("genres", Genre.values());
+        model.addAttribute("directors", directorRepository.findAll());
+
         return "movies/movie-list";
     }
 
@@ -49,7 +56,7 @@ public class MovieController {
     public String newMovie(Model model) {
         model.addAttribute("movie", new Movie());
         model.addAttribute("genres", Genre.values());
-        model.addAttribute("directors", Director.values());
+        model.addAttribute("directors", directorRepository.findAll());
         model.addAttribute("minAges", MinAge.values());
         return "movies/movie-form";
     }
@@ -58,15 +65,15 @@ public class MovieController {
     public String editMovie(@PathVariable Long id, Model model) {
         model.addAttribute("movie", movieRepository.findById(id).orElseThrow());
         model.addAttribute("genres", Genre.values());
-        model.addAttribute("directors", Director.values());
+        model.addAttribute("directors", directorRepository.findAll());
         model.addAttribute("minAges", MinAge.values());
         return "movies/movie-form";
     }
 
     @PostMapping("movies")
-    public String saveMovie(@ModelAttribute Movie movie) {
-        System.out.println("Película guardada: " + movie);
-        movieRepository.save(movie);
+    public String saveMovie(@ModelAttribute Movie movie,
+                            @RequestParam String directorName) {
+        movieService.createMovie(movie, directorName);
         return "redirect:/movies/" + movie.getId();
     }
 }
