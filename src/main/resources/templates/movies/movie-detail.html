@@ -19,7 +19,8 @@
 							<div class="card-text">
 								<p class="fw-bold mb-1">
 									Dirigida por:
-									<span class="fw-normal" th:text="${movie.director.label}"></span>
+									<span th:text="${movie.director != null ? movie.director.name : 'Sin director'}"
+									      class="fw-normal" ></span>
 								</p>
 								<p class="fw-bold mb-1">
 									Año de lanzamiento:

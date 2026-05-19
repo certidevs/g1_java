@@ -36,17 +36,10 @@
 		</div>
 
 		<div class="mb-3">
-			<label class="form-label" for="director">Director</label>
-			<select class="form-select" id="director" th:field="*{director}" required>
-				<option value=""></option>
+			<label class="form-label" for="directorName">Director</label>
 
-				<option
-						th:each="director : ${directors}"
-						th:value="${director}"
-						th:text="${director.label}">
-				</option>
-
-			</select>
+			<input type="text" class="form-control" id="directorName" name="directorName" placeholder="Director..."
+			       th:value="${movie.director != null ? movie.director.name : ''}">
 		</div>
 
 		<div class="mb-3">
