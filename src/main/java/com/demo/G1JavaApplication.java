@@ -17,17 +17,34 @@ public class G1JavaApplication {
     public static void main(String[] args) {
         var context = SpringApplication.run(G1JavaApplication.class, args);
 
+        DirectorRepository directorRepository = context.getBean(DirectorRepository.class);
         MovieRepository movieRepository = context.getBean(MovieRepository.class);
         RoomRepository roomRepository = context.getBean(RoomRepository.class);
         SessionRepository sessionRepository = context.getBean(SessionRepository.class);
         TicketRepository ticketRepository = context.getBean(TicketRepository.class);
         ReviewRepository reviewRepository = context.getBean(ReviewRepository.class);
 
+        Director director1 = new Director();
+        director1.setName("Horvath");
+
+        Director director2 = new Director();
+        director2.setName("Frankel");
+
+        Director director3 = new Director();
+        director3.setName("Fuqua");
+
+        Director director4 = new Director();
+        director4.setName("Mazon");
+
+        Director director5 = new Director();
+        director5.setName("McQuoid");
+
+        directorRepository.saveAll(List.of(director1, director2, director3, director4, director5));
 
         Movie movie1 = new Movie();
         movie1.setTitle("Super Mario Galaxy");
         movie1.setGenreSet(EnumSet.of(Genre.COMEDY, Genre.ANIMATION));
-        movie1.setDirector(Director.HORVATH);
+        movie1.setDirector(director1);
         movie1.setReleaseYear(2026);
         movie1.setMinAge(MinAge.AGE_7);
         movie1.setDuration(98);
@@ -42,7 +59,7 @@ public class G1JavaApplication {
         Movie movie2 = new Movie();
         movie2.setTitle("El diablo viste de Prada 2");
         movie2.setGenreSet(EnumSet.of(Genre.COMEDY, Genre.DRAMA));
-        movie2.setDirector(Director.FRANKEL);
+        movie2.setDirector(director2);
         movie2.setReleaseYear(2026);
         movie2.setMinAge(MinAge.AGE_7);
         movie2.setDuration(119);
@@ -56,7 +73,7 @@ public class G1JavaApplication {
         Movie movie3 = new Movie();
         movie3.setTitle("Michael");
         movie3.setGenreSet(EnumSet.of(Genre.DRAMA, Genre.DOCUMENTARY));
-        movie3.setDirector(Director.FUQUA);
+        movie3.setDirector(director3);
         movie3.setReleaseYear(2026);
         movie3.setMinAge(MinAge.AGE_12);
         movie3.setDuration(127);
@@ -70,7 +87,7 @@ public class G1JavaApplication {
         Movie movie4 = new Movie();
         movie4.setTitle("La familia Benetón + 2");
         movie4.setGenreSet(EnumSet.of(Genre.COMEDY, Genre.SPANISH));
-        movie4.setDirector(Director.MAZON);
+        movie4.setDirector(director4);
         movie4.setReleaseYear(2026);
         movie4.setMinAge(MinAge.ALL);
         movie4.setDuration(87);
@@ -82,7 +99,21 @@ public class G1JavaApplication {
                 "familia multicultural, la llegada de dos nuevos bebés pondrá patas arriba la casa y a toda la familia. " +
                 "Los problemas crecen pero las aventuras también.");
 
-        movieRepository.saveAll(List.of(movie1, movie2, movie3, movie4));
+        Movie movie5 = new Movie();
+        movie5.setTitle("Mortal Kombat II");
+        movie5.setGenreSet(EnumSet.of(Genre.FANTASY, Genre.SCI_FI));
+        movie5.setDirector(director5);
+        movie5.setReleaseYear(2026);
+        movie5.setMinAge(MinAge.AGE_16);
+        movie5.setDuration(116);
+        movie5.setTrailerUrl("https://www.youtube.com/embed/ZDDRv_FsiFs");
+        movie5.setImageUrl(
+                "https://m.media-amazon.com/images/M/MV5BZDI1ODhkZWYtM2Q2NS00MmI4LTg3NzUtYTM3NTBlYmQ3NzM3XkEyXkFqcGc@._V1_.jpg"
+        );
+        movie5.setSinopsis("Los guerreros más queridos, incluyendo a Johnny Cage, luchan juntos en un combate definitivo " +
+                "contra el malvado Shao Kahn, cuyo reino amenaza con destruir la Tierra y a quienes la protegen.");
+
+        movieRepository.saveAll(List.of(movie1, movie2, movie3, movie4, movie5));
 
 
         Room r1 = new Room();
