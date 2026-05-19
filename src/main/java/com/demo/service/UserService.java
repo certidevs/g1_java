@@ -1,5 +1,6 @@
 package com.demo.service;
 
+import com.demo.dto.RegisterForm;
 import com.demo.model.User;
 import com.demo.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -27,5 +28,8 @@ public class UserService implements UserDetailsService {
         else {
             throw new UsernameNotFoundException("Usuario no encontrado con username: " + username);
         }
+    }
+
+    public void register(RegisterForm form) {
     }
 }
