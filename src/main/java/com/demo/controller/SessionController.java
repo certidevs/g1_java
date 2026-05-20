@@ -3,6 +3,7 @@ package com.demo.controller;
 import com.demo.model.Movie;
 import com.demo.model.Room;
 import com.demo.model.Session;
+import com.demo.model.Ticket;
 import com.demo.model.enums.Language;
 import com.demo.model.enums.ScreenType;
 import com.demo.repository.MovieRepository;
@@ -50,8 +51,7 @@ public class SessionController {
             Session session = sessionOptional.get();
             model.addAttribute("proyeccion", session);
             // TODO
-            // model.addAttribute("tickets" ..... )
-            //model.addAttribute("tickets", ticketRepository.findBySession_Movie_Id(id));
+            model.addAttribute("tickets", ticketRepository.findBySession_Id(id));
             return "sessions/session-detail";
         }
         else {
@@ -96,6 +96,19 @@ public class SessionController {
     @PostMapping("sessions")
     public String saveSession(@ModelAttribute Session session){
         sessionRepository.save(session);
+
+        int cols = 10;
+        int rows = session.getRoom().getCapacity() / 10;
+        for (int i = 0; i < rows; i++){
+            String row = String.valueOf((char) ('A' + i));
+            for(int j = 1; j <= cols; j++){
+                ticketRepository.save(Ticket.builder()
+                        .seatRow(row)
+                        .seatNumber(j)
+                        .price(session.getRoom().getPrice())
+                        .session(session).build());
+            }
+        }
         return "redirect:/sessions/" + session.getId();
     }
 
