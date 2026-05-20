@@ -42,16 +42,13 @@ public class UserService implements UserDetailsService {
         if (! form.getPassword().equals(form.getPasswordConfirm()))
             throw new IllegalArgumentException("Las contraseñas no coinciden");
 
-//        if (! form.getAcceptTermsAndConditions())
-//            throw new IllegalArgumentException("Obligatorio aceptar términos y condiciones de la plataforma.");
-
 
         User user = new User();
-        user.setUsername(form.getUsername()); // el username se podría generar automáticamente en base al email
+        user.setUsername(form.getUsername());
         user.setEmail(form.getEmail());
-//      user.setPassword(form.getPassword()); // texto plano sin cifrar  admin
+        // user.setPassword(form.getPassword()); // texto plano sin cifrar
         user.setPassword(passwordEncoder.encode(form.getPassword())); // password cifrada con bcrypt
-        user.setRole(Role.ROLE_USER); // por defecto no asignamos rol de admin a usuarios nuevos
-        return userRepository.save(user); // guarda el usuario en base de datos
+        user.setRole(Role.ROLE_USER);
+        return userRepository.save(user);
     }
 }
