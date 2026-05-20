@@ -27,7 +27,6 @@ public class SecurityConfig  {
         http.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"));
 
         http.headers(headers -> headers.frameOptions(frame -> frame.sameOrigin())); // h2 usa iframes
-
         //Para proteger las rutas
         http.authorizeHttpRequests(
                 auth -> auth
