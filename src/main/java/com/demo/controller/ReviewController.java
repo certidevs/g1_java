@@ -62,7 +62,10 @@ public class ReviewController {
     @PostMapping("reviews")
     public String saveReview(@ModelAttribute Review review, RedirectAttributes redirectAttributes){
         reviewRepository.save(review);
-        redirectAttributes.addFlashAttribute("message", "¡Reseña guardada exitosamente!");
+
+//        if (review.getMovie() != null)
+//            return "redirect:/movies/" + review.getMovie().getId();
+            redirectAttributes.addFlashAttribute("message", "¡Reseña guardada exitosamente!");
         return "redirect:/reviews";
     }
 
