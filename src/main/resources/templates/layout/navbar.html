@@ -42,12 +42,28 @@
 				</li>
 			</ul>
 
-			<a class="btn btn-outline-light btn-sm" th:href="@{/login}">
-				<i class="fa-solid fa-sign-in"></i> Entrar
-			</a>
-			<a class="btn btn-light btn-sm ms-2" th:href="@{/register}">
-				<i class="fa-solid fa-circle-user"></i> Registro
-			</a>
+			<div sec:authorize="!isAuthenticated()" class="d-flex justify-content-end">
+				<a class="btn btn-outline-light btn-sm" th:href="@{/login}">
+					<i class="fa-solid fa-sign-in"></i> Entrar
+				</a>
+				<a class="btn btn-light btn-sm ms-2" th:href="@{/register}">
+					<i class="fa-solid fa-circle-user"></i> Registro
+				</a>
+			</div>
+
+			<div sec:authorize="isAuthenticated()" class="d-flex justify-content-end">
+
+                <span class="text-light me-3 mt-1">
+                    <i class="fa-solid fa-user me-1"></i>
+                    <span sec:authentication="name"></span>
+                </span>
+				<form th:action="@{/logout}" method="post" class="d-inline">
+					<button class="btn btn-outline-light btn-sm ms-2">
+						<i class="fa-solid fa-sign-out"></i> Salir
+					</button>
+				</form>
+
+			</div>
 
 		</div>
 	</div>
