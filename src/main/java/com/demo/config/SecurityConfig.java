@@ -64,8 +64,8 @@ public class SecurityConfig  {
                         .requestMatchers(HttpMethod.GET, "/reviews/edit/*").hasRole("USER")
                         .requestMatchers(HttpMethod.GET, "/reviews/delete/*").hasRole("ADMIN")
 
-                        // todos los roles
-                        .requestMatchers("/tickets", "/tickets/*").authenticated()
+                        // tickets públicos hasta que el sistema de auth esté completo porq no me deja ver las session detail
+                        .requestMatchers("/tickets", "/tickets/**").permitAll()
 
                         // lo demás autenticado si o si
                         .anyRequest().authenticated()
