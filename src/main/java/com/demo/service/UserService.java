@@ -49,7 +49,7 @@ public class UserService implements UserDetailsService {
         User user = new User();
         user.setUsername(form.getUsername()); // el username se podría generar automáticamente en base al email
         user.setEmail(form.getEmail());
-//      user.setPassword(form.getPassword()); // texto plano sin cifrar  admin
+        // user.setPassword(form.getPassword()); // texto plano sin cifrar  admin
         user.setPassword(passwordEncoder.encode(form.getPassword())); // password cifrada con bcrypt
         user.setRole(Role.ROLE_USER); // por defecto no asignamos rol de admin a usuarios nuevos
         return userRepository.save(user); // guarda el usuario en base de datos
