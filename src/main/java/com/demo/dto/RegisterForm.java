@@ -1,8 +1,14 @@
 package com.demo.dto;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+
 public class RegisterForm {
     private String username;
     private String email;
