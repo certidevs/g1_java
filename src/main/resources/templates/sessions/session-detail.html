@@ -69,8 +69,6 @@
             </a>
         </div>
 
-        <h2>Compra tu ticket</h2>
-
 <!--        if sesion.active true mostramos tickets a la venta-->
 <!--        if session.active false no mostramos tickets y ponemos un mensaje de disculpas -->
 
@@ -84,15 +82,71 @@
 
 <!--        <div th:if="${session.active == true : }" >-->
 
-    </div>
+<!--        <table>-->
+<!--            <tr>-->
+<!--                &lt;!&ndash; Bucle para generar celdas th &ndash;&gt;-->
 
-        <div class="alert alert-info" role="alert">
-            Disculpe las molestias ocasionadas, en este momento esta sala se encuentra en restaurancion.
-            Puede disfrutar del resto de las instalaciones, nos vemos pronto :)
+<!--                <th th:each="butaca : ${listaButaca}" th:text="${butaca}"></th>-->
+<!--                -->
+<!--            </tr>-->
+<!--        </table>-->
+
+        <div th:if="${proyeccion.active}" class="mt-4">
+
+            <h3 class="mb-1">Seleccioná tu butaca</h3>
+
+            <!-- Pantalla del cine -->
+            <div class="bg-dark text-white text-center py-2 rounded mb-3 mx-auto"
+                 style="max-width: 640px;">
+                <small><i class="fa-solid fa-tv me-1"></i> PANTALLA</small>
+            </div>
+
+            <!-- Butacas -->
+<!--            El th:block no genera html simplemente que si utilizo div como conteiner no se veian bien las butacas-->
+            <div class="d-flex flex-wrap gap-2 mb-4 mx-auto" style="max-width: 640px;">
+                <th:block th:each="ticket : ${tickets}">
+
+                    <!-- fuerza nueva línea y muestra la letra cuando empieza una fila nueva -->
+                    <div th:if="${ticket.seatNumber == 1}" class="w-100">
+                        <small class="fw-bold text-secondary" th:text="'Fila ' + ${ticket.seatRow}"></small>
+                    </div>
+
+                    <!-- Disponible -->
+                    <a th:if="${ticket.purchaseTime == null}"
+                       th:href="@{/tickets/new(sessionId=${proyeccion.id})}"
+                       class="btn btn-success d-flex align-items-center justify-content-center"
+                       style="width: 52px; height: 52px;"
+                       th:title="'Butaca ' + ${ticket.seatNumber}"
+                       th:text="${ticket.seatNumber}">
+
+                    </a>
+
+                    <!-- Vendida -->
+                    <button th:unless="${ticket.purchaseTime == null}"
+                            class="btn btn-danger d-flex align-items-center justify-content-center"
+                            style="width: 52px; height: 52px;"
+                            th:title="'Vendida ' + ${ticket.seatNumber}"
+                            th:text="${ticket.seatNumber}"
+                            disabled>
+                    </button>
+
+                </th:block>
+            </div>
+<!--            Esto &nbsp; es un ESPACIO EN BLANCO-->
+            <div class="d-flex gap-3 justify-content-center mt-2 mx-auto" style="max-width: 640px;">
+                <span><span class="badge bg-success" style="width:20px; display:inline-block;">&nbsp;</span> Disponible</span>
+                <span><span class="badge bg-danger"  style="width:20px; display:inline-block;">&nbsp;</span> Vendida</span>
+            </div>
+
         </div>
 
+        <div th:unless="${proyeccion.active}" class="mt-4">
+            <div class="alert alert-warning">
+                <i class="fa-solid fa-ban me-1"></i> Esta función no está disponible.
+            </div>
+        </div>
 
-
+    </div>
     </div>
 </main>
 
