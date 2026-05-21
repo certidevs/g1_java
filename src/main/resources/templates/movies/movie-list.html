@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="~{layout/head :: head('Cine')}"></head>
 <body class="d-flex flex-column min-vh-100">
 
@@ -8,27 +8,14 @@
 <main class="container flex-grow-1">
 	<div class="d-flex justify-content-between align-items-center mb-4">
 		<h1 class="mb-0" th:text="${title}">Películas</h1>
-		<span class="badge bg-secondary fs-6" th:text="|${numMovies} resultados|">0 resultados</span>
+		<a sec:authorize="hasRole('ADMIN')" th:href="@{/movies/new}" class="btn btn-primary align-self-end">
+			<i class="fa-solid fa-plus"></i>
+			Crear película
+		</a>
 	</div>
 
-	<a th:href="@{/movies/new}" class="btn btn-primary btn-sm mb-2">
-		<i class="fa-solid fa-plus"></i>
-		Crear película
-	</a>
-
-	<div class="mb-3">
-		<h5>Filtros rápidos</h5>
-		<a th:href="@{/movies}" class="btn btn-sm btn-primary">Todos</a>
-		<a th:href="@{/movies(directorName='Frankel')}" class="btn btn-sm btn-secondary">Películas de Frankel</a>
-		<a th:href="@{/movies(genre='COMEDY')}" class="btn btn-sm btn-secondary">Películas cómicas</a>
-		<a th:href="@{/movies(genre='DRAMA')}" class="btn btn-sm btn-secondary">Películas dramáticas</a>
-		<a th:href="@{/movies(minAge=ALL)}" class="btn btn-sm btn-info">Todas las audiencias</a>
-		<a th:href="@{/movies(minAge=AGE_12)}" class="btn btn-sm btn-info">+12</a>
-		<a th:href="@{/movies(releaseYear=2026)}" class="btn btn-sm btn-info">2026</a>
-	</div>
-
-	<div class="mb-3">
-		<h5>Búsqueda avanzada</h5>
+	<div class="mb-4">
+		<h5 class="mb-3">Búsqueda avanzada</h5>
 		<form th:action="@{/movies}" method="get" class="row align-items-end">
 			<div class="col-auto">
 				<label class="form-label form-label-sm">Título</label>
@@ -85,13 +72,13 @@
 					<img style="height: 24rem" th:src="${movie.getImageUrl}" class="card-img-top" alt="Film card">
 				</div>
 				<div class="card-body">
-					<h5 class="card-title" th:text="${movie.title}">Nombre</h5>
+					<h5 class="card-title mb-3" th:text="${movie.title}">Nombre</h5>
 					<div class="card-footer bg-transparent border-0 pt-0">
 						<a th:href="@{/movies/{id}(id=${movie.id})}"
-						   class="btn btn-outline-primary btn-sm w-100">
+						   class="btn btn-outline-primary btn-sm w-100 mb-2">
 							<i class="fa-regular fa-eye me-1"></i>Ver película
 						</a>
-						<a th:href="@{/movies/edit/{id}(id=${movie.id})}"
+						<a sec:authorize="hasRole('ADMIN')" th:href="@{/movies/edit/{id}(id=${movie.id})}"
 						   class="btn btn-outline-primary btn-sm w-100">
 							<i class="fa-solid fa-pencil me-1"></i>Editar
 						</a>
