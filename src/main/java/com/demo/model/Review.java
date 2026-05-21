@@ -34,4 +34,8 @@ public class Review {
     @ManyToOne
     private Movie movie;
 
+    @ToString.Exclude
+    @ManyToOne
+    private User user;
+
 }
