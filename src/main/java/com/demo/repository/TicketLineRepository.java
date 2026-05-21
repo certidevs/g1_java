@@ -1,6 +1,6 @@
 package com.demo.repository;
 
-import com.demo.controller.TicketLine;
+import com.demo.model.TicketLine;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -18,4 +18,5 @@ public interface TicketLineRepository extends JpaRepository<TicketLine, Long> {
         FROM TicketLine tl where tl.ticket.id = ?1
        """)
     Double calculateTotalPrice(Long ticketId);
+
 }

@@ -1,6 +1,5 @@
-package com.demo.controller;
+package com.demo.model;
 
-import com.demo.model.Ticket;
 import jakarta.persistence.*;
 import lombok.*;
 
