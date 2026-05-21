@@ -2,10 +2,12 @@ package com.demo.controller;
 
 import com.demo.model.Session;
 import com.demo.model.Ticket;
+import com.demo.model.User;
 import com.demo.repository.MovieRepository;
 import com.demo.repository.SessionRepository;
 import com.demo.repository.TicketRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -80,12 +82,25 @@ public class TicketController {
         model.addAttribute("projections", sessionRepository.findAll());
         return "tickets/ticket-form";
     }
+
+    // Get editTicket
+    @GetMapping("tickets/buy/{id}")
+    public String buyTicket(@PathVariable Long id, Model model){
+        Ticket ticket = ticketRepository.findById(id).orElseThrow();
+        model.addAttribute("ticket", ticket);
+        model.addAttribute("projections", sessionRepository.findAll());
+        // foodRepository.findAll
+        return "tickets/ticket-form";
+    }
+
+
     // Post saveTicket
     // El usuario compra el ticket
     @PostMapping("tickets")
     public String saveTicket(
-            @ModelAttribute Ticket ticket){
+            @ModelAttribute Ticket ticket, @AuthenticationPrincipal User user) {
         ticket.setPurchaseTime(LocalDateTime.now());
+        ticket.setUser(user);
         // TODO recalculate total price
         // TODO no hace falta guardarlo en base de datos pero sí mostrarlo al usuario en el HTML para que vea el total
        Double precioBase = ticket.getSession().getRoom().getPrice();

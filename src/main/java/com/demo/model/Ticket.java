@@ -1,5 +1,6 @@
 package com.demo.model;
 
+import com.demo.service.UserService;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -46,6 +47,8 @@ public class Ticket {
 //    private Long sessionId;
 
 
-
+    @ToString.Exclude
+    @ManyToOne
+    private User user;
 
 }

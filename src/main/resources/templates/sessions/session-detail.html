@@ -113,7 +113,7 @@
 
                     <!-- Disponible -->
                     <a th:if="${ticket.purchaseTime == null}"
-                       th:href="@{/tickets/new(sessionId=${proyeccion.id})}"
+                       th:href="@{/tickets/buy/{id}(id=${ticket.id})}"
                        class="btn btn-success d-flex align-items-center justify-content-center"
                        style="width: 52px; height: 52px;"
                        th:title="'Butaca ' + ${ticket.seatNumber}"
