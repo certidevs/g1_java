@@ -19,6 +19,8 @@ public interface SessionRepository extends JpaRepository<Session, Long> {
 
     List<Session> findByRoom_Screentype(ScreenType screentype);
 
+    List<Session> findByMovie_IdAndStartTimeBetween(Long movieId, LocalDateTime start, LocalDateTime end);
+
     @Query("""
       SELECT s FROM Session s
       WHERE s.active = true

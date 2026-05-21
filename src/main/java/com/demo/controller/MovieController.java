@@ -12,6 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -36,7 +40,7 @@ public class MovieController {
 
         model.addAttribute("movies", movies);
         model.addAttribute("numMovies", movies.size());
-        model.addAttribute("title", "Lista de películas");
+        model.addAttribute("title", "Películas");
         model.addAttribute("minAges", MinAge.values());
         model.addAttribute("genres", Genre.values());
         model.addAttribute("directors", directorRepository.findAll());
@@ -46,9 +50,24 @@ public class MovieController {
 
 
     @GetMapping("movies/{id}")
-    public String movie(Model model, @PathVariable Long id){
-        model.addAttribute("movie", movieRepository.findById(id).orElseThrow());
-        model.addAttribute("projections", sessionRepository.findByMovie_Id(id));
+    public String movie(Model model, @PathVariable Long id, @RequestParam(required = false) LocalDate date) {
+        Movie movie = movieRepository.findById(id).orElseThrow();
+        model.addAttribute("movie", movie);
+        model.addAttribute("selectedDate", date);
+
+        List<LocalDate> availableDates = new ArrayList<>();
+        LocalDate today = LocalDate.now();
+        for (int i = 0; i < 15; i++) {
+            availableDates.add(today.plusDays(i));
+        }
+        model.addAttribute("availableDates", availableDates);
+
+        if (date != null) {
+            LocalDateTime start = date.atStartOfDay();
+            LocalDateTime end = date.atTime(LocalTime.MAX);
+            model.addAttribute("projections", sessionRepository.findByMovie_IdAndStartTimeBetween(id, start, end));
+        }
+
         return "movies/movie-detail";
     }
 
