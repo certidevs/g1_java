@@ -51,7 +51,7 @@
             </a>
 
             <!-- Botón de editar -->
-            <a sec:authorize="hasRole('ADMIN')" class="btn btn-success" th:href="@{/reviews/edit/{id}(id=${review.id})}">
+            <a sec:authorize="hasRole('USER')" class="btn btn-success" th:href="@{/reviews/edit/{id}(id=${review.id})}">
               <i class="fa-solid fa-pencil mr-2"></i> Editar
             </a>
 

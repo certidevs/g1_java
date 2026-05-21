@@ -1,9 +1,11 @@
 package com.demo.controller;
 
 import com.demo.model.Review;
+import com.demo.model.User;
 import com.demo.repository.MovieRepository;
 import com.demo.repository.ReviewRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -60,11 +62,19 @@ public class ReviewController {
     }
 
     @PostMapping("reviews")
-    public String saveReview(@ModelAttribute Review review, RedirectAttributes redirectAttributes){
+    public String saveReview(@ModelAttribute Review review, @AuthenticationPrincipal User user, RedirectAttributes redirectAttributes) {
+        //  usuario que crea/modifica la review
+        review.setUser(user);
+
+        if (review.getMovie() != null && review.getMovie().getId() != null) {
+            review.setMovie(movieRepository.findById(review.getMovie().getId()).orElseThrow());
+        }
+
         reviewRepository.save(review);
         redirectAttributes.addFlashAttribute("message", "¡Reseña guardada exitosamente!");
         return "redirect:/reviews";
     }
+
 
 
 

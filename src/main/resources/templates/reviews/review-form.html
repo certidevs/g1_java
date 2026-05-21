@@ -15,7 +15,7 @@
 
     <form th:action="@{/reviews}" method="post" th:object="${review}">
         <input type="hidden" th:field="*{id}">
-        <input type="hidden" th:field="*{movie}">
+        <input type="hidden" th:field="*{movie.id}">
         <input type="hidden" th:field="*{creationDate}">
 
         <div class="alert alert-info my-3" th:if="${review.movie != null}">
