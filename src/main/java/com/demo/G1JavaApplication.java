@@ -40,7 +40,18 @@ public class G1JavaApplication {
         Director director5 = new Director();
         director5.setName("McQuoid");
 
-        directorRepository.saveAll(List.of(director1, director2, director3, director4, director5));
+        Director director6 = new Director();
+        director5.setName("McCarthy");
+
+        Director director7 = new Director();
+        director5.setName("Serkis");
+
+        Director director8 = new Director();
+        director5.setName("McQuoid");
+
+        directorRepository.saveAll(
+                List.of(director1, director2, director3, director4, director5,  director6, director7, director8)
+        );
 
         Movie movie1 = new Movie();
         movie1.setTitle("Super Mario Galaxy");
@@ -119,7 +130,54 @@ public class G1JavaApplication {
         movie5.setSinopsis("Los guerreros más queridos, incluyendo a Johnny Cage, luchan juntos en un combate definitivo " +
                 "contra el malvado Shao Kahn, cuyo reino amenaza con destruir la Tierra y a quienes la protegen.");
 
-        movieRepository.saveAll(List.of(movie1, movie2, movie3, movie4, movie5));
+        Movie movie6 = new Movie();
+        movie6.setTitle("Hokum");
+        movie6.setGenreSet(EnumSet.of(Genre.HORROR, Genre.THRILLER));
+        movie6.setDirector(director6);
+        movie6.setReleaseDate(LocalDate.of(2026, 5, 15));
+        movie6.setMinAge(MinAge.AGE_18);
+        movie6.setMovieStatus(MovieStatus.NOW_SHOWING);
+        movie6.setDuration(101);
+        movie6.setTrailerUrl("https://www.youtube.com/embed/6cHc23cGDIc");
+        movie6.setImageUrl(
+                "https://m.media-amazon.com/images/M/MV5BYWJlNDJkNjQtYjJkZi00YzY0LWFmNjEtMWNiMzZlNjY3Y2VkXkEyXkFqcGc@._V1_.jpg"
+        );
+        movie6.setSinopsis("Un escritor de terror visita una posada irlandesa para esparcir las cenizas de sus padres, " +
+                "sin saber que se dice que la propiedad está embrujada por una bruja."
+        );
+
+        Movie movie7 = new Movie();
+        movie7.setTitle("Rebelión en la granja");
+        movie7.setGenreSet(EnumSet.of(Genre.ANIMATION, Genre.COMEDY));
+        movie7.setDirector(director7);
+        movie7.setReleaseDate(LocalDate.of(2026, 5, 1));
+        movie7.setMinAge(MinAge.AGE_7);
+        movie7.setMovieStatus(MovieStatus.NOW_SHOWING);
+        movie7.setDuration(96);
+        movie7.setTrailerUrl("https://www.youtube.com/embed/NN6J7l6ulYk");
+        movie7.setImageUrl(
+                "https://m.media-amazon.com/images/M/MV5BY2U5YTliZDktZWFhZS00ZDI3LTk5MWMtMDFlMjA3MDI2MGMwXkEyXkFqcGc@._V1_.jpg");
+        movie7.setSinopsis("Alegoría de la Revolución Rusa con animales rebelándose contra granjero buscando libertad. " +
+                "Su revuelta es socavada internamente sin que los animales lo sepan."
+        );
+
+        Movie movie8 = new Movie();
+        movie8.setTitle("Las ovejas detectives");
+        movie8.setGenreSet(EnumSet.of(Genre.ADVENTURE, Genre.COMEDY));
+        movie8.setDirector(director8);
+        movie8.setReleaseDate(LocalDate.of(2026, 5, 8));
+        movie8.setMinAge(MinAge.AGE_7);
+        movie8.setMovieStatus(MovieStatus.NOW_SHOWING);
+        movie8.setDuration(109);
+        movie8.setTrailerUrl("https://www.youtube.com/embed/XrDIQGFm5Fw");
+        movie8.setImageUrl(
+                "https://m.media-amazon.com/images/M/MV5BYTk0ZDI5NTAtYWQ5MS00MmI2LWIxMTktOWFkNTEwYzg0OWE4XkEyXkFqcGc@._V1_.jpg");
+        movie8.setSinopsis("Cada noche, un pastor lee una novela policíaca, imaginando que sus ovejas pueden entenderla. " +
+                "Cuando lo encuentran muerto, las ovejas se dan cuenta de que se trata de un asesinato " +
+                "y creen saber todo lo necesario para resolverlo."
+        );
+
+        movieRepository.saveAll(List.of(movie1, movie2, movie3, movie4, movie5,  movie6, movie7, movie8));
 
 
         Room r1 = new Room();
