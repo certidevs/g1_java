@@ -6,82 +6,82 @@
 <header th:replace="~{layout/navbar :: navbar}"></header>
 
 <main class="container flex-grow-1">
-	<div class="d-flex justify-content-between align-items-center mb-4">
-		<h1 class="mb-0" th:text="${title}">Películas</h1>
-		<a sec:authorize="hasRole('ADMIN')" th:href="@{/movies/new}" class="btn btn-primary align-self-end">
+	<div sec:authorize="hasRole('ADMIN')" class="d-flex justify-content-between align-items-center mb-4">
+		<p class="fs-3 fw-bold mb-0">¡Quieto todo el mundo! Ha llegado el admin... 👀</p>
+		<a th:href="@{/movies/new}" class="btn btn-primary align-self-end">
 			<i class="fa-solid fa-plus"></i>
 			Crear película
 		</a>
 	</div>
 
-	<div class="mb-4">
-		<h5 class="mb-3">Búsqueda avanzada</h5>
-		<form th:action="@{/movies}" method="get" class="row align-items-end">
-			<div class="col-auto">
-				<label class="form-label form-label-sm">Título</label>
-				<input type="text" name="title" class="form-control form-control-sm"
-				       placeholder="Busca por título..." th:value="${param.title}">
-			</div>
-			<div class="col-auto">
-				<label class="form-label form-label-sm">Rango edad</label>
-
-				<select name="minAge" class="form-select form-select-sm">
-
-					<option value="">Restricción por edad</option>
-
-					<option th:each="minAge : ${minAges}"
-					        th:value="${minAge.name()}"
-					        th:text="${minAge.label}"
-					        th:selected="${param.minAge != null and param.minAge[0] == minAge.name()}">
-					</option>
-
-				</select>
-			</div>
-			<div class="col-auto">
-				<label class="form-label form-label-sm">Géneros</label>
-
-				<select name="genre" class="form-select form-select-sm">
-
-					<option value="">No seleccionado</option>
-
-					<option th:each="genre : ${genres}"
-					        th:value="${genre.name()}"
-					        th:text="${genre.label}"
-					        th:selected="${param.genre != null and param.genre[0] == genre.name()}">
-					</option>
-
-				</select>
-			</div>
-			<div class="col-auto">
-				<button type="submit" class="btn btn-primary btn-sm">
-					<i class="fa-solid fa-magnifying-glass"></i>
-					Buscar
-				</button>
-				<a th:href="@{/movies}" class="btn btn-danger btn-sm">
-					<i class="fa-solid fa-broom"></i>
-					Limpiar filtros
-				</a>
-			</div>
-		</form>
-	</div>
-
-	<div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
-		<div class="col" th:each="movie : ${movies}">
-			<div class="card h-100 shadow-sm">
-				<div>
-					<img style="height: 24rem" th:src="${movie.getImageUrl}" class="card-img-top" alt="Film card">
+	<div class="card">
+		<div class="mb-4">
+			<nav class="navbar navbar-expand-lg bg-primary-subtle">
+				<div class="container-fluid">
+					<a class="nav-link" th:href="@{/movies}">
+						<h1 class="fs-5 mb-0">Volver a todas las películas</h1>
+					</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav ms-auto me-2 mb-2 mb-lg-0">
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+									Género
+								</a>
+								<ul class="dropdown-menu">
+									<li th:each="genre : ${genres}">
+										<a class="dropdown-item"
+										   th:href="@{/movies(genre=${genre.name()})}"
+										   th:text="${genre.label}">
+										</a>
+									</li>
+								</ul>
+							</li>
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+									Edad mínima
+								</a>
+								<ul class="dropdown-menu">
+									<li th:each="minAge : ${minAges}">
+										<a class="dropdown-item"
+										   th:href="@{/movies(minAge=${minAge.name()})}"
+										   th:text="${minAge.label}">
+										</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+					<form class="d-flex" role="search">
+						<input type="text" name="title" class="form-control form-control-sm me-2"
+						       placeholder="Busca por título..." th:value="${param.title}">
+						<button type="submit" class="btn btn-primary btn-sm">
+							<i class="fa-solid fa-magnifying-glass"></i>
+						</button>
+					</form>
 				</div>
-				<div class="card-body">
-					<h5 class="card-title mb-3" th:text="${movie.title}">Nombre</h5>
-					<div class="card-footer bg-transparent border-0 pt-0">
-						<a th:href="@{/movies/{id}(id=${movie.id})}"
-						   class="btn btn-outline-primary btn-sm w-100 mb-2">
-							<i class="fa-regular fa-eye me-1"></i>Ver película
-						</a>
-						<a sec:authorize="hasRole('ADMIN')" th:href="@{/movies/edit/{id}(id=${movie.id})}"
-						   class="btn btn-outline-primary btn-sm w-100">
-							<i class="fa-solid fa-pencil me-1"></i>Editar
-						</a>
+			</nav>
+		</div>
+		<div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 p-3 g-3">
+			<div class="col" th:each="movie : ${movies}">
+				<div class="card h-100 shadow-sm">
+					<div>
+						<img style="height: 24rem" th:src="${movie.getImageUrl}" class="card-img-top" alt="Film card">
+					</div>
+					<div class="card-body">
+						<h5 class="card-title mb-3" th:text="${movie.title}">Nombre</h5>
+						<div class="card-footer bg-transparent border-0 pt-0">
+							<a th:href="@{/movies/{id}(id=${movie.id})}"
+							   class="btn btn-outline-primary btn-sm w-100 mb-2">
+								<i class="fa-regular fa-eye me-1"></i>Ver película
+							</a>
+							<a sec:authorize="hasRole('ADMIN')" th:href="@{/movies/edit/{id}(id=${movie.id})}"
+							   class="btn btn-outline-primary btn-sm w-100">
+								<i class="fa-solid fa-pencil me-1"></i>Editar
+							</a>
+						</div>
 					</div>
 				</div>
 			</div>
