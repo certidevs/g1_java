@@ -8,7 +8,7 @@
 <main class="container flex-grow-1 mb-3">
 	<div class="row">
 		<div class="col-md-9">
-			<div class="card shadow-sm mb-3">
+			<div class="card shadow-sm">
 				<div class="row g-0">
 					<div class="col-md-8">
 						<div class="card-body m-4">
@@ -89,20 +89,25 @@
 				<div class="card-body m-2">
 					<h5 class="card-title mb-3">Sesiones</h5>
 					<div class="card" th:if="${projections != null}">
-						<ul class="list-group list-group-flush">
-							<li class="list-group-item" th:each="projection : ${projections}" >
-								<a th:href="@{/sessions/{id}(id=${projection.id})}" class="btn btn-white btn-sm">
-									<span th:text="${projection.room.name}"></span>
-									<span th:text="${#temporals.format(projection.startTime, 'HH:mm')}"></span>
-								</a>
-							</li>
-							<li class="list-group-item text-muted" th:if="${#lists.isEmpty(projections)}">
+						<div class="card-body">
+							<div th:if="${#lists.isEmpty(projections)}" class="text-muted">
 								No hay sesiones disponibles
-							</li>
-						</ul>
+							</div>
+							<div th:each="entry : ${projectionsByRoom}" class="mb-3">
+								<h6 class="fw-bold" th:text="${entry.key.name}"></h6>
+								<div class="d-flex flex-wrap gap-2">
+									<a th:each="projection : ${entry.value}"
+									   th:href="@{/sessions/{id}(id=${projection.id})}"
+									   class="btn btn-outline-primary btn-sm"
+									   th:text="${#temporals.format(projection.startTime, 'HH:mm')}">
+									</a>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
+
 		</div>
 	</div>
 </main>

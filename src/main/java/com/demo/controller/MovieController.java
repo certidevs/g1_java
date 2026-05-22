@@ -1,6 +1,8 @@
 package com.demo.controller;
 
 import com.demo.model.Movie;
+import com.demo.model.Room;
+import com.demo.model.Session;
 import com.demo.model.enums.Genre;
 import com.demo.model.enums.MinAge;
 import com.demo.repository.DirectorRepository;
@@ -16,7 +18,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor
 @Controller
@@ -65,7 +69,17 @@ public class MovieController {
         if (date != null) {
             LocalDateTime start = date.atStartOfDay();
             LocalDateTime end = date.atTime(LocalTime.MAX);
-            model.addAttribute("projections", sessionRepository.findByMovie_IdAndStartTimeBetween(id, start, end));
+            List<Session> projections = sessionRepository.findByMovie_IdAndStartTimeBetween(id, start, end);
+
+            Map<Room, List<Session>> projectionsByRoom = new LinkedHashMap<>();
+            for (Session session : projections) {
+                projectionsByRoom
+                        .computeIfAbsent(session.getRoom(), room -> new ArrayList<>())
+                        .add(session);
+            }
+
+            model.addAttribute("projections", projections);
+            model.addAttribute("projectionsByRoom", projectionsByRoom);
         }
 
         return "movies/movie-detail";
