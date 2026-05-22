@@ -6,6 +6,7 @@ import com.demo.model.enums.MovieStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.EnumSet;
 import java.util.Set;
 
@@ -32,7 +33,7 @@ public class Movie {
     @Enumerated(EnumType.STRING)
     private Set<Genre> genreSet = EnumSet.noneOf(Genre.class);
 
-    private Integer releaseYear;
+    private LocalDate releaseDate;
 
     @Builder.Default
     @Enumerated(EnumType.STRING)

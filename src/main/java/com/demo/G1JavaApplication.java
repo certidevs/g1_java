@@ -6,6 +6,7 @@ import com.demo.repository.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.EnumSet;
 import java.util.List;
@@ -45,7 +46,7 @@ public class G1JavaApplication {
         movie1.setTitle("Super Mario Galaxy");
         movie1.setGenreSet(EnumSet.of(Genre.COMEDY, Genre.ANIMATION));
         movie1.setDirector(director1);
-        movie1.setReleaseYear(2026);
+        movie1.setReleaseDate(LocalDate.of(2026, 4, 1));
         movie1.setMinAge(MinAge.AGE_7);
         movie1.setMovieStatus(MovieStatus.NOW_SHOWING);
         movie1.setDuration(98);
@@ -61,7 +62,7 @@ public class G1JavaApplication {
         movie2.setTitle("El diablo viste de Prada 2");
         movie2.setGenreSet(EnumSet.of(Genre.COMEDY, Genre.DRAMA));
         movie2.setDirector(director2);
-        movie2.setReleaseYear(2026);
+        movie2.setReleaseDate(LocalDate.of(2026, 4, 30));
         movie2.setMinAge(MinAge.AGE_7);
         movie2.setMovieStatus(MovieStatus.NOW_SHOWING);
         movie2.setDuration(119);
@@ -76,7 +77,7 @@ public class G1JavaApplication {
         movie3.setTitle("Michael");
         movie3.setGenreSet(EnumSet.of(Genre.DRAMA, Genre.DOCUMENTARY));
         movie3.setDirector(director3);
-        movie3.setReleaseYear(2026);
+        movie3.setReleaseDate(LocalDate.of(2026, 4, 24));
         movie3.setMinAge(MinAge.AGE_12);
         movie3.setMovieStatus(MovieStatus.NOW_SHOWING);
         movie3.setDuration(127);
@@ -91,7 +92,7 @@ public class G1JavaApplication {
         movie4.setTitle("La familia Benetón + 2");
         movie4.setGenreSet(EnumSet.of(Genre.COMEDY, Genre.SPANISH));
         movie4.setDirector(director4);
-        movie4.setReleaseYear(2026);
+        movie4.setReleaseDate(LocalDate.of(2026, 4, 17));
         movie4.setMinAge(MinAge.ALL);
         movie4.setMovieStatus(MovieStatus.NOW_SHOWING);
         movie4.setDuration(87);
@@ -107,7 +108,7 @@ public class G1JavaApplication {
         movie5.setTitle("Mortal Kombat II");
         movie5.setGenreSet(EnumSet.of(Genre.FANTASY, Genre.SCI_FI));
         movie5.setDirector(director5);
-        movie5.setReleaseYear(2026);
+        movie5.setReleaseDate(LocalDate.of(2026, 5, 8));
         movie5.setMinAge(MinAge.AGE_16);
         movie5.setMovieStatus(MovieStatus.NOW_SHOWING);
         movie5.setDuration(116);

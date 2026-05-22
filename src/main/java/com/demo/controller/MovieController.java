@@ -39,10 +39,9 @@ public class MovieController {
             @RequestParam(required = false) Genre genre,
             @RequestParam(required = false) String title,
             @RequestParam(required = false) MinAge minAge,
-            @RequestParam(required = false) Integer releaseYear,
             @RequestParam(required = false)MovieStatus movieStatus
             ) {
-        List<Movie> movies = movieRepository.findActiveFiltering(directorName, genre, title, minAge, releaseYear, movieStatus);
+        List<Movie> movies = movieRepository.findActiveFiltering(directorName, genre, title, minAge, movieStatus);
 
         model.addAttribute("movies", movies);
         model.addAttribute("numMovies", movies.size());
