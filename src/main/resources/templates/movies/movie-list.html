@@ -41,6 +41,19 @@
 							</li>
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+									Estado
+								</a>
+								<ul class="dropdown-menu">
+									<li th:each="movieStatus : ${moviesStatus}">
+										<a class="dropdown-item"
+										   th:href="@{/movies(movieStatus=${movieStatus.name()})}"
+										   th:text="${movieStatus.label}">
+										</a>
+									</li>
+								</ul>
+							</li>
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 									Edad mínima
 								</a>
 								<ul class="dropdown-menu">

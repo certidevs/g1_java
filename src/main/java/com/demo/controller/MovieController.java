@@ -5,6 +5,7 @@ import com.demo.model.Room;
 import com.demo.model.Session;
 import com.demo.model.enums.Genre;
 import com.demo.model.enums.MinAge;
+import com.demo.model.enums.MovieStatus;
 import com.demo.repository.DirectorRepository;
 import com.demo.repository.MovieRepository;
 import com.demo.repository.SessionRepository;
@@ -38,9 +39,10 @@ public class MovieController {
             @RequestParam(required = false) Genre genre,
             @RequestParam(required = false) String title,
             @RequestParam(required = false) MinAge minAge,
-            @RequestParam(required = false) Integer releaseYear
-    ) {
-        List<Movie> movies = movieRepository.findActiveFiltering(directorName, genre, title, minAge, releaseYear);
+            @RequestParam(required = false) Integer releaseYear,
+            @RequestParam(required = false)MovieStatus movieStatus
+            ) {
+        List<Movie> movies = movieRepository.findActiveFiltering(directorName, genre, title, minAge, releaseYear, movieStatus);
 
         model.addAttribute("movies", movies);
         model.addAttribute("numMovies", movies.size());
@@ -48,6 +50,7 @@ public class MovieController {
         model.addAttribute("minAges", MinAge.values());
         model.addAttribute("genres", Genre.values());
         model.addAttribute("directors", directorRepository.findAll());
+        model.addAttribute("moviesStatus", MovieStatus.values());
 
         return "movies/movie-list";
     }

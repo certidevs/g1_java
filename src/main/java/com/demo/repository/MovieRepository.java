@@ -4,6 +4,7 @@ import com.demo.model.Director;
 import com.demo.model.Movie;
 import com.demo.model.enums.Genre;
 import com.demo.model.enums.MinAge;
+import com.demo.model.enums.MovieStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -27,12 +28,14 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
         AND (:title IS NULL OR :title = '' OR LOWER(m.title) LIKE LOWER(CONCAT('%', :title, '%')))
         AND (:minAge IS NULL OR m.minAge = :minAge)
         AND (:releaseYear IS NULL OR m.releaseYear = :releaseYear)
+        AND (:movieStatus IS NULL OR m.movieStatus = :movieStatus)
     """)
     List<Movie> findActiveFiltering(
             @Param("directorName") String directorName,
             @Param("genre") Genre genre,
             @Param("title") String title,
             @Param("minAge") MinAge minAge,
-            @Param("releaseYear") Integer releaseYear
+            @Param("releaseYear") Integer releaseYear,
+            @Param("movieStatus") MovieStatus movieStatus
     );
 }

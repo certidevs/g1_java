@@ -2,6 +2,7 @@ package com.demo.model;
 
 import com.demo.model.enums.Genre;
 import com.demo.model.enums.MinAge;
+import com.demo.model.enums.MovieStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -36,6 +37,10 @@ public class Movie {
     @Builder.Default
     @Enumerated(EnumType.STRING)
     private MinAge minAge = MinAge.ALL;
+
+    @Builder.Default
+    @Enumerated(EnumType.STRING)
+    private MovieStatus movieStatus = MovieStatus.NOW_SHOWING;
 
     private Integer duration;
     private String trailerUrl;
