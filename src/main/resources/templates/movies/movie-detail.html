@@ -63,22 +63,22 @@
 		</div>
 		<div class="col-md-3">
 			<form th:action="@{/movies/{id}(id=${movie.id})}" method="get">
-				<label class="form-label" for="date">Selecciona fecha</label>
-				<select class="form-select" id="date" name="date" required>
-					<option value=""></option>
-
-					<option
-							th:each="availableDate : ${availableDates}"
-							th:value="${availableDate}"
-							th:text="${availableDate}"
-							th:selected="${selectedDate != null and selectedDate == availableDate}">
-					</option>
-
-				</select>
-				<button type="submit" class="btn btn-primary mt-2">Buscar sesiones</button>
+				<label class="form-label fs-4 fw-bold" for="date">Selecciona fecha</label>
+				<div class="d-flex align-items-center mb-3">
+					<select class="form-select me-2" id="date" name="date" required>
+						<option value=""></option>
+						<option
+								th:each="availableDate : ${availableDates}"
+								th:value="${availableDate}"
+								th:text="${availableDate}"
+								th:selected="${selectedDate != null and selectedDate == availableDate}">
+						</option>
+					</select>
+					<button type="submit" class="btn btn-primary">Buscar</button>
+				</div>
 			</form>
 			<div class="card">
-				<div class="card-body m-4">
+				<div class="card-body m-2">
 					<h5 class="card-title mb-3">Sesiones</h5>
 					<div class="card" th:if="${projections != null}">
 						<ul class="list-group list-group-flush">
