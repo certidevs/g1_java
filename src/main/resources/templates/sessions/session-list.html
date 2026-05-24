@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="~{layout/head :: head('Cines')}"></head>
 <body class="d-flex flex-column min-vh-100">
 
@@ -11,7 +11,7 @@
             <h1 class="mb-0">Listado de funciones</h1>
             <span class="badge bg-secondary fs-6 mt-1" th:text="|${numSessions} funciones|"></span>
         </div>
-        <a th:href="@{/sessions/new}" class="btn btn-outline-info" role="button">
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/sessions/new}" class="btn btn-outline-info" role="button">
             <i class="fa-solid fa-plus me-1"></i> Agregar función
         </a>
     </div>
@@ -85,11 +85,11 @@
                        class="btn btn-outline-info btn-sm w-100 mb-1">
                         <i class="fa-regular fa-eye me-1"></i> Ver detalles
                     </a>
-                    <a th:href="@{/sessions/edit/{id}(id=${cinemaFunction.id})}"
+                    <a sec:authorize="hasRole('ADMIN')" th:href="@{/sessions/edit/{id}(id=${cinemaFunction.id})}"
                        class="btn btn-outline-info btn-sm w-100 mb-1">
                         <i class="fa-solid fa-pencil me-1"></i> Editar
                     </a>
-                    <a th:href="@{/sessions/deactivate/{id}(id=${cinemaFunction.id})}"
+                    <a sec:authorize="hasRole('ADMIN')" th:href="@{/sessions/deactivate/{id}(id=${cinemaFunction.id})}"
                        class="btn btn-outline-info btn-sm w-100"
                        onclick="return confirm('¿Estás seguro de que querés desactivar esta función?')">
                         <i class="fa-solid fa-ban me-1"></i> Desactivar
