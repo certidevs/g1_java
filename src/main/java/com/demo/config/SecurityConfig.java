@@ -70,6 +70,7 @@ public class SecurityConfig  {
                         // lo demás autenticado si o si
                         .anyRequest().authenticated()
         );
+        http.exceptionHandling(exception -> exception.accessDeniedPage("/movies"));
 
         http.formLogin(form ->
                 form.loginPage("/login")
