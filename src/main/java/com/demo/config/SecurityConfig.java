@@ -50,11 +50,12 @@ public class SecurityConfig  {
                         .requestMatchers(HttpMethod.GET, "/rooms/deactivate/*").hasRole("ADMIN")
 
                         .requestMatchers(HttpMethod.GET, "/sessions").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/sessions/*").permitAll()
                         .requestMatchers(HttpMethod.POST, "/sessions").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/sessions/new").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/sessions/edit/*").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/sessions/deactivate/*").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/sessions/*").permitAll()
+
 
                         .requestMatchers(HttpMethod.GET, "/reviews").permitAll()
                         .requestMatchers(HttpMethod.GET, "/reviews/*").permitAll()
