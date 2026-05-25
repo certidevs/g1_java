@@ -70,8 +70,14 @@ public class SecurityConfig  {
                         // lo demás autenticado si o si
                         .anyRequest().authenticated()
         );
-        http.exceptionHandling(exception -> exception.accessDeniedPage("/movies"));
 
+//        ejecuta un forward interno al recurso indicado: el servidor renderiza otra cosa pero la URL del navegador se queda con la original
+//        http.exceptionHandling(exception -> exception.accessDeniedPage("/movies"));
+        // este sí redirecciona
+        http.exceptionHandling(ex -> ex
+                .accessDeniedHandler((request, response, e) ->
+                        response.sendRedirect(request.getContextPath() + "/movies"))
+        );
         http.formLogin(form ->
                 form.loginPage("/login")
                         .defaultSuccessUrl("/movies", true)

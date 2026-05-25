@@ -95,18 +95,24 @@ public class SessionController {
     //NO USAR SESSION
     @PostMapping("sessions")
     public String saveSession(@ModelAttribute Session session){
+        boolean isNewSession = session.getId() == null;
+
         sessionRepository.save(session);
 
-        int cols = 10;
-        int rows = session.getRoom().getCapacity() / 10;
-        for (int i = 0; i < rows; i++){
-            String row = String.valueOf((char) ('A' + i));
-            for(int j = 1; j <= cols; j++){
-                ticketRepository.save(Ticket.builder()
-                        .seatRow(row)
-                        .seatNumber(j)
-                        .price(session.getRoom().getPrice())
-                        .session(session).build());
+        // Si es creación de nueva sesion se crean tickets
+        // si es edición de sesión existente no se crean tickets
+        if (isNewSession) {
+            int cols = 10;
+            int rows = session.getRoom().getCapacity() / 10;
+            for (int i = 0; i < rows; i++) {
+                String row = String.valueOf((char) ('A' + i));
+                for (int j = 1; j <= cols; j++) {
+                    ticketRepository.save(Ticket.builder()
+                            .seatRow(row)
+                            .seatNumber(j)
+                            .price(session.getRoom().getPrice())
+                            .session(session).build());
+                }
             }
         }
         return "redirect:/sessions/" + session.getId();
