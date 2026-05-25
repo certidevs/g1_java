@@ -1,5 +1,6 @@
 package com.demo.repository;
 
+import com.demo.model.Ticket;
 import com.demo.model.TicketLine;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -9,9 +10,9 @@ import java.util.Optional;
 
 public interface TicketLineRepository extends JpaRepository<TicketLine, Long> {
 
-    List<TicketLine> findByTicket_Id(Long id);
+   // List<Ticket> findByUser_IdOrderByFechaDesc(Long id);
 
-    Optional<TicketLine> findByTicket_IdAndId(Long ticketId, Long lineId);
+    Optional<Ticket> findByTicket_IdAndId(Long ticketId, Long lineId);
 
     @Query("""
         SELECT SUM(tl.quantity * tl.ticket.price)

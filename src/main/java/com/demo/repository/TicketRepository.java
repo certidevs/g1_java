@@ -10,11 +10,12 @@ import java.util.List;
 
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
-
-    // Para buscar tickets vendidos por fecha y hora
+    // Para admin: buscar tickets vendidos por fecha y hora
     List<Ticket> findByPurchaseTime(LocalDateTime purchaseTime);
 
     List<Ticket> findBySession_Id(Long sessionId);
+    List<Ticket> findByUser_IdOrderByPurchaseTime(Long id);
+//    Long countByUser_Id(Long id);
 
    // Query con filtros
     @Query("""

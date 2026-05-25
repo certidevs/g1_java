@@ -19,8 +19,11 @@ public class TicketLine {
 
     private Integer quantity;
 
+    @ToString.Exclude
     @ManyToOne
     private Ticket ticket;
+
+
 
 
 }
