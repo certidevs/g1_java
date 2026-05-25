@@ -58,19 +58,33 @@ public class TicketController {
     // detail
     @GetMapping("tickets/{id}")
     public String ticketDetail(@PathVariable Long id, Model model){
-        // Filtrar por id y cargar en el modelo
-        Optional<Ticket> ticketOptional = ticketRepository.findById(id);
-        //Comprobamos si existe
-        if(ticketOptional.isPresent()){
-            Ticket ticket = ticketOptional.get();
-            model.addAttribute("ticket", ticket);
-            return "tickets/ticket-detail";
-        }
+       Ticket ticket = ticketRepository.findById(id).orElseThrow();
+       model.addAttribute("ticket", ticket);
+//        model.addAttribute("ticketLines", ticketLineRepository.findByTicket_Id(id));
+//        model.addAttribute("countUserTickets", ticketRepository.countByUser_Id(ticket.getUser().getId()));
+//        model.addAttribute("totalMoneyUserSpent", ticketRepository.calculateTotalMoneySpentByUserId(ticket.getUser().getId()));
 
-       // model.addAttribute("tickets", ticketRepository.findAll());
-        // En caso de que no exista lo envía a session
-        return "redirect:/sessions";
+        if (ticket.getUser() == null) {
+            model.addAttribute("countUserTickets", 0);
+            model.addAttribute("totalMoneyUserSpent", 0);
+        } else {
+            model.addAttribute("ticketLines", ticketLineRepository.findByTicket_Id(id));
+
+            model.addAttribute("countUserTickets",
+                    ticketRepository.countByUser_Id(ticket.getUser().getId()));
+
+            model.addAttribute("totalMoneyUserSpent",
+                    ticketRepository.calculateTotalMoneySpentByUserId(ticket.getUser().getId()));
+        }
+        // Cargar tickets filtrando por session
+        List<Ticket> tickets = ticketRepository.findBySession_Id(ticket.getSession().getId());
+        model.addAttribute("tickets", tickets);
+            return "tickets/ticket-detail";
+//
+//
+//
     }
+
 
     // Get newTicket
     // TODO RequestParam sessionId

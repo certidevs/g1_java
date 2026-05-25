@@ -71,6 +71,31 @@
         <span th:text="${#temporals.format(ticket.purchaseTime, 'dd/MM/yyyy HH:mm')}">Fecha compra</span>
     </p>
 
+    <hr class="my-4">
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <h5 class="card-title mb-3">
+                <i class="fa-solid fa-user me-2 text-primary"></i>
+                Resumen del usuario
+            </h5>
+
+            <p class="mb-2">
+                <strong>Tickets comprados:</strong>
+                <span th:text="${countUserTickets}">0</span>
+            </p>
+
+            <p class="mb-0">
+                <strong>Total gastado:</strong>
+                <span class="badge bg-success fs-6">
+                <span th:text="${#numbers.formatDecimal(totalMoneyUserSpent, 1, 2)}">0.00</span> €
+            </span>
+            </p>
+
+        </div>
+    </div>
+
 </main>
 
 <footer th:replace="~{layout/footer :: footer}"></footer>

@@ -15,7 +15,15 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     List<Ticket> findBySession_Id(Long sessionId);
     List<Ticket> findByUser_IdOrderByPurchaseTime(Long id);
-//    Long countByUser_Id(Long id);
+
+    Long countByUser_Id(Long id);
+
+    @Query("""
+      SELECT SUM(o.price) 
+      FROM Ticket o 
+      WHERE o.user.id = :userId
+""")
+    double calculateTotalMoneySpentByUserId(Long userId);
 
    // Query con filtros
     @Query("""
