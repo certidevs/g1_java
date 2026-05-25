@@ -64,8 +64,14 @@ public class SecurityConfig  {
                         .requestMatchers(HttpMethod.GET, "/reviews/edit/*").hasRole("USER")
                         .requestMatchers(HttpMethod.GET, "/reviews/delete/*").hasRole("ADMIN")
 
-                        // tickets públicos hasta que el sistema de auth esté completo porq no me deja ver las session detail
-                        .requestMatchers("/tickets", "/tickets/**").authenticated()
+                        // hecho por jose,
+                        .requestMatchers(HttpMethod.GET, "/tickets").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/tickets/*").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/tickets").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/tickets/new").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/tickets/edit/*").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/tickets/delete/*").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/tickets/buy/*").permitAll()
 
                         // lo demás autenticado si o si
                         .anyRequest().authenticated()
