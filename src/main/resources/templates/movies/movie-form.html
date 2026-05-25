@@ -8,7 +8,7 @@
 <main class="container flex-grow-1">
 
 	<h1 class="mb-4">
-		<i class="fa-solid fa-utensils text-primary me-2"></i>Formulario película
+		<i class="fa-solid fa-film text-primary me-2"></i>Formulario película
 	</h1>
 
 	<form th:action="@{/movies}" method="post" th:object="${movie}">
@@ -46,6 +46,20 @@
 			<label for="releaseDate" class="form-label">Fecha de lanzamiento</label>
 			<input type="date" class="form-control" id="releaseDate"
 			       th:field="*{releaseDate}" placeholder="1985/05/06" required>
+		</div>
+
+		<div class="mb-3">
+			<label class="form-label" for="movieStatus">Géneros</label>
+			<select class="form-select" id="movieStatus" th:field="*{movieStatus}" required>
+				<option value=""></option>
+
+				<option
+						th:each="movieStatus : ${moviesStatus}"
+						th:value="${movieStatus}"
+						th:text="${movieStatus.label}">
+				</option>
+
+			</select>
 		</div>
 
 		<div class="mb-3">
