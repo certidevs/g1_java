@@ -4,6 +4,8 @@ public enum ScreenType {
     STANDARD("ESTÁNDAR"),
     IMAX("IMAX"),
     THREE_D("3D"),
+    DOLBY_CINE("DOLBY_CINE"),
+    SCREEN_X ("SCREEN_X"),
     VIP("VIP");
 
     private final String label;
