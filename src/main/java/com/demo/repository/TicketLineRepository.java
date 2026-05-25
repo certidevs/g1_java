@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface TicketLineRepository extends JpaRepository<TicketLine, Long> {
 
-   // List<Ticket> findByUser_IdOrderByFechaDesc(Long id);
+    List<TicketLine> findByTicket_Id(Long ticketId);
 
     Optional<Ticket> findByTicket_IdAndId(Long ticketId, Long lineId);
 
