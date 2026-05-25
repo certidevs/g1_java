@@ -188,7 +188,7 @@ public class G1JavaApplication {
 
         Room r2 = new Room();
         r2.setName("Sala 2");
-        r2.setCapacity(60);
+        r2.setCapacity(70);
         r2.setPrice(11.95);
         r2.setScreentype(ScreenType.THREE_D);
 
@@ -200,12 +200,36 @@ public class G1JavaApplication {
 
         Room r4 = new Room();
         r4.setName("Sala VIP");
-        r4.setCapacity(20);
+        r4.setCapacity(30);
         r4.setPrice(25.95);
         r4.setScreentype(ScreenType.VIP);
 
+        Room r5 = new Room();
+        r5.setName("Sala 5");
+        r5.setCapacity(50);
+        r5.setPrice(20.95);
+        r5.setScreentype(ScreenType.SCREEN_X);
+
+        Room r6 = new Room();
+        r6.setName("Sala 6");
+        r6.setCapacity(60);
+        r6.setPrice(8.99);
+        r6.setScreentype(ScreenType.STANDARD);
+
+        Room r7 = new Room();
+        r7.setName("Sala 7");
+        r7.setCapacity(70);
+        r7.setPrice(11.95);
+        r7.setScreentype(ScreenType.THREE_D);
+
+        Room r8 = new Room();
+        r8.setName("Sala 8");
+        r8.setCapacity(45);
+        r8.setPrice(18.95);
+        r8.setScreentype(ScreenType.DOLBY_CINE);
+
         // Guardar en la base de datos
-        roomRepository.saveAll(List.of(r1, r2, r3, r4));
+        roomRepository.saveAll(List.of(r1, r2, r3, r4, r5, r6, r7, r8));
 
         //Datos de SESIONES con las peliculas
         //De lunes a viernes hay 2 sesiones por pelicula, sabado y domingo 3 sesiones por pelicula
