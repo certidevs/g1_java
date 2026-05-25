@@ -69,9 +69,6 @@ public class TicketController {
     public String ticketDetail(@PathVariable Long id, Model model){
        Ticket ticket = ticketRepository.findById(id).orElseThrow();
        model.addAttribute("ticket", ticket);
-//        model.addAttribute("ticketLines", ticketLineRepository.findByTicket_Id(id));
-//        model.addAttribute("countUserTickets", ticketRepository.countByUser_Id(ticket.getUser().getId()));
-//        model.addAttribute("totalMoneyUserSpent", ticketRepository.calculateTotalMoneySpentByUserId(ticket.getUser().getId()));
 
         if (ticket.getUser() == null) {
             model.addAttribute("countUserTickets", 0);
@@ -89,11 +86,18 @@ public class TicketController {
         List<Ticket> tickets = ticketRepository.findBySession_Id(ticket.getSession().getId());
         model.addAttribute("tickets", tickets);
             return "tickets/ticket-detail";
-//
-//
-//
     }
 
+    @GetMapping("tickets/desactivate/{id}")
+    public String ticketDesactivate(@PathVariable Long id, Model model){
+        Optional <Ticket> ticketOptional = ticketRepository.findById(id);
+        if (ticketOptional.isPresent()){
+            Ticket ticket = ticketOptional.get();
+            ticket.setActive(false);
+            ticketRepository.save(ticket);
+        }
+        return "redirect:/tickets";
+    }
 
     // Get newTicket
     // TODO RequestParam sessionId

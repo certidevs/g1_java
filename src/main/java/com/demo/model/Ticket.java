@@ -31,13 +31,10 @@ public class Ticket {
 
     // comida sin necesidad de crear una entidad nueva
     private Double priceCombo; // 5, 7, 10
-//    private Double priceCombo1;
-//    private Double priceCombo2;
-//    private Double priceCombo3;
 
-//    @Builder.Default
-//    @Enumerated(EnumType.STRING)
-//    private TicketType ticketType = TicketType.STANDARD;
+    @Builder.Default
+    @Column(columnDefinition = "BOOLEAN DEFAULT true")
+    private Boolean active = true;
 
    @ToString.Exclude
    @ManyToOne
