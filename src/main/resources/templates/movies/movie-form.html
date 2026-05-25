@@ -22,17 +22,13 @@
 		</div>
 
 		<div class="mb-3">
-			<label class="form-label" for="genreSet">Géneros</label>
-			<select class="form-select" id="genreSet" th:field="*{genreSet}" multiple required>
-				<option value=""></option>
-
-				<option
-						th:each="genreSet : ${genres}"
-						th:value="${genreSet}"
-						th:text="${genreSet.label}">
-				</option>
-
-			</select>
+			<label class="form-label">Géneros</label>
+			<div class="form-control">
+				<div th:each="genre : ${genres}">
+					<input id="genreSet" type="checkbox" th:field="*{genreSet}" th:value="${genre}">
+					<label for="genreSet" th:text="${genre.label}"></label>
+				</div>
+			</div>
 		</div>
 
 		<div class="mb-3">
