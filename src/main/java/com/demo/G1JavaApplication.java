@@ -49,8 +49,12 @@ public class G1JavaApplication {
         Director director8 = new Director();
         director5.setName("McQuoid");
 
+        Director directorOld1 = new Director();
+        director5.setName("McQuoid");
+
         directorRepository.saveAll(
-                List.of(director1, director2, director3, director4, director5,  director6, director7, director8)
+                List.of(director1, director2, director3, director4, director5,  director6, director7, director8,
+                        directorOld1)
         );
 
         Movie movie1 = new Movie();
@@ -143,8 +147,7 @@ public class G1JavaApplication {
                 "https://m.media-amazon.com/images/M/MV5BYWJlNDJkNjQtYjJkZi00YzY0LWFmNjEtMWNiMzZlNjY3Y2VkXkEyXkFqcGc@._V1_.jpg"
         );
         movie6.setSinopsis("Un escritor de terror visita una posada irlandesa para esparcir las cenizas de sus padres, " +
-                "sin saber que se dice que la propiedad está embrujada por una bruja."
-        );
+                "sin saber que se dice que la propiedad está embrujada por una bruja.");
 
         Movie movie7 = new Movie();
         movie7.setTitle("Rebelión en la granja");
@@ -158,8 +161,7 @@ public class G1JavaApplication {
         movie7.setImageUrl(
                 "https://m.media-amazon.com/images/M/MV5BY2U5YTliZDktZWFhZS00ZDI3LTk5MWMtMDFlMjA3MDI2MGMwXkEyXkFqcGc@._V1_.jpg");
         movie7.setSinopsis("Alegoría de la Revolución Rusa con animales rebelándose contra granjero buscando libertad. " +
-                "Su revuelta es socavada internamente sin que los animales lo sepan."
-        );
+                "Su revuelta es socavada internamente sin que los animales lo sepan.");
 
         Movie movie8 = new Movie();
         movie8.setTitle("Las ovejas detectives");
@@ -174,10 +176,25 @@ public class G1JavaApplication {
                 "https://m.media-amazon.com/images/M/MV5BYTk0ZDI5NTAtYWQ5MS00MmI2LWIxMTktOWFkNTEwYzg0OWE4XkEyXkFqcGc@._V1_.jpg");
         movie8.setSinopsis("Cada noche, un pastor lee una novela policíaca, imaginando que sus ovejas pueden entenderla. " +
                 "Cuando lo encuentran muerto, las ovejas se dan cuenta de que se trata de un asesinato " +
-                "y creen saber todo lo necesario para resolverlo."
-        );
+                "y creen saber todo lo necesario para resolverlo.");
 
-        movieRepository.saveAll(List.of(movie1, movie2, movie3, movie4, movie5,  movie6, movie7, movie8));
+        Movie movieOld1 = new Movie();
+        movieOld1.setTitle("Gojira");
+        movieOld1.setGenreSet(EnumSet.of(Genre.ADVENTURE, Genre.ACTION));
+        movieOld1.setDirector(directorOld1);
+        movieOld1.setReleaseDate(LocalDate.of(1956, 11, 5));
+        movieOld1.setMinAge(MinAge.AGE_12);
+        movieOld1.setMovieStatus(MovieStatus.VOTED);
+        movieOld1.setDuration(96);
+        movieOld1.setTrailerUrl("https://www.youtube.com/embed/IVONRrcn9TI");
+        movieOld1.setImageUrl(
+                "https://m.media-amazon.com/images/M/MV5BNTk3M2U3YjMtZDkzYS00OGU5LWEwOTctMDZhNTE0ZDYxZmJjXkEyXkFqcGc@._V1_.jpg");
+        movieOld1.setSinopsis("Los Estados Unidos hacen una pruebas de armamento nuclear que resultan en la creación de " +
+                "una terrible e imparable bestia similar a un dinosaurio.");
+
+        movieRepository.saveAll(
+                List.of(movie1, movie2, movie3, movie4, movie5,  movie6, movie7, movie8, movieOld1)
+        );
 
 
         Room r1 = new Room();
