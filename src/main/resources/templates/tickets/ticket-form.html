@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="~{layout/head :: head('Formulario Ticket')}"></head>
 <body class="d-flex flex-column min-vh-100">
 
@@ -45,7 +45,17 @@
 
         </div>
 
-
+        <div class="mb-3" sec:authorize="hasRole('ADMIN')">
+            <label for="user" class="form-label">Usuario cliente</label>
+            <select class="form-select" id="user" th:field="*{user}" required>
+                <option value=""></option>
+                <option
+                        th:each="user : ${users}"
+                        th:value="${user.id}"
+                        th:text="${user.id + ' - ' + user.username + '-' + user.email}">
+                </option>
+            </select>
+        </div>
 <!--        <div class="mb-3">-->
 <!--            <label for="purchaseTime" class="form-label">Fecha de compra</label>-->
 <!--            <input type="datetime-local" class="form-control" id="purchaseTime"-->

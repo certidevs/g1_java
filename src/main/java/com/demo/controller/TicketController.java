@@ -4,10 +4,7 @@ import com.demo.model.Session;
 import com.demo.model.Ticket;
 import com.demo.model.User;
 import com.demo.model.enums.Role;
-import com.demo.repository.MovieRepository;
-import com.demo.repository.SessionRepository;
-import com.demo.repository.TicketLineRepository;
-import com.demo.repository.TicketRepository;
+import com.demo.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -26,6 +23,7 @@ public class TicketController {
     private final TicketRepository ticketRepository;
     private final TicketLineRepository ticketLineRepository;
     private final SessionRepository sessionRepository;
+    private final UserRepository userRepository;
 
     //GetMapping para ticket-list
     @GetMapping("tickets")
@@ -86,6 +84,7 @@ public class TicketController {
 
         model.addAttribute("ticket", ticket);
         model.addAttribute("projections", sessionRepository.findAll());
+        model.addAttribute("users", userRepository.findAll());
         return "tickets/ticket-form";
     }
     // Get editTicket
@@ -94,6 +93,8 @@ public class TicketController {
         model.addAttribute("ticket", ticketRepository.findById(id).orElseThrow());
        // model.addAttribute("language" , Language.values());
         model.addAttribute("projections", sessionRepository.findAll());
+        model.addAttribute("users", userRepository.findAll());
+
         return "tickets/ticket-form";
     }
 
@@ -103,6 +104,8 @@ public class TicketController {
         Ticket ticket = ticketRepository.findById(id).orElseThrow();
         model.addAttribute("ticket", ticket);
         model.addAttribute("projections", sessionRepository.findAll());
+        model.addAttribute("users", userRepository.findAll());
+
         // foodRepository.findAll
         return "tickets/ticket-form";
     }
@@ -113,8 +116,13 @@ public class TicketController {
     @PostMapping("tickets")
     public String saveTicket(
             @ModelAttribute Ticket ticket, @AuthenticationPrincipal User user) {
+
+        if (user.getRole() !=  Role.ROLE_ADMIN) {
+            // si no es admin, entonces es user y lo asignamos al ticket porque lo está comprando
+            ticket.setUser(user);
+        }
         ticket.setPurchaseTime(LocalDateTime.now());
-        ticket.setUser(user);
+
         //  recalculate total price
        Double precioBase = ticket.getSession().getRoom().getPrice();
        Double precioComida = ticket.getPriceCombo() != null ? ticket.getPriceCombo() : 0.0;
