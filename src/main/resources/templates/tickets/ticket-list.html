@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="~{layout/head :: head('Tickets')}"></head>
 <body class="d-flex flex-column min-vh-100">
 
@@ -9,7 +9,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Tickets</h2>
     </div>
-    <a th:href="@{/tickets/new}" class="btn btn-primary btn-sm mb-2">
+    <a sec:authorize="hasRole('ADMIN')" th:href="@{/tickets/new}" class="btn btn-primary btn-sm mb-2">
         <i class="fa-solid fa-plus"></i>
         Crear ticket
     </a>
@@ -46,6 +46,13 @@
                     </option>
 
                 </select>
+            </div>
+
+            <!-- Filtro por fecha de compra -->
+            <div sec:authorize="hasRole('ADMIN')"  class="col-auto" >
+                <label class="form-label form-label-sm">Fecha de Compra</label>
+                <input type="datetime-local" name="purchaseTime" class="form-control form-control-sm"
+                       placeholder="Selecciona una fecha..." th:value="${param.purchaseTime}">
             </div>
 
             <div class="col-auto">
@@ -101,7 +108,7 @@
                                class="btn btn-sm btn-outline-primary flex-shrink-0">
                                 <i class="fa-regular fa-eye me-1"></i>Ver detalles
                             </a>
-                            <a th:href="@{/tickets/edit/{id}(id=${ticket.id})}"
+                            <a sec:authorize="hasRole('ADMIN')" th:href="@{/tickets/edit/{id}(id=${ticket.id})}"
                                class="btn btn-sm btn-success btn-sm  flex-shrink-0">
                                 <i class="fa-solid fa-pencil me-1"></i>Editar
                             </a>

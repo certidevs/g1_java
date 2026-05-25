@@ -3,8 +3,10 @@ package com.demo.controller;
 import com.demo.model.Session;
 import com.demo.model.Ticket;
 import com.demo.model.User;
+import com.demo.model.enums.Role;
 import com.demo.repository.MovieRepository;
 import com.demo.repository.SessionRepository;
+import com.demo.repository.TicketLineRepository;
 import com.demo.repository.TicketRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,7 +24,7 @@ import java.util.Optional;
 public class TicketController {
      // Inyectar TicketRepository
     private final TicketRepository ticketRepository;
-    private final MovieRepository movieRepository;
+    private final TicketLineRepository ticketLineRepository;
     private final SessionRepository sessionRepository;
 
     //GetMapping para ticket-list
@@ -31,15 +33,27 @@ public class TicketController {
             Model model,
             @RequestParam(required = false) Long sessionId,
             @RequestParam(required = false) String title,
-            @RequestParam(required = false) Double price){
+            @RequestParam(required = false) Double price,
+            @RequestParam(required = false) LocalDateTime purchaseTime,
+            @AuthenticationPrincipal User user){
+        if(user.getRole() == Role.ROLE_ADMIN){
+            List<Ticket> tickets;
 
-        List<Ticket> tickets =
-                ticketRepository.filterTickets(sessionId, title, price);
-
-        model.addAttribute("tickets", tickets);
-        model.addAttribute("sessions", sessionRepository.findAll()); // Agregar sessiones
+         // Si el damin fltra por fecha de compra
+         if(purchaseTime != null) {
+             tickets = ticketRepository.findByPurchaseTime(purchaseTime);
+         }else {
+            tickets = ticketRepository.filterTickets(sessionId, title, price);
+         }
+            model.addAttribute("tickets", tickets);
+            model.addAttribute("sessions", sessionRepository.findAll()); // Agregar sessiones
+        }
+        else {
+            model.addAttribute("tickets", ticketRepository.findByUser_IdOrderByPurchaseTime(user.getId()));
+        }
         return "tickets/ticket-list";
     }
+
 
     // detail
     @GetMapping("tickets/{id}")
@@ -101,8 +115,7 @@ public class TicketController {
             @ModelAttribute Ticket ticket, @AuthenticationPrincipal User user) {
         ticket.setPurchaseTime(LocalDateTime.now());
         ticket.setUser(user);
-        // TODO recalculate total price
-        // TODO no hace falta guardarlo en base de datos pero sí mostrarlo al usuario en el HTML para que vea el total
+        //  recalculate total price
        Double precioBase = ticket.getSession().getRoom().getPrice();
        Double precioComida = ticket.getPriceCombo() != null ? ticket.getPriceCombo() : 0.0;
        Double precioTotal = precioBase + precioComida;
