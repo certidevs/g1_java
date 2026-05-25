@@ -71,6 +71,11 @@
         <span th:text="${#temporals.format(ticket.purchaseTime, 'dd/MM/yyyy HH:mm')}">Fecha compra</span>
     </p>
 
+
+    <!-- TODO imprimir un QR: -->
+    <!-- img th src https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://localhost:8080/tickets/qr-scan/{id} -->
+
+    <!-- TODO mostrar boolean qrScanned  como badge rojo si false o badge verde si true solo para ROLE_ADMIN -->
 </main>
 
 <footer th:replace="~{layout/footer :: footer}"></footer>

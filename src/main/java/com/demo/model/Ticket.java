@@ -51,4 +51,8 @@ public class Ticket {
     @ManyToOne
     private User user;
 
+
+    // por defecto false
+    // private Boolean qrScanned;
+
 }

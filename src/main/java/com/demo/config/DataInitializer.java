@@ -42,5 +42,11 @@ public class DataInitializer implements ApplicationRunner {
                 .role(Role.ROLE_ADMIN)
                 .build());
 
+        // session
+        // startTime LocalDateTime.now()
+        // startTime LocalDateTime.now().plusDays(1)
+        // startTime LocalDateTime.now().plusDays(2)
+        // startTime LocalDateTime.now().plusDays(3)
+
     }
 }

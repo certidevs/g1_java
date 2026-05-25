@@ -125,7 +125,10 @@ public class TicketController {
     }
 
 
-
+    // TODO http://movies.render.io/tickets/qr-scan/1
+    // tickets/qr-scan/{id}
+    // findById   ticket.setQRScanned true
+    // save
 
 
 

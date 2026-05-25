@@ -252,10 +252,10 @@ public class G1JavaApplication {
         //De lunes a viernes hay 2 sesiones por pelicula, sabado y domingo 3 sesiones por pelicula
         // l1s1m1 --> Lunes (1 semana) Sesion 1 Movie 1
         // l1s2m1 --> Lunes (1 semana) Sesion 2 Movie 1
-        Session l1s1m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.of(2026, 4, 6, 17, 30)).language(Language.ESP).room(r2).numAds(3).build());
-        Session l1s2m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.of(2026, 4, 6, 20, 45)).language(Language.VOSE).room(r2).numAds(3).build());
-        Session m1s1m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.of(2026, 4, 7, 17, 30)).language(Language.ESP).room(r2).numAds(3).build());
-        Session m1s2m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.of(2026, 4, 7, 20, 45)).language(Language.VOSE).room(r2).numAds(3).build());
+        Session l1s1m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.now().withHour(20).withMinute(0)).language(Language.ESP).room(r2).numAds(3).build());
+        Session l1s2m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.now().withHour(22).withMinute(0)).language(Language.VOSE).room(r2).numAds(3).build());
+        Session m1s1m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.now().plusDays(1).withHour(20).withMinute(0)).language(Language.ESP).room(r2).numAds(3).build());
+        Session m1s2m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.now().plusDays(1).withHour(22).withMinute(0)).language(Language.VOSE).room(r2).numAds(3).build());
         Session x1s1m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.of(2026, 4, 8, 17, 30)).language(Language.ESP).room(r2).numAds(3).build());
         Session x1s2m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.of(2026, 4, 8, 20, 45)).language(Language.VOSE).room(r2).numAds(3).build());
         Session j1s1m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.of(2026, 4, 9, 17, 30)).language(Language.ESP).room(r2).numAds(3).build());
