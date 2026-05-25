@@ -7,7 +7,7 @@
 
 <main class="container flex-grow-1">
 
-	<h1 class="mb-0">
+	<h1 class="mb-4">
 		<i class="fa-solid fa-utensils text-primary me-2"></i>Formulario película
 	</h1>
 
@@ -43,9 +43,9 @@
 		</div>
 
 		<div class="mb-3">
-			<label for="releaseYear" class="form-label">Año de lanzamiento</label>
-			<input type="text" class="form-control" id="releaseYear"
-			       th:field="*{releaseYear}" placeholder="1985" required>
+			<label for="releaseDate" class="form-label">Fecha de lanzamiento</label>
+			<input type="date" class="form-control" id="releaseDate"
+			       th:field="*{releaseDate}" placeholder="1985/05/06" required>
 		</div>
 
 		<div class="mb-3">
