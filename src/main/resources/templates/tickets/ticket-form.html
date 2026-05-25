@@ -14,7 +14,6 @@
     <!-- TODO formulario para crear o editar un ticket -->
     <form th:action="@{/tickets}" method="post" th:object="${ticket}">
         <input type="hidden" th:field="*{id}">
-<!--        <input type="hidden" th:field="*{purchaseTime}">-->
 
         <!-- campos del ticket-->
         <div class="mb-3">
@@ -30,12 +29,12 @@
         <div class="mb-3">
             <label for="seatRow" class="form-label">Fila</label>
             <input type="text" class="form-control" id="seatRow"
-                   th:field="*{seatRow}" placeholder="Ejemplo: A, B, C..." required>
+                   th:field="*{seatRow}" placeholder="Ejemplo: A, B, C..." required readonly>
         </div>
         <div class="mb-3">
             <label for="seatNumber" class="form-label">Numero de asiento</label>
             <input type="number" class="form-control" id="seatNumber"
-                   th:field="*{seatNumber}" step="1" min="1" placeholder="Ejemplo: 1, 2, 3..." required>
+                   th:field="*{seatNumber}" step="1" min="1" placeholder="Ejemplo: 1, 2, 3..." required readonly>
         </div>
         <div class="mb-3">
             <label for="price" class="form-label">Precio</label>
@@ -56,11 +55,6 @@
                 </option>
             </select>
         </div>
-<!--        <div class="mb-3">-->
-<!--            <label for="purchaseTime" class="form-label">Fecha de compra</label>-->
-<!--            <input type="datetime-local" class="form-control" id="purchaseTime"-->
-<!--                    th:field="*{purchaseTime}">-->
-<!--        </div>-->
 
         <!-- TODO combos opcionales € -->
         <div class="mb-3">

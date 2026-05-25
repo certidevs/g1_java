@@ -34,20 +34,31 @@ public class TicketController {
             @RequestParam(required = false) Double price,
             @RequestParam(required = false) LocalDateTime purchaseTime,
             @AuthenticationPrincipal User user){
-        if(user.getRole() == Role.ROLE_ADMIN){
+        // ADMIN
+        if(user != null && user.getRole() == Role.ROLE_ADMIN){
+
             List<Ticket> tickets;
 
-         // Si el damin fltra por fecha de compra
-         if(purchaseTime != null) {
-             tickets = ticketRepository.findByPurchaseTime(purchaseTime);
-         }else {
-            tickets = ticketRepository.filterTickets(sessionId, title, price);
-         }
+            if(purchaseTime != null) {
+                tickets = ticketRepository.findByPurchaseTime(purchaseTime);
+            } else {
+                tickets = ticketRepository.filterTickets(sessionId, title, price);
+            }
+
             model.addAttribute("tickets", tickets);
-            model.addAttribute("sessions", sessionRepository.findAll()); // Agregar sessiones
+            model.addAttribute("sessions", sessionRepository.findAll());
+
         }
+        // USER NORMAL
+        else if(user != null){
+            model.addAttribute(
+                    "tickets",
+                    ticketRepository.findByUser_IdOrderByPurchaseTime(user.getId())
+            );
+        }
+        // VISITANTE SIN LOGIN
         else {
-            model.addAttribute("tickets", ticketRepository.findByUser_IdOrderByPurchaseTime(user.getId()));
+            model.addAttribute("tickets", ticketRepository.findAll());
         }
         return "tickets/ticket-list";
     }
@@ -101,6 +112,7 @@ public class TicketController {
         model.addAttribute("users", userRepository.findAll());
         return "tickets/ticket-form";
     }
+
     // Get editTicket
     @GetMapping("tickets/edit/{id}")
     public String editTicket(@PathVariable Long id, Model model){
