@@ -3,6 +3,7 @@ package com.demo;
 import com.demo.model.*;
 import com.demo.model.enums.*;
 import com.demo.repository.*;
+import com.demo.service.MovieService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -24,6 +25,7 @@ public class G1JavaApplication {
         SessionRepository sessionRepository = context.getBean(SessionRepository.class);
         TicketRepository ticketRepository = context.getBean(TicketRepository.class);
         ReviewRepository reviewRepository = context.getBean(ReviewRepository.class);
+        MovieService movieService = context.getBean(MovieService.class);
 
         Director director1 = new Director();
         director1.setName("Horvath");
@@ -63,7 +65,7 @@ public class G1JavaApplication {
         movie1.setDirector(director1);
         movie1.setReleaseDate(LocalDate.of(2026, 4, 1));
         movie1.setMinAge(MinAge.AGE_7);
-        movie1.setMovieStatus(MovieStatus.NOW_SHOWING);
+        movieService.updateStatus(movie1, MovieStatus.NOW_SHOWING);
         movie1.setDuration(98);
         movie1.setTrailerUrl("https://www.youtube.com/embed/ipzEY7c7it8");
         movie1.setImageUrl(
@@ -79,7 +81,7 @@ public class G1JavaApplication {
         movie2.setDirector(director2);
         movie2.setReleaseDate(LocalDate.of(2026, 4, 30));
         movie2.setMinAge(MinAge.AGE_7);
-        movie2.setMovieStatus(MovieStatus.NOW_SHOWING);
+        movieService.updateStatus(movie2, MovieStatus.NOW_SHOWING);
         movie2.setDuration(119);
         movie2.setTrailerUrl("https://www.youtube.com/embed/IQD3qh7te2o");
         movie2.setImageUrl(
@@ -94,7 +96,7 @@ public class G1JavaApplication {
         movie3.setDirector(director3);
         movie3.setReleaseDate(LocalDate.of(2026, 4, 24));
         movie3.setMinAge(MinAge.AGE_12);
-        movie3.setMovieStatus(MovieStatus.NOW_SHOWING);
+        movieService.updateStatus(movie3, MovieStatus.NOW_SHOWING);
         movie3.setDuration(127);
         movie3.setTrailerUrl("https://www.youtube.com/embed/iVJaujA54Y8");
         movie3.setImageUrl(
@@ -109,7 +111,7 @@ public class G1JavaApplication {
         movie4.setDirector(director4);
         movie4.setReleaseDate(LocalDate.of(2026, 4, 17));
         movie4.setMinAge(MinAge.ALL);
-        movie4.setMovieStatus(MovieStatus.NOW_SHOWING);
+        movieService.updateStatus(movie4, MovieStatus.NOW_SHOWING);
         movie4.setDuration(87);
         movie4.setTrailerUrl("https://www.youtube.com/embed/O9kD-WhRNus");
         movie4.setImageUrl(
@@ -125,7 +127,7 @@ public class G1JavaApplication {
         movie5.setDirector(director5);
         movie5.setReleaseDate(LocalDate.of(2026, 5, 8));
         movie5.setMinAge(MinAge.AGE_16);
-        movie5.setMovieStatus(MovieStatus.NOW_SHOWING);
+        movieService.updateStatus(movie5, MovieStatus.NOW_SHOWING);
         movie5.setDuration(116);
         movie5.setTrailerUrl("https://www.youtube.com/embed/ZDDRv_FsiFs");
         movie5.setImageUrl(
@@ -140,7 +142,7 @@ public class G1JavaApplication {
         movie6.setDirector(director6);
         movie6.setReleaseDate(LocalDate.of(2026, 5, 15));
         movie6.setMinAge(MinAge.AGE_18);
-        movie6.setMovieStatus(MovieStatus.NOW_SHOWING);
+        movieService.updateStatus(movie6, MovieStatus.NOW_SHOWING);
         movie6.setDuration(101);
         movie6.setTrailerUrl("https://www.youtube.com/embed/6cHc23cGDIc");
         movie6.setImageUrl(
@@ -155,7 +157,7 @@ public class G1JavaApplication {
         movie7.setDirector(director7);
         movie7.setReleaseDate(LocalDate.of(2026, 5, 1));
         movie7.setMinAge(MinAge.AGE_7);
-        movie7.setMovieStatus(MovieStatus.NOW_SHOWING);
+        movieService.updateStatus(movie7, MovieStatus.NOW_SHOWING);
         movie7.setDuration(96);
         movie7.setTrailerUrl("https://www.youtube.com/embed/NN6J7l6ulYk");
         movie7.setImageUrl(
@@ -169,7 +171,7 @@ public class G1JavaApplication {
         movie8.setDirector(director8);
         movie8.setReleaseDate(LocalDate.of(2026, 5, 8));
         movie8.setMinAge(MinAge.AGE_7);
-        movie8.setMovieStatus(MovieStatus.NOW_SHOWING);
+        movieService.updateStatus(movie8, MovieStatus.NOW_SHOWING);
         movie8.setDuration(109);
         movie8.setTrailerUrl("https://www.youtube.com/embed/XrDIQGFm5Fw");
         movie8.setImageUrl(
@@ -184,7 +186,7 @@ public class G1JavaApplication {
         movieOld1.setDirector(directorOld1);
         movieOld1.setReleaseDate(LocalDate.of(1956, 11, 5));
         movieOld1.setMinAge(MinAge.AGE_12);
-        movieOld1.setMovieStatus(MovieStatus.VOTED);
+        movieService.updateStatus(movieOld1, MovieStatus.VOTED);
         movieOld1.setDuration(96);
         movieOld1.setTrailerUrl("https://www.youtube.com/embed/IVONRrcn9TI");
         movieOld1.setImageUrl(
