@@ -3,6 +3,7 @@ package com.demo.model;
 import com.demo.model.enums.Genre;
 import com.demo.model.enums.MinAge;
 import com.demo.model.enums.MovieStatus;
+import com.demo.model.enums.Section;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -41,7 +42,10 @@ public class Movie {
 
     @Builder.Default
     @Enumerated(EnumType.STRING)
-    private MovieStatus movieStatus = MovieStatus.NOW_SHOWING;
+    private MovieStatus movieStatus = MovieStatus.FINISHED;
+
+    @Enumerated(EnumType.STRING)
+    private Section section;
 
     private Integer duration;
     private String trailerUrl;
