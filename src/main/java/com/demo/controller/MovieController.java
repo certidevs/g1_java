@@ -6,6 +6,7 @@ import com.demo.model.Session;
 import com.demo.model.enums.Genre;
 import com.demo.model.enums.MinAge;
 import com.demo.model.enums.MovieStatus;
+import com.demo.model.enums.Section;
 import com.demo.repository.DirectorRepository;
 import com.demo.repository.MovieRepository;
 import com.demo.repository.SessionRepository;
@@ -39,9 +40,10 @@ public class MovieController {
             @RequestParam(required = false) Genre genre,
             @RequestParam(required = false) String title,
             @RequestParam(required = false) MinAge minAge,
-            @RequestParam(required = false)MovieStatus movieStatus
-            ) {
-        List<Movie> movies = movieRepository.findActiveFiltering(directorName, genre, title, minAge, movieStatus);
+            @RequestParam(required = false) MovieStatus movieStatus,
+            @RequestParam(required = false) Section section
+    ) {
+        List<Movie> movies = movieRepository.findActiveFiltering(directorName, genre, title, minAge, movieStatus, section);
 
         model.addAttribute("movies", movies);
         model.addAttribute("numMovies", movies.size());
@@ -50,8 +52,20 @@ public class MovieController {
         model.addAttribute("genres", Genre.values());
         model.addAttribute("directors", directorRepository.findAll());
         model.addAttribute("moviesStatus", MovieStatus.values());
+        model.addAttribute("sections", Section.values());
+        model.addAttribute("section", section != null ? section.name() : null);
 
         return "movies/movie-list";
+    }
+
+    @GetMapping("movies/billboard")
+    public String billboard() {
+        return "redirect:/movies?section=BILLBOARD";
+    }
+
+    @GetMapping("movies/flux")
+    public String flux() {
+        return "redirect:/movies?section=FLUX";
     }
 
 
