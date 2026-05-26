@@ -4,6 +4,8 @@ import com.demo.model.enums.ScreenType;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "rooms")
 @Getter
@@ -33,6 +35,9 @@ public class Room {
 
     @Column(columnDefinition = "BOOLEAN DEFAULT true")
     private Boolean active = true;
+
+    @OneToMany(mappedBy = "room")
+    private List<Session> sessions;
 }
 
 

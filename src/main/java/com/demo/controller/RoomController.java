@@ -35,7 +35,11 @@ public class RoomController {
     // Detalle de una sala activa por ID
     @GetMapping("/rooms/{id}")
     public String roomDetail(Model model, @PathVariable Long id) {
+
+        // Room room = roomRepository.findByIdAndActiveTrue(id).orElse(null);
+
         model.addAttribute("room", roomRepository.findByIdAndActiveTrue(id).orElse(null));
+        // model.addAttribute("sessions", room.getSessions());
         return "rooms/room-detail";
     }
 

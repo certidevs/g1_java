@@ -4,6 +4,7 @@ import com.demo.model.Review;
 import com.demo.model.User;
 import com.demo.repository.MovieRepository;
 import com.demo.repository.ReviewRepository;
+import com.demo.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -18,11 +19,13 @@ public class ReviewController {
     // Inyectar el repositorio de reviews
     private final ReviewRepository reviewRepository;
     private final MovieRepository movieRepository;
+    private final UserRepository userRepository;
 
     //getmapping reviews
     @GetMapping("reviews")
     public String reviews(Model model) {
         model.addAttribute("reviews", reviewRepository.findAll());
+        model.addAttribute("users", userRepository.findAll());
         return "reviews/review-list";
     }
 
@@ -43,6 +46,7 @@ public class ReviewController {
     @GetMapping("reviews/edit/{id}")
     public String editReview(Model model, @PathVariable Long id) {
         model.addAttribute("review", reviewRepository.findById(id).orElseThrow());
+        model.addAttribute("users", userRepository.findAll());
         return "reviews/review-form";
     }
 
@@ -58,6 +62,7 @@ public class ReviewController {
             review.setMovie(movieRepository.findById(movieId).orElseThrow());
 
         model.addAttribute("review", review);
+        model.addAttribute("users", userRepository.findAll());
         return "reviews/review-form";
     }
 
