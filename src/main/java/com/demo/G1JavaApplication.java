@@ -43,16 +43,16 @@ public class G1JavaApplication {
         director5.setName("McQuoid");
 
         Director director6 = new Director();
-        director5.setName("McCarthy");
+        director6.setName("McCarthy");
 
         Director director7 = new Director();
-        director5.setName("Serkis");
+        director7.setName("Serkis");
 
         Director director8 = new Director();
-        director5.setName("McQuoid");
+        director8.setName("Balda");
 
         Director directorOld1 = new Director();
-        director5.setName("McQuoid");
+        directorOld1.setName("Honda");
 
         directorRepository.saveAll(
                 List.of(director1, director2, director3, director4, director5,  director6, director7, director8,

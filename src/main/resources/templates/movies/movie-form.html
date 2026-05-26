@@ -31,13 +31,6 @@
 			</div>
 		</div>
 
-<!--		<div class="mb-3">-->
-<!--			<label class="form-label" for="directorName">Director</label>-->
-
-<!--			<input type="text" class="form-control" id="directorName" name="directorName" placeholder="Director..."-->
-<!--			       th:value="${movie.director != null ? movie.director.name : ''}">-->
-<!--		</div>-->
-
 		<div class="mb-3">
 			<label for="director" class="form-label">Director</label>
 			<select class="form-select" id="director" th:field="*{director}" required>
@@ -48,52 +41,12 @@
 						th:text="${director.id + ' - ' + director.name}">
 				</option>
 			</select>
-			<small>¿No encuentras el director? <a href="/directors/new">Crea uno nuevo</a></small>
+			<small>¿No encuentras el director?
+				<a th:href="@{/directors/new(returnTo=${movie.id} != null ? '/movies/edit/' + movie.id : '/movies/new')}">
+					Crea uno nuevo
+				</a>
+			</small>
 		</div>
-
-		<!--
-
-		Si se quiere redireccion hacia movie form tras crear un directo rhay que hacer todo esto:
-
-		  En movie-form.html:
-
-		<a th:href="@{/directors/new(returnTo=${movie.id} != null ? '/movies/edit/' + movie.id : '/movies/new')}"
-		   class="btn btn-outline-secondary">
-			<i class="fa-solid fa-plus"></i> Nuevo director
-		</a>
-
-		En DirectorController:
-
-		@GetMapping("directors/new")
-		public String newDirector(@RequestParam(required = false) String returnTo, Model model) {
-		model.addAttribute("director", new Director());
-		model.addAttribute("returnTo", returnTo);
-		return "directors/director-form";
-		}
-
-		@PostMapping("directors")
-		public String save(@ModelAttribute Director director,
-		@RequestParam(required = false) String returnTo,
-		RedirectAttributes redirect) {
-		directorRepository.save(director);
-		redirect.addFlashAttribute("message", "Director creado");
-
-		// Validación contra open-redirect: solo rutas internas
-		if (returnTo != null && returnTo.startsWith("/") && !returnTo.startsWith("//")) {
-		return "redirect:" + returnTo;
-		}
-		return "redirect:/directors";
-		}
-
-		En director-form.html — propagar returnTo por el POST:
-
-		<form th:action="@{/directors}" method="post">
-			<input type="hidden" name="returnTo" th:value="${returnTo}" />
-			<button type="submit">Guardar</button>
-			<a th:href="${returnTo != null ? returnTo : '/directors'}" class="btn btn-secondary">Cancelar</a>
-		</form>
-
-		-->
 
 		<div class="mb-3">
 			<label for="releaseDate" class="form-label">Fecha de lanzamiento</label>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head lang="en" th:replace="~{layout/head :: head('Formulario Director')}"></head>
+<body class="d-flex flex-column min-vh-100">
+
+<header th:replace="~{layout/navbar :: navbar}"></header>
+
+<main class="container flex-grow-1">
+	<h1 class="mb-4">
+		<i class="fa-solid fa-clapperboard text-primary me-2"></i>Formulario director
+	</h1>
+
+	<form th:action="@{/directors}" method="post" th:object="${director}">
+		<input type="hidden" name="returnTo" th:value="${returnTo}">
+		<input type="hidden" th:field="*{id}">
+
+		<div class="mb-3">
+			<label for="name" class="form-label">Nombre</label>
+			<input type="text" class="form-control" id="name"
+			       th:field="*{name}" placeholder="Stanley Kubrick" required>
+		</div>
+
+		<button type="submit" class="btn btn-success">
+			<i class="fa-solid fa-floppy-disk"></i> Guardar
+		</button>
+
+		<a th:href="@{/movies}" class="btn btn-secondary">Cancelar</a>
+		<a th:href="${returnTo != null ? returnTo : '/directors'}" class="btn btn-secondary">Cancelar</a>
+	</form>
+</main>
+
+<footer th:replace="~{layout/footer :: footer}"></footer>
+<script th:replace="~{layout/footer :: scripts}"></script>
+
+</body>
+</html>
