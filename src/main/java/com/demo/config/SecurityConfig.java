@@ -73,6 +73,7 @@ public class SecurityConfig  {
                         .requestMatchers(HttpMethod.GET, "/tickets/delete/*").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/tickets/buy/*").permitAll()
 
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         // lo demás autenticado si o si
                         .anyRequest().authenticated()
         );

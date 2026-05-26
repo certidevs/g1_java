@@ -40,6 +40,11 @@
 						<i class="fa-solid fa-comment"></i> Reviews
 					</a>
 				</li>
+				<li class="nav-item" sec:authorize="hasRole('ADMIN')">
+					<a class="nav-link" th:href="@{/admin/users}">
+						<i class="fa-solid fa-users"></i> Usuarios
+					</a>
+				</li>
 			</ul>
 
 			<div sec:authorize="!isAuthenticated()" class="d-flex justify-content-end">

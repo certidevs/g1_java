@@ -3,6 +3,8 @@ package com.demo.service;
 import com.demo.dto.RegisterForm;
 import com.demo.model.User;
 import com.demo.model.enums.Role;
+import com.demo.repository.ReviewRepository;
+import com.demo.repository.TicketRepository;
 import com.demo.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,6 +21,8 @@ import java.util.Optional;
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ReviewRepository reviewRepository;
+    private final TicketRepository ticketRepository;
 
 
     @Override
@@ -53,5 +58,14 @@ public class UserService implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(form.getPassword())); // password cifrada con bcrypt
         user.setRole(Role.ROLE_USER); // por defecto no asignamos rol de admin a usuarios nuevos
         return userRepository.save(user); // guarda el usuario en base de datos
+    }
+
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    public User findById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
     }
 }
