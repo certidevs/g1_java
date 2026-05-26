@@ -77,7 +77,7 @@ public class MovieController {
 
         List<LocalDate> availableDates = new ArrayList<>();
         LocalDate today = LocalDate.now();
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 5; i++) {
             availableDates.add(today.plusDays(i));
         }
         model.addAttribute("availableDates", availableDates);

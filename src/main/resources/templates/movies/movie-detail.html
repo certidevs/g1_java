@@ -74,7 +74,6 @@
 				<label class="form-label fs-4 fw-bold" for="date">Selecciona fecha</label>
 				<div class="d-flex align-items-center mb-3">
 					<select class="form-select me-2" id="date" name="date" required>
-						<option value=""></option>
 						<option
 								th:each="availableDate : ${availableDates}"
 								th:value="${availableDate}"
