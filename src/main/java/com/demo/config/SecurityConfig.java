@@ -36,6 +36,10 @@ public class SecurityConfig  {
                                 "/images/**", "/webjars/**").permitAll()
 
                         // separado de una en una
+
+                        .requestMatchers(HttpMethod.GET, "/").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/index").permitAll()
+
                         .requestMatchers(HttpMethod.GET, "/movies").permitAll()
                         .requestMatchers(HttpMethod.GET, "/movies/*").permitAll()
                         .requestMatchers(HttpMethod.POST, "/movies").hasRole("ADMIN")
