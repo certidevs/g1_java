@@ -68,9 +68,9 @@ public class SecurityConfig  {
                         .requestMatchers(HttpMethod.GET, "/reviews/edit/*").hasRole("USER")
                         .requestMatchers(HttpMethod.GET, "/reviews/delete/*").hasRole("ADMIN")
 
-                        // hecho por jose,
-                        .requestMatchers(HttpMethod.GET, "/tickets").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/tickets/*").permitAll()
+                        // hecho por jose
+                        .requestMatchers(HttpMethod.GET, "/tickets").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/tickets/*").authenticated()
                         .requestMatchers(HttpMethod.POST, "/tickets").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/tickets/new").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/tickets/edit/*").hasRole("ADMIN")

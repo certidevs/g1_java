@@ -30,7 +30,7 @@
 						<i class="fa-solid fa-chalkboard"></i> Funciones
 					</a>
 				</li>
-				<li class="nav-item">
+				<li sec:authorize="isAuthenticated()" class="nav-item">
 					<a class="nav-link" th:href="@{/tickets}">
 						<i class="fa-solid fa-ticket"></i> Tickets
 					</a>
