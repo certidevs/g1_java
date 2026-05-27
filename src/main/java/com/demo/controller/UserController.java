@@ -7,7 +7,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @AllArgsConstructor
 @Controller
@@ -29,6 +32,11 @@ public class UserController {
         return "users/user-detail";
     }
 
+    /*
+    Si queremos que user-form.html tenga passwordConfirm entonces es mejor usar aquí
+    un DTO por ejemplo UserFormDTO con los campos de User más passwordConfirm,
+    y en el metodo save() convertir ese DTO a User para guardarlo en la base de datos.
+     */
     @GetMapping("admin/users/new")
     public String newUser(Model model) {
         model.addAttribute("user", new User());
@@ -45,5 +53,22 @@ public class UserController {
         model.addAttribute("roles", Role.values());
         model.addAttribute("edit", true);
         return "users/user-form";
+    }
+
+    @PostMapping("admin/users")
+    public String saveUser(@ModelAttribute User user, RedirectAttributes ra) {
+        try {
+            if (user.getId() == null) {
+                userService.create(user);
+                ra.addFlashAttribute("message", "Usuario creado");
+            } else {
+                userService.update(user);
+                ra.addFlashAttribute("message", "Usuario actualizado");
+            }
+            return "redirect:/admin/users";
+        } catch (Exception e) {
+            ra.addFlashAttribute("error", e.getMessage());
+            return user.getId() == null ? "redirect:/admin/users/new" : "redirect:/admin/users/edit" + user.getId();
+        }
     }
 }

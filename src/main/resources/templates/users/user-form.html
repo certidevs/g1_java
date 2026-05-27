@@ -34,6 +34,7 @@
 			<input type="password" th:field="*{password}"
 			       class="form-control" id="password"
 			       minlength="4" th:required="${!edit}"> <!-- creación te obliga a poner contraseña -->
+			<small class="text-muted">Deja este campo vacío para conservar la misma contraseña.</small>
 		</div>
 		<div class="mb-3">
 			<label for="role" class="form-label">Rol (Permisos)</label>
@@ -44,6 +45,10 @@
 						th:text="${role.name()}">
 				</option>
 			</select>
+		</div>
+		<div class="mb-3 form-check" th:if="${edit}">
+			<input type="checkbox" class="form-check-input" id="active" th:field="*{active}">
+			<label class="form-check-label" for="active">Activo</label>
 		</div>
 		<button type="submit" class="btn btn-success">
 			<i class="fa-solid fa-floppy-disk"></i> Guardar

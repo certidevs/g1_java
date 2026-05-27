@@ -1,6 +1,7 @@
 package com.demo.controller;
 
 import com.demo.model.Movie;
+import com.demo.model.Review;
 import com.demo.model.Room;
 import com.demo.model.Session;
 import com.demo.model.enums.Genre;
@@ -9,6 +10,7 @@ import com.demo.model.enums.MovieStatus;
 import com.demo.model.enums.Section;
 import com.demo.repository.DirectorRepository;
 import com.demo.repository.MovieRepository;
+import com.demo.repository.ReviewRepository;
 import com.demo.repository.SessionRepository;
 import com.demo.service.MovieService;
 import lombok.AllArgsConstructor;
@@ -30,6 +32,7 @@ public class MovieController {
     private final MovieRepository movieRepository;
     private final SessionRepository sessionRepository;
     private final DirectorRepository directorRepository;
+    private final ReviewRepository reviewRepository;
     private final MovieService movieService;
 
 
@@ -74,6 +77,9 @@ public class MovieController {
         Movie movie = movieRepository.findById(id).orElseThrow();
         model.addAttribute("movie", movie);
         model.addAttribute("selectedDate", date);
+
+        List<Review> reviews = reviewRepository.findByMovie_IdOrderByCreationDateDesc(movie.getId());
+        model.addAttribute("reviews", reviews);
 
         List<LocalDate> availableDates = new ArrayList<>();
         LocalDate today = LocalDate.now();
