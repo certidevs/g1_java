@@ -1,5 +1,6 @@
 package com.demo.service;
 
+import ch.qos.logback.core.util.StringUtil;
 import com.demo.dto.RegisterForm;
 import com.demo.dto.UserStats;
 import com.demo.model.User;
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -79,4 +81,39 @@ public class UserService implements UserDetailsService {
 //                ticketRepository.calculateTotalMoneySpentByUserId(id)
 //        );
 //    }
+
+    public User create(User user) {
+        if (userRepository.existsByUsername(user.getUsername()))
+            throw new IllegalArgumentException("El nombre de usuario ya existe");
+        if (userRepository.existsByEmail(user.getEmail()))
+            throw new IllegalArgumentException("El correo ya existe");
+//        if (user.getPassword() == null || user.getPassword().isBlank())
+//            throw new IllegalArgumentException("La contraseña es obligatoria");
+        if (!StringUtils.hasText(user.getPassword()))
+            throw new IllegalArgumentException("La contraseña es obligatoria");
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
+    }
+
+    public User update(User userForm) {
+        User userDB = findById(userForm.getId());
+        Optional<User> userOpt = userRepository.findByUsername(userForm.getUsername());
+        if (userOpt.isPresent() && !userOpt.get().getId().equals(userDB.getId()))
+            throw new IllegalArgumentException("El nombre de usuario ya existe");
+        userRepository.findByEmail(userForm.getEmail())
+                .filter(user -> !user.getId().equals(userForm.getId()))
+                .ifPresent(user -> {
+                    throw new IllegalArgumentException("El email de usuario ya existe");
+                });
+        userDB.setUsername(userForm.getUsername());
+        userDB.setEmail(userForm.getEmail());
+        userDB.setRole(userForm.getRole());
+        // TODO un admin podría desactivarse a sí mismo, hay que impedirlo lanzando Illegal
+        userDB.setActive(userForm.getActive());
+        if (StringUtils.hasText(userForm.getPassword()))
+            userDB.setPassword(passwordEncoder.encode(userForm.getPassword()));
+
+        return userRepository.save(userDB); // guardamos el usuario actualizado en base de datos
+    }
 }

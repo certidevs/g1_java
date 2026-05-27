@@ -6,12 +6,14 @@
 <main class="container flex-grow-1">
 	<div class="d-flex justify-content-between align-items-center mb-4">
 		<h1 class="mb-3">Listado de usuarios</h1>
-<!--		<a th:href="@{/admin/users/new}"-->
-<!--		   class="btn btn-primary btn-sm mb-2">-->
-<!--			<i class="fa-solid fa-user-plus me-1"></i>-->
-<!--			Crear usuario-->
-<!--		</a>-->
+		<a th:href="@{/admin/users/new}"
+		   class="btn btn-primary btn-sm mb-2">
+			<i class="fa-solid fa-user-plus me-1"></i>
+			Crear usuario
+		</a>
 	</div>
+
+	<div th:if="${message}" class="alert alert-success mt-3" th:text="${message}"></div>
 
 	<div class="table-responsive">
 		<table class="table table-hover align-middle table-bordered border-success">
@@ -36,16 +38,16 @@
 						<i class="fa-solid fa-eye me-1"></i>
 						Ver
 					</a>
-<!--					<a th:href="@{/admin/users/edit/{id}(id=${user.id})}"-->
-<!--					   class="btn btn-sm btn-outline-primary">-->
-<!--						<i class="fa-solid fa-user-pen me-1"></i>-->
-<!--						Editar-->
-<!--					</a>-->
-<!--					<a th:href="@{/admin/users/deactivate/{id}(id=${user.id})}"-->
-<!--					   class="btn btn-sm btn-outline-primary">-->
-<!--						<i class="fa-solid fa-trash me-1"></i>-->
-<!--						Desactivar-->
-<!--					</a>-->
+					<a th:href="@{/admin/users/edit/{id}(id=${user.id})}"
+					   class="btn btn-sm btn-outline-primary">
+						<i class="fa-solid fa-user-pen me-1"></i>
+						Editar
+					</a>
+					<a th:href="@{/admin/users/deactivate/{id}(id=${user.id})}"
+					   class="btn btn-sm btn-outline-primary">
+						<i class="fa-solid fa-trash me-1"></i>
+						Desactivar
+					</a>
 				</td>
 			</tr>
 			</tbody>
