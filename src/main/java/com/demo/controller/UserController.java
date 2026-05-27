@@ -1,5 +1,7 @@
 package com.demo.controller;
 
+import com.demo.model.User;
+import com.demo.model.enums.Role;
 import com.demo.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -25,5 +27,23 @@ public class UserController {
         model.addAttribute("user", userService.findById(id));
 //        model.addAttribute("userStats", userService.findStatsById(id));
         return "users/user-detail";
+    }
+
+    @GetMapping("admin/users/new")
+    public String newUser(Model model) {
+        model.addAttribute("user", new User());
+        model.addAttribute("roles", Role.values());
+        model.addAttribute("edit", false);
+        return "users/user-form";
+    }
+
+    @GetMapping("admin/users/edit/{id}")
+    public String editUser(Model model, @PathVariable Long id) {
+        User user = userService.findById(id);
+        user.setPassword(null);
+        model.addAttribute("user", user);
+        model.addAttribute("roles", Role.values());
+        model.addAttribute("edit", true);
+        return "users/user-form";
     }
 }
