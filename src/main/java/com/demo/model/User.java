@@ -36,8 +36,15 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private Role role;
 
+    private Boolean active;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return active != null && active;
     }
 }

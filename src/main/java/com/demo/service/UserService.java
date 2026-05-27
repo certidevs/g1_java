@@ -60,6 +60,7 @@ public class UserService implements UserDetailsService {
         // user.setPassword(form.getPassword()); // texto plano sin cifrar  admin
         user.setPassword(passwordEncoder.encode(form.getPassword())); // password cifrada con bcrypt
         user.setRole(Role.ROLE_USER); // por defecto no asignamos rol de admin a usuarios nuevos
+        user.setActive(true);
         return userRepository.save(user); // guarda el usuario en base de datos
     }
 
