@@ -23,6 +23,7 @@ public class UserController {
     @GetMapping("admin/users/{id}")
     public String detail(@PathVariable Long id, Model model){
         model.addAttribute("user", userService.findById(id));
+//        model.addAttribute("userStats", userService.findStatsById(id));
         return "users/user-detail";
     }
 }

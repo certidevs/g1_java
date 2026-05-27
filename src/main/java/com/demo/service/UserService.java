@@ -1,6 +1,7 @@
 package com.demo.service;
 
 import com.demo.dto.RegisterForm;
+import com.demo.dto.UserStats;
 import com.demo.model.User;
 import com.demo.model.enums.Role;
 import com.demo.repository.ReviewRepository;
@@ -68,4 +69,14 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
     }
+
+//    public UserStats findStatsById(Long id) {
+//        return new UserStats(
+//                reviewRepository.countByUser_Id(id),
+//                reviewRepository.findByUser_Id(id),
+//                ticketRepository.countByUser_Id(id),
+//                ticketRepository.findByUser_IdOrderByPurchaseTime(id),
+//                ticketRepository.calculateTotalMoneySpentByUserId(id)
+//        );
+//    }
 }
