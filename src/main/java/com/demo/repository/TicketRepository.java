@@ -19,8 +19,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     Long countByUser_Id(Long id);
 
     @Query("""
-      SELECT SUM(o.price) 
-      FROM Ticket o 
+      SELECT COALESCE(SUM(o.price), 0.0) FROM Ticket o 
       WHERE o.user.id = :userId
 """)
     double calculateTotalMoneySpentByUserId(Long userId);

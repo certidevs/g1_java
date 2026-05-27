@@ -88,7 +88,7 @@ public class TicketController {
             return "tickets/ticket-detail";
     }
 
-    @GetMapping("tickets/desactivate/{id}")
+    @GetMapping("tickets/deactivate/{id}")
     public String ticketDesactivate(@PathVariable Long id, Model model){
         Optional <Ticket> ticketOptional = ticketRepository.findById(id);
         if (ticketOptional.isPresent()){
@@ -142,23 +142,43 @@ public class TicketController {
 
 
     // Post saveTicket
-    // El usuario compra el ticket
     @PostMapping("tickets")
     public String saveTicket(
-            @ModelAttribute Ticket ticket, @AuthenticationPrincipal User user) {
+            @ModelAttribute Ticket ticket,
+            @AuthenticationPrincipal User user) {
 
-        if (user.getRole() !=  Role.ROLE_ADMIN) {
-            // si no es admin, entonces es user y lo asignamos al ticket porque lo está comprando
+        // usuario comprador
+        if (user != null && user.getRole() != Role.ROLE_ADMIN) {
             ticket.setUser(user);
         }
+
         ticket.setPurchaseTime(LocalDateTime.now());
 
-        //  recalculate total price
-       Double precioBase = ticket.getSession().getRoom().getPrice();
-       Double precioComida = ticket.getPriceCombo() != null ? ticket.getPriceCombo() : 0.0;
-       Double precioTotal = precioBase + precioComida;
-       ticket.setPrice(precioTotal);
-       ticketRepository.save(ticket);
+        // RECARGAR SESSION COMPLETA DESDE LA BD
+        Long sessionId = ticket.getSession().getId();
+
+        Session session = sessionRepository
+                .findById(sessionId)
+                .orElseThrow(() ->
+                        new RuntimeException("Sesión no encontrada"));
+
+        // asignar session completa al ticket
+        ticket.setSession(session);
+
+        // calcular precio
+        Double precioBase = session.getRoom().getPrice();
+
+        Double precioComida =
+                ticket.getPriceCombo() != null
+                        ? ticket.getPriceCombo()
+                        : 0.0;
+
+        Double precioTotal = precioBase + precioComida;
+
+        ticket.setPrice(precioTotal);
+
+        ticketRepository.save(ticket);
+
         return "redirect:/tickets/" + ticket.getId();
     }
 

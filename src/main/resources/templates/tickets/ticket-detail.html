@@ -1,76 +1,334 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="~{layout/head :: head('Detalle Ticket')}"></head>
 
-<body class="d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100 bg-light">
 
 <nav th:replace="~{layout/navbar :: navbar}"></nav>
 
-<main class="container flex-grow-1">
-    <div class="d-flex justify-content-between align-items-start mb-3">
+<main class="container flex-grow-1 my-4">
 
-        <h1 th:text="${ticket.id}">Numero de Ticket</h1>
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a th:href="@{/tickets}" class="text-decoration-none">
+                    <i class="fa-solid fa-ticket me-1"></i>Tickets
+                </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                Ticket #<span th:text="${ticket.id}"></span>
+            </li>
+        </ol>
+    </nav>
 
-        <a th:href="@{/tickets}" class="btn btn-outline-secondary">
-            <i class="fa-solid fa-arrow-left me-1"></i> Volver a tickets
-        </a>
+    <!-- Cabecera -->
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+                <div>
+                    <h1 class="h3 mb-1">
+                        <i class="fa-solid fa-receipt text-success me-2"></i>
+                        ticket #<span th:text="${ticket.id}"></span>
+                    </h1>
+                    <div class="text-muted small">
+                        <i class="fa-regular fa-clock me-1"></i>
+                        <strong>Comprado:</strong>
+                        <span th:text="${#temporals.format(ticket.purchaseTime, 'dd/MM/yyyy HH:mm')}">Fecha compra</span>
+                    </div>
+                </div>
+                <div class="d-flex gap-2 align-items-center">
+
+
+                    <a th:href="@{/tickets}" class="btn btn-outline-secondary btn-sm">
+                        <i class="fa-solid fa-arrow-left me-1"></i> Volver
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Título de la película -->
-    <h5 class="card-title">
-        <i class="fa-solid fa-film text-primary me-2"></i>
-        <span th:text="${ticket.session.movie.title}">Título de película</span>
-    </h5>
+    <div class="row g-3 mb-4">
 
-    <!-- Hora de la sesión -->
-    <p class="card-text">
-        <strong>
-            <i class="fa-solid fa-clock me-1"></i>Sesión:
-        </strong>
-        <span th:text="${#temporals.format(ticket.session.startTime, 'dd/MM/yyyy HH:mm')}">Fecha y hora Función</span>
-    </p>
+        <!-- Información del ticket -->
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">
+                        <i class="fa-solid fa-clipboard-list me-2"></i>Ticket
+                    </h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span class="text-muted"><i class="fa-solid fa-film me-2"></i>Título de película</span>
+                        <span class="fw-semibold" th:text="${ticket.session.movie.title}"></span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span class="text-muted"><i class="fa-solid fa-clock me-2"></i>Función</span>
+                        <span th:text="${#temporals.format(ticket.session.startTime, 'dd/MM/yyyy HH:mm')}">Fecha y hora Función</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span class="text-muted"><i class="fa-solid fa-door-open me-2"></i>Sala</span>
+                        <span class="fw-semibold" th:text="${ticket.session.room.name}"></span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span class="text-muted"><i class="fa-solid fa-chair me-2"></i>Asiento</span>
+                        <span class="fw-semibold">
+                                    <span th:text="${ticket.seatRow + ticket.seatNumber}"></span>
+                                </span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span class="text-muted"><i class="fa-solid fa-euro-sign me-2"></i>Precio total</span>
+                        <span class="fw-semibold">
+                                    <span th:text="${#numbers.formatDecimal(ticket.price, 1, 2)}">Precio total</span>
+                                </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
-    <!-- Sala -->
-    <p class="card-text">
-        <strong>
-            <i class="fa-solid fa-door-open me-1"></i>Sala:
-        </strong>
-        <span th:text="${ticket.session.room.name}">Sala</span>
-    </p>
+<!--        &lt;!&ndash; Información de la tienda &ndash;&gt;-->
+<!--        <div class="col-md-4">-->
+<!--            <div class="card shadow-sm border-0 h-100">-->
+<!--                <div class="card-header bg-danger text-white">-->
+<!--                    <h5 class="mb-0">-->
+<!--                        <i class="fa-solid fa-store me-2"></i>Tienda-->
+<!--                    </h5>-->
+<!--                </div>-->
+<!--                <div class="card-body pb-2">-->
+<!--                    <h5 class="card-title mb-1">-->
+<!--                        <a th:href="@{/tiendas/{id}(id=${order.tiendas.id})}"-->
+<!--                           class="text-decoration-none link-dark"-->
+<!--                           th:text="${order.tiendas.name}"></a>-->
+<!--                    </h5>-->
+<!--                    <span class="badge bg-light text-dark border"-->
+<!--                          th:if="${order.tiendas.clothesType != null}"-->
+<!--                          th:text="${order.tiendas.clothesType}"></span>-->
+<!--                </div>-->
+<!--                <ul class="list-group list-group-flush">-->
+<!--                    <li class="list-group-item d-flex justify-content-between">-->
+<!--                        <span class="text-muted"><i class="fa-solid fa-euro-sign me-2"></i>Precio medio</span>-->
+<!--                        <span class="fw-semibold">-->
+<!--                                    <span th:text="${#numbers.formatDecimal(order.tiendas.averageprice, 1, 2)}"></span> €-->
+<!--                                </span>-->
+<!--                    </li>-->
+<!--                    <li class="list-group-item d-flex justify-content-between">-->
+<!--                        <span class="text-muted"><i class="fa-solid fa-users me-2"></i>Empleados</span>-->
+<!--                        <span class="fw-semibold" th:text="${order.tiendas.numberEmployees}"></span>-->
+<!--                    </li>-->
+<!--                    <li class="list-group-item d-flex justify-content-between">-->
+<!--                        <span class="text-muted"><i class="fa-solid fa-calendar-day me-2"></i>Apertura</span>-->
+<!--                        <span class="fw-semibold"-->
+<!--                              th:text="${#temporals.format(order.tiendas.starDate, 'dd/MM/yyyy')}"></span>-->
+<!--                    </li>-->
+<!--                    <li class="list-group-item d-flex justify-content-between">-->
+<!--                        <span class="text-muted"><i class="fa-solid fa-circle-check me-2"></i>Estado</span>-->
+<!--                        <span th:if="${order.tiendas.active}" class="badge bg-success">Activo</span>-->
+<!--                        <span th:unless="${order.tiendas.active}" class="badge bg-secondary">Inactivo</span>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--                <div class="card-body pt-2">-->
+<!--                    <a th:href="@{/tiendas/{id}(id=${order.tiendas.id})}"-->
+<!--                       class="btn btn-outline-danger btn-sm w-100">-->
+<!--                        <i class="fa-regular fa-eye me-1"></i> Ver tienda-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
 
-    <!-- Fila y Asiento -->
-    <p class="card-text">
-        <strong>
-            <i class="fa-solid fa-chair me-1"></i>Asiento:
-        </strong>
-        <span th:text="${ticket.seatRow + ticket.seatNumber}">A1</span>
-    </p>
+<!--        <div class="col-md-4">-->
+<!--            <div class="card shadow-sm border-0 h-100">-->
+<!--                <div class="card-header bg-primary text-white">-->
+<!--                    <h5 class="mb-0">-->
+<!--                        <i class="fa-solid fa-user me-2"></i>Cliente-->
+<!--                    </h5>-->
+<!--                </div>-->
+<!--                <div class="card-body text-center pb-2">-->
+<!--                    <div class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center mb-2"-->
+<!--                         style="width: 64px; height: 64px;">-->
+<!--                        <i class="fa-solid fa-user fa-2x text-primary"></i>-->
+<!--                    </div>-->
+<!--                    <h5 class="card-title mb-0" th:text="${order.user.username}"></h5>-->
+<!--                    <p class="text-muted small mb-0">-->
+<!--                        <i class="fa-solid fa-crown text-warning me-1"></i>Cliente VIP-->
+<!--                    </p>-->
+<!--                </div>-->
+<!--                <ul class="list-group list-group-flush">-->
+<!--                    <li class="list-group-item d-flex justify-content-between">-->
+<!--                        <span class="text-muted"><i class="fa-solid fa-envelope me-2"></i>Email</span>-->
+<!--                        <span class="fw-semibold small" th:text="${order.user.email}"></span>-->
+<!--                    </li>-->
+<!--                    <li class="list-group-item d-flex justify-content-between">-->
+<!--                        <span class="text-muted"><i class="fa-solid fa-phone me-2"></i>Teléfono</span>-->
+<!--                        <span class="fw-semibold">+34 600 123 456</span>-->
+<!--                    </li>-->
+<!--                    <li class="list-group-item d-flex justify-content-between">-->
+<!--                        <span class="text-muted"><i class="fa-solid fa-receipt me-2"></i>Pedidos</span>-->
+<!--                        <span class="fw-semibold" th:text="${countUserOrders}"></span>-->
+<!--                    </li>-->
+<!--                    <li class="list-group-item d-flex justify-content-between">-->
+<!--                        <span class="text-muted"><i class="fa-solid fa-receipt me-2"></i>Dinero Gastado</span>-->
+<!--                        <span class="fw-semibold" th:text="${totalMoneyUserSpent}"></span>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 
-    <!-- Precio -->
-    <p class="card-text">
-                        <span class="badge bg-success">
-                            <i class="fa-solid fa-euro-sign me-1"></i>
-                            <span th:text="${#numbers.formatDecimal(ticket.price, 1, 2)}">Precio</span>
-                        </span>
-    </p>
+<!--    &lt;!&ndash; Líneas del pedido &ndash;&gt;-->
+<!--    <div class="card shadow-sm border-0 mb-4">-->
+<!--        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">-->
+<!--            <h5 class="mb-0">-->
+<!--                <i class="fa-solid fa-shirt me-2"></i>Líneas del pedido-->
+<!--            </h5>-->
+<!--            <span class="badge bg-light text-dark"-->
+<!--                  th:text="|${#lists.size(orderLines)} líneas|"></span>-->
+<!--        </div>-->
 
-    <!-- Tipo de ticket -->
-<!--    <p class="card-text">-->
-<!--                        <span class="badge"-->
-<!--                              th:classappend="${ticket.ticketType == 'VIP' ? 'bg-warning' : 'bg-secondary'}">-->
-<!--                            <i class="fa-solid fa-star me-1"></i>-->
-<!--                            <span th:text="${ticket.ticketType}">Standard</span>-->
-<!--                        </span>-->
-<!--    </p>-->
+<!--        <div th:if="${#lists.isEmpty(orderLines)}" class="card-body text-center text-muted py-5">-->
+<!--            <i class="fa-regular fa-folder-open fa-2x mb-2 d-block"></i>-->
+<!--            <p class="mb-0">Este pedido no tiene líneas todavía</p>-->
+<!--        </div>-->
 
-    <!-- Fecha de compra -->
-    <p class="card-text text-muted small">
-        <i class="fa-solid fa-receipt me-1"></i>
-        <strong>Comprado:</strong>
-        <span th:text="${#temporals.format(ticket.purchaseTime, 'dd/MM/yyyy HH:mm')}">Fecha compra</span>
-    </p>
+<!--        <div th:unless="${#lists.isEmpty(orderLines)}" class="table-responsive">-->
+<!--            <table class="table table-hover align-middle mb-0">-->
+<!--                <thead class="table-light">-->
+<!--                <tr>-->
+<!--                    <th class="ps-3">#</th>-->
+<!--                    <th>Producto</th>-->
+<!--                    <th>Tipo</th>-->
+<!--                    <th class="text-center">Cantidad</th>-->
+<!--                    <th class="text-end">Precio</th>-->
+<!--                    <th class="text-end">Subtotal</th>-->
+<!--                    <th class="text-center pe-3">Ver</th> &lt;!&ndash; Ver &ndash;&gt;-->
+<!--                    <th class="text-center pe-3" th:if="${order.status.name() != 'ENTREGADO'}">Modificar</th> &lt;!&ndash; modificar cantidad &ndash;&gt;-->
+<!--                    <th class="text-center pe-3" th:if="${order.status.name() != 'ENTREGADO'}">Eliminar</th> &lt;!&ndash; eliminar linea pedido &ndash;&gt;-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody>-->
+<!--                <tr th:each="line, iter : ${orderLines}">-->
+<!--                    <td class="ps-3 text-muted" th:text="${iter.count}"></td>-->
+<!--                    <td>-->
+<!--                        <div class="fw-semibold">-->
+<!--                            <a th:href="@{/productos/{id}(id=${line.productos.id})}"-->
+<!--                               class="text-decoration-none link-dark"-->
+<!--                               th:text="${line.productos.nameProduct}"></a>-->
+<!--                        </div>-->
+<!--                        <div class="small text-muted text-truncate" style="max-width: 320px;"-->
+<!--                             th:text="${line.productos.description}"></div>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                                    <span class="badge bg-light text-dark border"-->
+<!--                                          th:if="${line.productos.productType != null}"-->
+<!--                                          th:text="${line.productos.productType}"></span>-->
+<!--                    </td>-->
+<!--                    <td class="text-center">-->
+<!--                        <span class="badge bg-secondary rounded-pill" th:text="${line.quantity}"></span>-->
+<!--                    </td>-->
+<!--                    <td class="text-center">-->
+<!--                        <span th:text="${#numbers.formatDecimal(line.productos.price, 1, 2)}"></span> €-->
+<!--                    </td>-->
+<!--                    <td class="text-center fw-semibold"-->
+<!--                        th:text="|${#numbers.formatDecimal(line.quantity * line.productos.price, 1, 2)} €|"></td>-->
+<!--                    <td class="text-center">-->
+<!--                        <a th:href="@{/productos/{id}(id=${line.productos.id})}"-->
+<!--                           class="btn btn-sm btn-outline-primary"-->
+<!--                           title="Ver producto">-->
+<!--                            <i class="fa-regular fa-eye"></i>-->
+<!--                        </a>-->
+<!--                    </td>-->
+<!--                    <td th:if="${order.status.name() != 'ENTREGADO'}" class="text-center">-->
 
+<!--                        &lt;!&ndash; <form> &ndash;&gt;-->
+<!--                        <form th:action="@{/orders/{orderId}/lines/{lineId}(orderId=${order.id},lineId=${line.id})}"-->
+<!--                              method="post" class="d-flex align-items-center justify-content-center gap-1">-->
+<!--                            <input name="quantity" type="number" min="1" style="width: 80px;"-->
+<!--                                   th:value="${line.quantity}" class="form-control form-control-sm me-2">-->
+<!--                            <button class="btn btn-sm btn-success">-->
+<!--                                <i class="fa-solid fa-floppy-disk"></i>-->
+<!--                            </button>-->
+<!--                        </form>-->
+
+<!--                    </td>-->
+<!--                    <td class="text-center" th:if="${order.status.name() != 'ENTREGADO'}">-->
+<!--                        <a class="btn btn-sm btn-danger text-center"-->
+<!--                           th:href="@{/orders/{orderId}/lines/{lineId}/delete(orderId=${order.id},lineId=${line.id})}">-->
+<!--                            <i class="fa-solid fa-trash"></i>-->
+<!--                        </a>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Totales &ndash;&gt;-->
+<!--        <div class="card-footer bg-white">-->
+<!--            <div class="row justify-content-end">-->
+<!--                <div class="col-md-5 col-lg-4">-->
+<!--                    <dl class="row mb-0">-->
+<!--                        <dt class="col-7 fs-5 mb-0">Total</dt>-->
+<!--                        <dd class="col-5 text-end fs-5 fw-bold text-success mb-0">-->
+<!--                            <span th:text="${#numbers.formatDecimal(order.totalPrice, 1, 2)}"></span> €-->
+<!--                        </dd>-->
+
+<!--                        <dd>-->
+
+<!--                        </dd>-->
+<!--                    </dl>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    &lt;!&ndash; formulario propina con boton finalizar pedido &ndash;&gt;-->
+<!--    <div class="card shadow-sm border-0 mb-4" th:if="${order.status.name() != 'ENTREGADO'}">-->
+<!--        <div class="card-body">-->
+<!--            <h5 class="mb-3">Sección de pago</h5>-->
+<!--            <form th:action="@{/orders/{id}/entregado(id=${order.id})}" method="get"-->
+<!--                  class="row align-items-end justify-content-end gab-3">-->
+
+<!--                &lt;!&ndash; Si enviamos info sencible mejor cambiar el "get" a "post" &ndash;&gt;-->
+<!--                <div class="col">-->
+<!--                    <label class="form-label" for="tip">Propina(€)</label>-->
+<!--                    <input type="number" id="tip" name="tip" min="0"-->
+<!--                           step="0.01" class="form-control" value="0.00" >-->
+<!--                </div>-->
+
+<!--                <div class="col">-->
+<!--                    <button type="submit" class="btn btn-sm btn-success">-->
+<!--                        <i class="fa-solid fa-credit-card"></i>-->
+<!--                        Pagar y finalizar-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; TODO MOSTRAR LOS PRODUCTOS A ELEGIR PARA EL PEDIDO EN PRPGRESO &ndash;&gt;-->
+<!--    <div th:if="${order.status.name() != 'ENTREGADO'}">-->
+<!--        <h2 class="mt-4">Selecciona los productos deseados</h2>-->
+
+<!--        <div class="row row-cols-1 row-cols-md-3 g-4">-->
+<!--            <div class="col" th:each="producto : ${productos}">-->
+<!--                <div class="card h-100">-->
+<!--                    <div class="card-body">-->
+<!--                        <h5 class="card-title" th:text="${producto.nameProduct}"></h5>-->
+<!--                        <p class="text-muted small" th:text="${producto.description}"></p>-->
+<!--                        <strong th:text="|${#numbers.formatDecimal(producto.price, 1, 2)} €|"></strong>-->
+<!--                    </div>-->
+
+<!--                    <div class="card-footer">-->
+
+<!--                        <form th:action="@{/orders/{id}/lines(id=${order.id})}" method="post">-->
+<!--                            <input type="hidden" name="productoId" th:value="${producto.id}">-->
+<!--                            <button class="btn btn-sm btn-success">-->
+<!--                                <i class="fa-solid fa-plus"></i>-->
+<!--                                Añadir-->
+<!--                            </button>-->
+<!--                        </form>-->
+<!--                    </div>-->
+
+<!--                </div>-->
 </main>
 
 <footer th:replace="~{layout/footer :: footer}"></footer>
@@ -78,3 +336,76 @@
 
 </body>
 </html>
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="es" xmlns:th="http://www.thymeleaf.org">-->
+
+<!--<head th:replace="~{layout/head :: head('Detalle Ticket')}"></head>-->
+
+<!--<body class="d-flex flex-column min-vh-100">-->
+
+<!--<nav th:replace="~{layout/navbar :: navbar}"></nav>-->
+
+<!--<main class="container flex-grow-1">-->
+<!--    <div class="d-flex justify-content-between align-items-start mb-3">-->
+
+<!--        <h1 th:text="${ticket.id}">Numero de Ticket</h1>-->
+
+<!--        <a th:href="@{/tickets}" class="btn btn-outline-secondary">-->
+<!--            <i class="fa-solid fa-arrow-left me-1"></i> Volver a tickets-->
+<!--        </a>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Título de la película &ndash;&gt;-->
+<!--    <h5 class="card-title">-->
+<!--        <i class="fa-solid fa-film text-primary me-2"></i>-->
+<!--        <span th:text="${ticket.session.movie.title}">Título de película</span>-->
+<!--    </h5>-->
+
+<!--    &lt;!&ndash; Hora de la sesión &ndash;&gt;-->
+<!--    <p class="card-text">-->
+<!--        <strong>-->
+<!--            <i class="fa-solid fa-clock me-1"></i>Sesión:-->
+<!--        </strong>-->
+<!--        <span th:text="${#temporals.format(ticket.session.startTime, 'dd/MM/yyyy HH:mm')}">Fecha y hora Función</span>-->
+<!--    </p>-->
+
+<!--    &lt;!&ndash; Sala &ndash;&gt;-->
+<!--    <p class="card-text">-->
+<!--        <strong>-->
+<!--            <i class="fa-solid fa-door-open me-1"></i>Sala:-->
+<!--        </strong>-->
+<!--        <span th:text="${ticket.session.room.name}">Sala</span>-->
+<!--    </p>-->
+
+<!--    &lt;!&ndash; Fila y Asiento &ndash;&gt;-->
+<!--    <p class="card-text">-->
+<!--        <strong>-->
+<!--            <i class="fa-solid fa-chair me-1"></i>Asiento:-->
+<!--        </strong>-->
+<!--        <span th:text="${ticket.seatRow + ticket.seatNumber}">A1</span>-->
+<!--    </p>-->
+
+<!--    &lt;!&ndash; Precio &ndash;&gt;-->
+<!--    <p class="card-text">-->
+<!--                        <span class="badge bg-success">-->
+<!--                            <i class="fa-solid fa-euro-sign me-1"></i>-->
+<!--                            <span th:text="${#numbers.formatDecimal(ticket.price, 1, 2)}">Precio</span>-->
+<!--                        </span>-->
+<!--    </p>-->
+
+
+<!--    &lt;!&ndash; Fecha de compra &ndash;&gt;-->
+<!--    <p class="card-text text-muted small">-->
+<!--        <i class="fa-solid fa-receipt me-1"></i>-->
+<!--        <strong>Comprado:</strong>-->
+<!--        <span th:text="${#temporals.format(ticket.purchaseTime, 'dd/MM/yyyy HH:mm')}">Fecha compra</span>-->
+<!--    </p>-->
+
+<!--</main>-->
+
+<!--<footer th:replace="~{layout/footer :: footer}"></footer>-->
+<!--<script th:replace="~{layout/footer :: scripts}"></script>-->
+
+<!--</body>-->
+<!--</html>-->
