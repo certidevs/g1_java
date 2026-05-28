@@ -71,7 +71,7 @@ public class SecurityConfig  {
                         // hecho por jose
                         .requestMatchers(HttpMethod.GET, "/tickets").authenticated()
                         .requestMatchers(HttpMethod.GET, "/tickets/*").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/tickets").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/tickets").authenticated()
                         .requestMatchers(HttpMethod.GET, "/tickets/new").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/tickets/edit/*").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/tickets/delete/*").hasRole("ADMIN")
