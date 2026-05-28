@@ -72,7 +72,7 @@
                 <tr>
                     <th><i class="fa-solid fa-film me-2"></i>Película</th>
                     <th><i class="fa-solid fa-clock me-2"></i>Hora</th>
-                    <th><i class="fa-solid fa-eye me-2"></i>Acción</th>
+                    <th><i class="fa-solid fa-arrow-right me-2"></i>Acción</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -83,7 +83,7 @@
                     <td th:text="${#temporals.format(projection.startTime, 'dd/MM/yyyy HH:mm')}"></td>
                     <td>
                         <a th:href="@{/sessions/{id}(id=${projection.id})}" class="btn btn-sm btn-outline-success">
-                            <i class="fa-solid fa-arrow-right me-1"></i>Ver
+                            <i class="fa-solid fa-eye me-1"></i>Ver
                         </a>
                     </td>
                 </tr>
