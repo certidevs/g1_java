@@ -3,6 +3,7 @@ package com.demo.controller;
 import com.demo.model.Room;
 import com.demo.model.enums.ScreenType;
 import com.demo.repository.RoomRepository;
+import com.demo.repository.SessionRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class RoomController {
     private final RoomRepository roomRepository;
+    private final SessionRepository sessionRepository;
 
     // Lista todas las salas activas con filtros
     @GetMapping("/rooms")
@@ -35,11 +37,8 @@ public class RoomController {
     // Detalle de una sala activa por ID
     @GetMapping("/rooms/{id}")
     public String roomDetail(Model model, @PathVariable Long id) {
-
-        // Room room = roomRepository.findByIdAndActiveTrue(id).orElse(null);
-
         model.addAttribute("room", roomRepository.findByIdAndActiveTrue(id).orElse(null));
-        // model.addAttribute("sessions", room.getSessions());
+        model.addAttribute("projections", sessionRepository.findByRoom_Id(id));
         return "rooms/room-detail";
     }
 

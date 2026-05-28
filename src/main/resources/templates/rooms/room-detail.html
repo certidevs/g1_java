@@ -62,9 +62,9 @@
     </a>
 
     <!-- TODO mostrar sessions asociadas a esta Room  -->
-    <h2 class="mt-3">Próximas sesiones en esa sala</h2>
+    <h2 class="mt-5">Próximas sesiones en esa sala</h2>
 
-    <div class="card shadow-sm" th:if="${sessions != null and !sessions.isEmpty()}">
+    <div class="card shadow-sm" th:if="${projections != null and !projections.isEmpty()}">
         <div class="card-body">
 
             <table class="table table-hover mb-0">
@@ -72,18 +72,17 @@
                 <tr>
                     <th><i class="fa-solid fa-film me-2"></i>Película</th>
                     <th><i class="fa-solid fa-clock me-2"></i>Hora</th>
-                    <th><i class="fa-solid fa-door-open me-2"></i>Sala</th>
+                    <th><i class="fa-solid fa-eye me-2"></i>Acción</th>
                     <th></th>
                 </tr>
                 </thead>
 
                 <tbody>
-                <tr th:each="session : ${sessions}">
-                    <td th:text="${session.movie.title}"></td>
-                    <td th:text="${#temporals.format(session.startTime, 'dd/MM/yyyy HH:mm')}"></td>
-                    <td th:text="${session.room.name}"></td>
+                <tr th:each="projection : ${projections}">
+                    <td th:text="${projection.movie.title}"></td>
+                    <td th:text="${#temporals.format(projection.startTime, 'dd/MM/yyyy HH:mm')}"></td>
                     <td>
-                        <a th:href="@{/sessions/{id}(id=${session.id})}" class="btn btn-sm btn-outline-success">
+                        <a th:href="@{/sessions/{id}(id=${projection.id})}" class="btn btn-sm btn-outline-success">
                             <i class="fa-solid fa-arrow-right me-1"></i>Ver
                         </a>
                     </td>
