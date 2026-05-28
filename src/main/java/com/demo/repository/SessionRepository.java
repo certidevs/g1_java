@@ -21,6 +21,8 @@ public interface SessionRepository extends JpaRepository<Session, Long> {
 
     List<Session> findByMovie_IdAndStartTimeBetween(Long movieId, LocalDateTime start, LocalDateTime end);
 
+    List<Session> findByRoom_Id(Long id);
+
     @Query("""
       SELECT s FROM Session s
       WHERE s.active = true
