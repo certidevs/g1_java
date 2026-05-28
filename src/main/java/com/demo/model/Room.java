@@ -36,6 +36,8 @@ public class Room {
     @Column(columnDefinition = "BOOLEAN DEFAULT true")
     private Boolean active = true;
 
+//    @OneToMany(mappedBy = "room")
+//    private List<Session> sessions;
 }
 
 

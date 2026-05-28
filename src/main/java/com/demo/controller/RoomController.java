@@ -38,7 +38,7 @@ public class RoomController {
     @GetMapping("/rooms/{id}")
     public String roomDetail(Model model, @PathVariable Long id) {
         model.addAttribute("room", roomRepository.findByIdAndActiveTrue(id).orElse(null));
-        model.addAttribute("projections", sessionRepository.findByRoom_Id(id));
+        // model.addAttribute("projections", sessionRepository.findByRoom_Id(id));
         return "rooms/room-detail";
     }
 
