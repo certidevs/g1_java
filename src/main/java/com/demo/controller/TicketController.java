@@ -151,32 +151,22 @@ public class TicketController {
         if (user != null && user.getRole() != Role.ROLE_ADMIN) {
             ticket.setUser(user);
         }
-
         ticket.setPurchaseTime(LocalDateTime.now());
-
         // RECARGAR SESSION COMPLETA DESDE LA BD
         Long sessionId = ticket.getSession().getId();
 
         Session session = sessionRepository
                 .findById(sessionId)
-                .orElseThrow(() ->
-                        new RuntimeException("Sesión no encontrada"));
-
+                .orElseThrow(() -> new RuntimeException("Sesión no encontrada"));
         // asignar session completa al ticket
         ticket.setSession(session);
-
         // calcular precio
         Double precioBase = session.getRoom().getPrice();
 
         Double precioComida =
-                ticket.getPriceCombo() != null
-                        ? ticket.getPriceCombo()
-                        : 0.0;
-
+                ticket.getPriceCombo() != null ? ticket.getPriceCombo() : 0.0;
         Double precioTotal = precioBase + precioComida;
-
         ticket.setPrice(precioTotal);
-
         ticketRepository.save(ticket);
 
         return "redirect:/tickets/" + ticket.getId();

@@ -75,6 +75,38 @@
 		</div>
 	</div>
 
+	<h2 class="mt-5">
+		<i class="fa-solid fa-ticket text-primary me-2"></i> Tickets de este usuario
+	</h2>
+	<div th:if="${userStats.tickets().isEmpty()}" class="alert alert-light border">
+		<i class="fa-regular fa-face-smile me-1"></i>
+		Este fenómeno no ha visto una sóla peli, le irán más los libros.
+	</div>
+	<div class="row row-cols-1 row-cols-md-2 g-3" th:unless="${userStats.tickets().isEmpty()}">
+		<div class="col" th:each="ticket : ${userStats.tickets()}">
+			<div class="card h-100 shadow-sm">
+				<div class="card-body">
+					<dl class="row mb-0">
+						<dt class="col-sm-6">ID</dt>
+						<dd class="col-sm-6" th:text="${ticket.id}"></dd>
+						<dt class="col-sm-6">Fila</dt>
+						<dd class="col-sm-6" th:text="${ticket.seatRow}"></dd>
+						<dt class="col-sm-6">Numero Asiento</dt>
+						<dd class="col-sm-6" th:text="${ticket.seatNumber}"></dd>
+						<dt class="col-sm-6">Hora de compra</dt>
+						<dd class="col-sm-6" th:text="${ticket.purchaseTime}"></dd>
+						<dt class="col-sm-6">Precio total</dt>
+						<dd class="col-sm-6" th:text="${ticket.price}"></dd>
+					</dl>
+				</div>
+				<div class="card-footer text-muted small bg-transparent">
+					<i class="fa-regular fa-calendar me-1"></i>
+					<span th:text="${ticket.purchaseTime}"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </main>
 
 <footer th:replace="~{layout/footer :: footer}"></footer>
