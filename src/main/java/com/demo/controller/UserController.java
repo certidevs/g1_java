@@ -2,22 +2,22 @@ package com.demo.controller;
 
 import com.demo.model.User;
 import com.demo.model.enums.Role;
+import com.demo.service.FileService;
 import com.demo.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
 @AllArgsConstructor
 @Controller
 public class UserController {
-    private UserService userService;
+    private final FileService fileService;
+    private final UserService userService;
 
     // user list
     @GetMapping("admin/users")
@@ -58,8 +58,16 @@ public class UserController {
     }
 
     @PostMapping("admin/users")
-    public String saveUser(@ModelAttribute User user, RedirectAttributes ra) {
+    public String saveUser(
+            @ModelAttribute User user,
+            RedirectAttributes ra,
+            @RequestParam("imageFile") MultipartFile imageFile
+            ) {
         log.info("Guardando user {}", user.getUsername());
+        String imageUrl = fileService.store(imageFile);
+        if (imageUrl != null)
+            user.setImageUrl(imageUrl);
+
         try {
             if (user.getId() == null) {
                 user = userService.create(user);

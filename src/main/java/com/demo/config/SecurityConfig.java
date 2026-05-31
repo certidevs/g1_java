@@ -32,8 +32,9 @@ public class SecurityConfig  {
                 auth -> auth
 
                         // rutas públicas tanto GET como POST
-                        .requestMatchers("/login", "/register", "/css/**",
-                                "/images/**", "/webjars/**").permitAll()
+                        .requestMatchers("/hola", "/adios", "/login", "/register",
+                                "/uploads/**",
+                                "/css/**", "/images/**", "/webjars/**").permitAll()
 
                         // separado de una en una
 
