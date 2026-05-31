@@ -105,12 +105,12 @@
                          style="max-width: 200px;" />
 
                     <!-- Estado del QR -->
-                    <span th:if="${ticket.qrScanned}" class="badge bg-danger fs-6">
-                <i class="fa-solid fa-circle-xmark me-1"></i>Ya utilizado
-            </span>
-                    <span th:unless="${ticket.qrScanned}" class="badge bg-success fs-6">
-                <i class="fa-solid fa-circle-check me-1"></i>Válido
-            </span>
+                    <span th:if="${ticket.currentUses >= ticket.maxUses}" class="badge bg-danger fs-6">
+                      <i class="fa-solid fa-circle-xmark me-1"></i>Ya utilizado
+                     </span>
+                    <span th:unless="${ticket.currentUses >= ticket.maxUses}" class="badge bg-success fs-6">
+                         <i class="fa-solid fa-circle-check me-1"></i>Válido
+                    </span>
 
                     <p class="text-muted small mb-0">
                         Muestra este QR en la entrada de la sala

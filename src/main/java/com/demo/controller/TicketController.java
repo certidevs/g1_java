@@ -155,12 +155,12 @@ public class TicketController {
             return "tickets/qr-result";
         }
 
-        if (ticket.getQrScanned()) {
+        if (ticket.getCurrentUses() >= ticket.getMaxUses()) {
             model.addAttribute("mensaje", "❌ Este ticket ya fue usado");
             return "tickets/qr-result";
         }
 
-        ticket.setQrScanned(true);
+        ticket.setCurrentUses(ticket.getCurrentUses() + 1);
         ticketRepository.save(ticket);
         model.addAttribute("mensaje", "✅ Acceso permitido");
         return "tickets/qr-result";

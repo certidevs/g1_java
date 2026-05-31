@@ -54,6 +54,12 @@ public class Ticket {
     @Column(columnDefinition = "BOOLEAN DEFAULT false")
      private Boolean qrScanned = false;
 
+    @Builder.Default
+    private Integer maxUses = 1; // por defecto 1 persona
+
+    @Builder.Default
+    private Integer currentUses = 0; // empieza en 0
+
 
 
 }
