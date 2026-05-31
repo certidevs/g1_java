@@ -88,6 +88,39 @@
             </div>
         </div>
 
+        <!-- QR del ticket -->
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">
+                        <i class="fa-solid fa-qrcode me-2"></i>Código QR
+                    </h5>
+                </div>
+                <div class="card-body text-center d-flex flex-column align-items-center justify-content-center gap-3">
+
+                    <!-- Imagen del QR -->
+                    <img th:src="'data:image/png;base64,' + ${qrCode}"
+                         alt="Código QR del ticket"
+                         class="img-fluid"
+                         style="max-width: 200px;" />
+
+                    <!-- Estado del QR -->
+                    <span th:if="${ticket.qrScanned}" class="badge bg-danger fs-6">
+                <i class="fa-solid fa-circle-xmark me-1"></i>Ya utilizado
+            </span>
+                    <span th:unless="${ticket.qrScanned}" class="badge bg-success fs-6">
+                <i class="fa-solid fa-circle-check me-1"></i>Válido
+            </span>
+
+                    <p class="text-muted small mb-0">
+                        Muestra este QR en la entrada de la sala
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+
 <!--        &lt;!&ndash; Información de la tienda &ndash;&gt;-->
 <!--        <div class="col-md-4">-->
 <!--            <div class="card shadow-sm border-0 h-100">-->

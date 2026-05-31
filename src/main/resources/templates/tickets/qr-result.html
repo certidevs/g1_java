@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/head :: head('Resultado QR')}"></head>
+
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+<nav th:replace="~{layout/navbar :: navbar}"></nav>
+
+<main class="container flex-grow-1 my-4">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+      <div class="card shadow-sm border-0 text-center p-4">
+
+        <!-- Acceso permitido -->
+        <div th:if="${mensaje == '✅ Acceso permitido'}">
+          <i class="fa-solid fa-circle-check text-success" style="font-size: 5rem;"></i>
+          <h2 class="mt-3 text-success">Acceso permitido</h2>
+          <p class="text-muted">El cliente puede entrar a la sala.</p>
+        </div>
+
+        <!-- Ticket ya usado -->
+        <div th:if="${mensaje == '❌ Este ticket ya fue usado'}">
+          <i class="fa-solid fa-circle-xmark text-danger" style="font-size: 5rem;"></i>
+          <h2 class="mt-3 text-danger">Ticket ya usado</h2>
+          <p class="text-muted">Este ticket ya fue escaneado anteriormente.</p>
+        </div>
+
+        <!-- Ticket desactivado -->
+        <div th:if="${mensaje == '❌ Ticket desactivado'}">
+          <i class="fa-solid fa-ban text-warning" style="font-size: 5rem;"></i>
+          <h2 class="mt-3 text-warning">Ticket desactivado</h2>
+          <p class="text-muted">Este ticket no está activo.</p>
+        </div>
+
+        <a th:href="@{/tickets}" class="btn btn-outline-secondary mt-3">
+          <i class="fa-solid fa-arrow-left me-1"></i> Volver a tickets
+        </a>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer th:replace="~{layout/footer :: footer}"></footer>
+<script th:replace="~{layout/footer :: scripts}"></script>
+
+</body>
+</html>

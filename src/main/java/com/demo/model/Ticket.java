@@ -50,6 +50,10 @@ public class Ticket {
 
 
     // por defecto false
-    // private Boolean qrScanned;
+    @Builder.Default
+    @Column(columnDefinition = "BOOLEAN DEFAULT false")
+     private Boolean qrScanned = false;
+
+
 
 }
