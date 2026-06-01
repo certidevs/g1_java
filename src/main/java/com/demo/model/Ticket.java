@@ -1,5 +1,6 @@
 package com.demo.model;
 
+import com.demo.model.enums.TicketStatus;
 import com.demo.service.UserService;
 import jakarta.persistence.*;
 import lombok.*;
@@ -39,6 +40,10 @@ public class Ticket {
    @ToString.Exclude
    @ManyToOne
     private Session session;
+
+   @Enumerated(EnumType.STRING)
+   @Builder.Default
+   private TicketStatus status = TicketStatus.IN_PROGRESS; // por defecto activo
 
 //    @Transient  // No se persiste en la base de datos
 //    private Long sessionId;

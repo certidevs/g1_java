@@ -4,6 +4,7 @@ import com.demo.model.Session;
 import com.demo.model.Ticket;
 import com.demo.model.User;
 import com.demo.model.enums.Role;
+import com.demo.model.enums.TicketStatus;
 import com.demo.repository.*;
 import com.demo.service.QrService;
 import com.google.zxing.WriterException;
@@ -198,10 +199,22 @@ public class TicketController {
     }
 
 
-    // TODO http://movies.render.io/tickets/qr-scan/1
-    // tickets/qr-scan/{id}
-    // findById   ticket.setQRScanned truea
-    // save
+    @GetMapping("tickets/{id}/finish")
+    public String finish(@PathVariable Long id, @RequestParam(required = false) Double iva) {
+        Ticket ticket =  ticketRepository.findById(id).orElseThrow();
+        ticket.setStatus(TicketStatus.FINISHED);
+        // TODO Añadir si agrego comida y/o una compra con varios asientos
+//        ticket.setTotalPrice(orderLineRepository.calculateTotalPrice(order.getId()));
+//        // tip, iva, service charge, terrace
+//        if(iva != null && iva > 0){
+//            ticket.setTotalPrice(ticket.getTotalPrice() + iva);
+//        } else{
+//            ticket.setTotalPrice(ticket.getTotalPrice());
+//        }
+
+        ticketRepository.save(ticket);
+        return "redirect:/tickets/" + id;
+    }
 
 
 
