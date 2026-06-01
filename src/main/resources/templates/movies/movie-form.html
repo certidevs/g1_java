@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head lang="en" th:replace="~{layout/head :: head('Formulario Película')}"></head>
 <body class="d-flex flex-column min-vh-100">
 
@@ -118,6 +118,11 @@
 		<button type="submit" class="btn btn-success">
 			<i class="fa-solid fa-floppy-disk"></i> Guardar
 		</button>
+		<a sec:authorize="hasRole('ADMIN')" th:href="@{/movies/deactivate/{id}(id=${movie.id})}"
+		   class="btn btn-warning" th:if="${movie.id != null}"
+		   onclick="return confirm('¿Estás seguro de que querés desactivar esta función?')">
+			<i class="fa-solid fa-ban me-1"></i> Desactivar
+		</a>
 
 		<a th:href="@{/movies}" class="btn btn-secondary">Cancelar</a>
 

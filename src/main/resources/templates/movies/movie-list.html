@@ -105,8 +105,13 @@
 								<i class="fa-regular fa-eye me-1"></i>Ver película
 							</a>
 							<a sec:authorize="hasRole('ADMIN')" th:href="@{/movies/edit/{id}(id=${movie.id})}"
-							   class="btn btn-outline-primary btn-sm w-100">
+							   class="btn btn-outline-primary btn-sm w-100 mb-2">
 								<i class="fa-solid fa-pencil me-1"></i>Editar
+							</a>
+							<a sec:authorize="hasRole('ADMIN')" th:href="@{/movies/deactivate/{id}(id=${movie.id})}"
+							   class="btn btn-outline-danger btn-sm w-100"
+							   onclick="return confirm('¿Estás seguro de que querés desactivar esta función?')">
+								<i class="fa-solid fa-ban me-1"></i> Desactivar
 							</a>
 						</div>
 					</div>

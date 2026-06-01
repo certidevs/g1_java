@@ -23,10 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @AllArgsConstructor
 @Controller
@@ -108,6 +105,17 @@ public class MovieController {
         }
 
         return "movies/movie-detail";
+    }
+
+    @GetMapping("movies/deactivate/{id}")
+    public String movieDeactivate(@PathVariable Long id, Model model){
+        Optional<Movie> movieOptional = movieRepository.findById(id);
+        if (movieOptional.isPresent()){
+            Movie movie = movieOptional.get();
+            movie.setActive(false);
+            movieRepository.save(movie);
+        }
+        return "redirect:/movies";
     }
 
     @GetMapping("movies/new")
