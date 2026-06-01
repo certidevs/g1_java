@@ -68,9 +68,7 @@ public class G1JavaApplication {
         movieService.updateStatus(movie1, MovieStatus.NOW_SHOWING);
         movie1.setDuration(98);
         movie1.setTrailerUrl("https://www.youtube.com/embed/ipzEY7c7it8");
-        movie1.setImageUrl(
-                "https://m.media-amazon.com/images/M/MV5BNTRkODc0MmItYzQ2NS00MGU3LTkwMTUtMGRmZjMwODNiNmI0XkEyXkFqcGc@._V1_.jpg"
-        );
+        movie1.setImageUrl("/uploads/SuperMarioGalaxy.jpg");
         movie1.setSinopsis("Mario y Luigi ayudan a la Princesa Peach en el Reino Champiñón y " +
                 "conocen a un nuevo aliado: Yoshi. Cuando una celebración desencadena una aventura galáctica, " +
                 "los hermanos viajan al espacio para detener a Bowser Jr. y proteger a Rosalina.");
@@ -84,9 +82,7 @@ public class G1JavaApplication {
         movieService.updateStatus(movie2, MovieStatus.NOW_SHOWING);
         movie2.setDuration(119);
         movie2.setTrailerUrl("https://www.youtube.com/embed/IQD3qh7te2o");
-        movie2.setImageUrl(
-                "https://m.media-amazon.com/images/M/MV5BOGEyNGU5YzItY2VhMy00NTRmLWI5MmYtZDYxZTczMjcwN2E3XkEyXkFqcGc@._V1_.jpg"
-        );
+        movie2.setImageUrl("/uploads/DiabloVistePrada2.jpg");
         movie2.setSinopsis("Cuando Miranda Priestly está por retirarse, " +
                 "se reencuentra con Andy Sachs para enfrentarse a su exasistente convertida en rival: Emily Charlton.");
 
@@ -99,9 +95,7 @@ public class G1JavaApplication {
         movieService.updateStatus(movie3, MovieStatus.NOW_SHOWING);
         movie3.setDuration(127);
         movie3.setTrailerUrl("https://www.youtube.com/embed/iVJaujA54Y8");
-        movie3.setImageUrl(
-                "https://m.media-amazon.com/images/M/MV5BYmMzNTNkOGYtYWViYy00ZmI2LWJjZDQtODhhNTA4NmRjNmE0XkEyXkFqcGc@._V1_.jpg"
-        );
+        movie3.setImageUrl("/uploads/Michael.jpg");
         movie3.setSinopsis("Película biográfica sobre el rey del pop, Michael Jackson. " +
                 "Retratará al cantante desde sus inicios hasta su trágico fallecimiento en 2009.");
 
@@ -114,9 +108,7 @@ public class G1JavaApplication {
         movieService.updateStatus(movie4, MovieStatus.NOW_SHOWING);
         movie4.setDuration(87);
         movie4.setTrailerUrl("https://www.youtube.com/embed/O9kD-WhRNus");
-        movie4.setImageUrl(
-                "https://m.media-amazon.com/images/M/MV5BZDFiYmZhNjEtNDJlMS00ZDdmLTg3YjktOTFlZjJkY2Q3NGQ5XkEyXkFqcGc@._V1_.jpg"
-        );
+        movie4.setImageUrl("/uploads/FamiliaBeneton+2.jpg");
         movie4.setSinopsis("Cuando Toni Benetón cree que tiene todo bajo control en su entrañable y divertida " +
                 "familia multicultural, la llegada de dos nuevos bebés pondrá patas arriba la casa y a toda la familia. " +
                 "Los problemas crecen pero las aventuras también.");
@@ -130,9 +122,7 @@ public class G1JavaApplication {
         movieService.updateStatus(movie5, MovieStatus.NOW_SHOWING);
         movie5.setDuration(116);
         movie5.setTrailerUrl("https://www.youtube.com/embed/ZDDRv_FsiFs");
-        movie5.setImageUrl(
-                "https://m.media-amazon.com/images/M/MV5BZDI1ODhkZWYtM2Q2NS00MmI4LTg3NzUtYTM3NTBlYmQ3NzM3XkEyXkFqcGc@._V1_.jpg"
-        );
+        movie5.setImageUrl("/uploads/MortalKombat2.jpg");
         movie5.setSinopsis("Los guerreros más queridos, incluyendo a Johnny Cage, luchan juntos en un combate definitivo " +
                 "contra el malvado Shao Kahn, cuyo reino amenaza con destruir la Tierra y a quienes la protegen.");
 
@@ -145,9 +135,7 @@ public class G1JavaApplication {
         movieService.updateStatus(movie6, MovieStatus.NOW_SHOWING);
         movie6.setDuration(101);
         movie6.setTrailerUrl("https://www.youtube.com/embed/6cHc23cGDIc");
-        movie6.setImageUrl(
-                "https://m.media-amazon.com/images/M/MV5BYWJlNDJkNjQtYjJkZi00YzY0LWFmNjEtMWNiMzZlNjY3Y2VkXkEyXkFqcGc@._V1_.jpg"
-        );
+        movie6.setImageUrl("/uploads/Hokum.jpg");
         movie6.setSinopsis("Un escritor de terror visita una posada irlandesa para esparcir las cenizas de sus padres, " +
                 "sin saber que se dice que la propiedad está embrujada por una bruja.");
 
@@ -160,8 +148,7 @@ public class G1JavaApplication {
         movieService.updateStatus(movie7, MovieStatus.NOW_SHOWING);
         movie7.setDuration(96);
         movie7.setTrailerUrl("https://www.youtube.com/embed/NN6J7l6ulYk");
-        movie7.setImageUrl(
-                "https://m.media-amazon.com/images/M/MV5BY2U5YTliZDktZWFhZS00ZDI3LTk5MWMtMDFlMjA3MDI2MGMwXkEyXkFqcGc@._V1_.jpg");
+        movie7.setImageUrl("/uploads/AnimalFarm.jpg");
         movie7.setSinopsis("Alegoría de la Revolución Rusa con animales rebelándose contra granjero buscando libertad. " +
                 "Su revuelta es socavada internamente sin que los animales lo sepan.");
 
@@ -174,8 +161,7 @@ public class G1JavaApplication {
         movieService.updateStatus(movie8, MovieStatus.NOW_SHOWING);
         movie8.setDuration(109);
         movie8.setTrailerUrl("https://www.youtube.com/embed/XrDIQGFm5Fw");
-        movie8.setImageUrl(
-                "https://m.media-amazon.com/images/M/MV5BYTk0ZDI5NTAtYWQ5MS00MmI2LWIxMTktOWFkNTEwYzg0OWE4XkEyXkFqcGc@._V1_.jpg");
+        movie8.setImageUrl("/uploads/OvejasDetectives.jpg");
         movie8.setSinopsis("Cada noche, un pastor lee una novela policíaca, imaginando que sus ovejas pueden entenderla. " +
                 "Cuando lo encuentran muerto, las ovejas se dan cuenta de que se trata de un asesinato " +
                 "y creen saber todo lo necesario para resolverlo.");
@@ -189,8 +175,7 @@ public class G1JavaApplication {
         movieService.updateStatus(movieOld1, MovieStatus.VOTED);
         movieOld1.setDuration(96);
         movieOld1.setTrailerUrl("https://www.youtube.com/embed/IVONRrcn9TI");
-        movieOld1.setImageUrl(
-                "https://m.media-amazon.com/images/M/MV5BNTk3M2U3YjMtZDkzYS00OGU5LWEwOTctMDZhNTE0ZDYxZmJjXkEyXkFqcGc@._V1_.jpg");
+        movieOld1.setImageUrl("/uploads/Gojira.jpg");
         movieOld1.setSinopsis("Los Estados Unidos hacen una pruebas de armamento nuclear que resultan en la creación de " +
                 "una terrible e imparable bestia similar a un dinosaurio.");
 
