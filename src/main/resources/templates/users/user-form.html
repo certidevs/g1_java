@@ -53,12 +53,10 @@
 
 		<div class="mb-3">
 			<label for="imageFile" class="form-label">Imagen</label>
-			<!-- conserva la imagen guardada al editar si no subes una nueva -->
 			<input type="hidden" th:field="*{imageUrl}">
 
 			<input type="file" class="form-control" id="imageFile" name="imageFile" accept="image/*">
 
-			<!-- EDITAR: muestra la guardada. ELEGIR archivo: el JS la sustituye -->
 			<img id="preview" alt="Previsualización" class="mt-2 rounded"
 			     style="max-height:150px; display:none"
 			     th:src="${user != null and user.imageUrl != null ? user.imageUrl : null}">

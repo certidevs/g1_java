@@ -11,7 +11,7 @@
 		<i class="fa-solid fa-film text-primary me-2"></i>Formulario película
 	</h1>
 
-	<form th:action="@{/movies}" method="post" th:object="${movie}">
+	<form th:action="@{/movies}" method="post" th:object="${movie}" enctype="multipart/form-data">
 
 		<input type="hidden" th:field="*{id}">
 
@@ -98,16 +98,21 @@
 		<!-- TODO mostrar preview del trailer de youtube para ver como quedaría el trailer cargado-->
 
 		<div class="mb-3">
-			<label for="imageUrl" class="form-label">Enlace de la imagen</label>
-			<input type="text" class="form-control" id="imageUrl"
-			       th:field="*{imageUrl}" placeholder="IMDB..." required>
-		</div>
-
-		<div class="mb-3">
 			<label for="sinopsis" class="form-label">Sinopsis</label>
 			<textarea class="form-control" id="sinopsis" th:field="*{sinopsis}"
 			          rows="3" maxlength="500" placeholder="Año 1941. Las tropas alemanas..." required>
 			</textarea>
+		</div>
+
+		<div class="mb-3">
+			<label for="imageFile" class="form-label">Imagen</label>
+			<input type="hidden" th:field="*{imageUrl}">
+
+			<input type="file" class="form-control" id="imageFile" name="imageFile" accept="image/*">
+
+			<img id="preview" alt="Previsualización" class="mt-2 rounded"
+			     style="max-height:150px; display:none"
+			     th:src="${movie != null and movie.imageUrl != null ? movie.imageUrl : null}">
 		</div>
 
 		<button type="submit" class="btn btn-success">
@@ -123,6 +128,6 @@
 
 <footer th:replace="~{layout/footer :: footer}"></footer>
 <script th:replace="~{layout/footer :: scripts}"></script>
-
+<script th:src="@{/js/img-preview.js}"></script>
 </body>
 </html>
