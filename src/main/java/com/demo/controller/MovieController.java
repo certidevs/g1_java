@@ -123,6 +123,7 @@ public class MovieController {
         model.addAttribute("genres", Genre.values());
         model.addAttribute("directors", directorRepository.findAll());
         model.addAttribute("minAges", MinAge.values());
+        model.addAttribute("moviesStatus", MovieStatus.values());
         return "movies/movie-form";
     }
 

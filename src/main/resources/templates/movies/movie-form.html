@@ -33,16 +33,18 @@
 
 		<div class="mb-3">
 			<label for="director" class="form-label">Director</label>
-			<select class="form-select" id="director" th:field="*{director}" required>
+			<select class="form-select" id="director" name="directorName" required>
 				<option value=""></option>
 				<option
 						th:each="director : ${directors}"
-						th:value="${director.id}"
-						th:text="${director.id + ' - ' + director.name}">
+						th:value="${director.name}"
+						th:text="${director.id + ' - ' + director.name}"
+						th:selected="${movie.director != null and movie.director.id == director.id}">
 				</option>
 			</select>
 			<small>¿No encuentras el director?
-				<a th:href="@{/directors/new(returnTo=${movie.id} != null ? '/movies/edit/' + movie.id : '/movies/new')}">
+				<a th:href="${movie.id != null ? '/directors/new?returnTo=/movies/edit/' + movie.id :
+				'/directors/new?returnTo=/movies/new'}">
 					Crea uno nuevo
 				</a>
 			</small>
@@ -50,12 +52,12 @@
 
 		<div class="mb-3">
 			<label for="releaseDate" class="form-label">Fecha de lanzamiento</label>
-			<input type="date" class="form-control" id="releaseDate"
-			       th:field="*{releaseDate}" placeholder="1985/05/06" required>
+			<input type="date" class="form-control" id="releaseDate" placeholder="1985/05/06"
+			       th:value="${#temporals.format(movie.releaseDate, 'yyyy-MM-dd')}" required>
 		</div>
 
 		<div class="mb-3">
-			<label class="form-label" for="movieStatus">Géneros</label>
+			<label class="form-label" for="movieStatus">Sección</label>
 			<select class="form-select" id="movieStatus" th:field="*{movieStatus}" required>
 				<option value=""></option>
 
@@ -100,8 +102,6 @@
 			<input type="text" class="form-control" id="imageUrl"
 			       th:field="*{imageUrl}" placeholder="IMDB..." required>
 		</div>
-		<!-- TODO mostrar preview de imagen de youtube para ver como quedaría el trailer cargado-->
-		<!-- <img th:src imageUrl -->
 
 		<div class="mb-3">
 			<label for="sinopsis" class="form-label">Sinopsis</label>
