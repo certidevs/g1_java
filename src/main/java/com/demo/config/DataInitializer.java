@@ -6,6 +6,7 @@ import com.demo.model.Movie;
 import com.demo.model.User;
 import com.demo.model.enums.Genre;
 import com.demo.model.enums.Role;
+import com.demo.repository.DirectorRepository;
 import com.demo.repository.FavoriteRepository;
 import com.demo.repository.MovieRepository;
 import com.demo.repository.UserRepository;
@@ -17,6 +18,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.EnumSet;
 
 /*
@@ -28,6 +30,7 @@ public class DataInitializer implements ApplicationRunner {
 
     private final FavoriteRepository favoriteRepository;
     private final MovieRepository movieRepository;
+  //  private final DirectorRepository directorRepository;
     private final UserService userService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -65,6 +68,9 @@ public class DataInitializer implements ApplicationRunner {
         Movie movie = new Movie();
         movie.setTitle("Película para fav");
         movie.setActive(Boolean.TRUE);
+        movie.setSinopsis("Descripción de la película para fav");
+        movie.setReleaseDate(LocalDate.of(2026, 4, 24));
+       // movie.setDirector(directorRepository.findById(1L).orElse(null)); no se como llamar al director desde aqui we
         movie.setDuration(120);
         movie.setGenreSet(EnumSet.of(Genre.ADVENTURE, Genre.COMEDY));
         movie.setImageUrl("/uploads/ollama.png");
