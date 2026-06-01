@@ -1,6 +1,16 @@
 package com.demo.model.enums;
 
 public enum Section {
-    BILLBOARD,
-    FLUX;
+    BILLBOARD("Cartelera"),
+    FLUX("Sala Flux");
+
+    private final String label;
+
+    Section(String label) {
+        this.label = label;
+    }
+
+    public String getLabel() {
+        return label;
+    }
 }

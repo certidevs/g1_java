@@ -129,6 +129,7 @@ public class MovieController {
         model.addAttribute("directors", directorRepository.findAll());
         model.addAttribute("minAges", MinAge.values());
         model.addAttribute("moviesStatus", MovieStatus.values());
+        model.addAttribute("sections", Section.values());
         return "movies/movie-form";
     }
 
@@ -139,6 +140,7 @@ public class MovieController {
         model.addAttribute("directors", directorRepository.findAll());
         model.addAttribute("minAges", MinAge.values());
         model.addAttribute("moviesStatus", MovieStatus.values());
+        model.addAttribute("sections", Section.values());
         return "movies/movie-form";
     }
 

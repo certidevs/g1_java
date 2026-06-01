@@ -57,7 +57,21 @@
 		</div>
 
 		<div class="mb-3">
-			<label class="form-label" for="movieStatus">Sección</label>
+			<label class="form-label" for="section">Sección</label>
+			<select class="form-select" id="section" th:field="*{section}" required>
+				<option value=""></option>
+
+				<option
+						th:each="section : ${sections}"
+						th:value="${section}"
+						th:text="${section.label}">
+				</option>
+
+			</select>
+		</div>
+
+		<div class="mb-3">
+			<label class="form-label" for="movieStatus">Estado</label>
 			<select class="form-select" id="movieStatus" th:field="*{movieStatus}" required>
 				<option value=""></option>
 
