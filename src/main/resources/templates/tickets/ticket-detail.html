@@ -66,7 +66,7 @@
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-header bg-success text-white">
                     <h5 class="mb-0">
-                        <i class="fa-solid fa-clipboard-list me-2"></i>Ticket
+                        <i class="fa-solid fa-ticket me-2"></i>Ticket
                     </h5>
                 </div>
                 <ul class="list-group list-group-flush">
@@ -89,11 +89,24 @@
                                 </span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between">
+                        <span class="text-muted"><i class="fa-solid fa-percent me-2"></i>IVA (10%)</span>
+                        <span class="fw-semibold">
+        <span th:text="${#numbers.formatDecimal(iva, 1, 2)}"></span> €
+                        </span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span class="text-muted"><i class="fa-solid fa-building me-2"></i>Base imponible</span>
+                        <span class="fw-semibold">
+        <span th:text="${#numbers.formatDecimal(precioSinIva, 1, 2)}"></span> €
+                        </span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
                         <span class="text-muted"><i class="fa-solid fa-euro-sign me-2"></i>Precio total</span>
                         <span class="fw-semibold">
                                     <span th:text="${#numbers.formatDecimal(ticket.price, 1, 2)}">Precio total</span>
                                 </span>
                     </li>
+
                 </ul>
             </div>
         </div>
@@ -129,94 +142,75 @@
             </div>
         </div>
 
-
-
-<!--        &lt;!&ndash; Información de la tienda &ndash;&gt;-->
-<!--        <div class="col-md-4">-->
-<!--            <div class="card shadow-sm border-0 h-100">-->
-<!--                <div class="card-header bg-danger text-white">-->
-<!--                    <h5 class="mb-0">-->
-<!--                        <i class="fa-solid fa-store me-2"></i>Tienda-->
-<!--                    </h5>-->
-<!--                </div>-->
-<!--                <div class="card-body pb-2">-->
-<!--                    <h5 class="card-title mb-1">-->
-<!--                        <a th:href="@{/tiendas/{id}(id=${order.tiendas.id})}"-->
-<!--                           class="text-decoration-none link-dark"-->
-<!--                           th:text="${order.tiendas.name}"></a>-->
-<!--                    </h5>-->
-<!--                    <span class="badge bg-light text-dark border"-->
-<!--                          th:if="${order.tiendas.clothesType != null}"-->
-<!--                          th:text="${order.tiendas.clothesType}"></span>-->
-<!--                </div>-->
-<!--                <ul class="list-group list-group-flush">-->
-<!--                    <li class="list-group-item d-flex justify-content-between">-->
-<!--                        <span class="text-muted"><i class="fa-solid fa-euro-sign me-2"></i>Precio medio</span>-->
-<!--                        <span class="fw-semibold">-->
-<!--                                    <span th:text="${#numbers.formatDecimal(order.tiendas.averageprice, 1, 2)}"></span> €-->
-<!--                                </span>-->
-<!--                    </li>-->
-
-<!--                    <li class="list-group-item d-flex justify-content-between">-->
-<!--                        <span class="text-muted"><i class="fa-solid fa-calendar-day me-2"></i>Apertura</span>-->
-<!--                        <span class="fw-semibold"-->
-<!--                              th:text="${#temporals.format(order.tiendas.starDate, 'dd/MM/yyyy')}"></span>-->
-<!--                    </li>-->
-<!--                    <li class="list-group-item d-flex justify-content-between">-->
-<!--                        <span class="text-muted"><i class="fa-solid fa-circle-check me-2"></i>Estado</span>-->
-<!--                        <span th:if="${order.tiendas.active}" class="badge bg-success">Activo</span>-->
-<!--                        <span th:unless="${order.tiendas.active}" class="badge bg-secondary">Inactivo</span>-->
-<!--                    </li>-->
-<!--                </ul>-->
-<!--                <div class="card-body pt-2">-->
-<!--                    <a th:href="@{/tiendas/{id}(id=${order.tiendas.id})}"-->
-<!--                       class="btn btn-outline-danger btn-sm w-100">-->
-<!--                        <i class="fa-regular fa-eye me-1"></i> Ver tienda-->
-<!--                    </a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <div class="col-md-4">-->
-<!--            <div class="card shadow-sm border-0 h-100">-->
-<!--                <div class="card-header bg-primary text-white">-->
-<!--                    <h5 class="mb-0">-->
-<!--                        <i class="fa-solid fa-user me-2"></i>Cliente-->
-<!--                    </h5>-->
-<!--                </div>-->
-<!--                <div class="card-body text-center pb-2">-->
-<!--                    <div class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center mb-2"-->
-<!--                         style="width: 64px; height: 64px;">-->
-<!--                        <i class="fa-solid fa-user fa-2x text-primary"></i>-->
-<!--                    </div>-->
-<!--                    <h5 class="card-title mb-0" th:text="${order.user.username}"></h5>-->
-<!--                    <p class="text-muted small mb-0">-->
-<!--                        <i class="fa-solid fa-crown text-warning me-1"></i>Cliente VIP-->
-<!--                    </p>-->
-<!--                </div>-->
-<!--                <ul class="list-group list-group-flush">-->
-<!--                    <li class="list-group-item d-flex justify-content-between">-->
-<!--                        <span class="text-muted"><i class="fa-solid fa-envelope me-2"></i>Email</span>-->
-<!--                        <span class="fw-semibold small" th:text="${order.user.email}"></span>-->
-<!--                    </li>-->
+        <!-- Pantalla del cliente -->
+        <div class="col-md-4" th:if="${ticket.user != null}">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="fa-solid fa-user me-2"></i> Cliente
+                    </h5>
+                </div>
+                <div class="card-body text-center pb-2">
+                    <div th:unless="${ticket.user.imageUrl}" class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center mb-2"
+                         style="width: 64px; height: 64px;">
+                        <i class="fa-solid fa-user fa-2x text-primary"></i>
+                    </div>
+                    <div th:if="${ticket.user.imageUrl}" class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center mb-2"
+                         style="width: 64px; height: 64px;">
+                        <img th:if="${ticket.user.imageUrl != null}" th:src="${ticket.user.imageUrl}"
+                             class="rounded-circle object-fit-cover"
+                             width="64" height="64" alt="Foto perfil">
+                    </div>
+                    <h5 class="card-title mb-0" th:text="${ticket.user.username}"></h5>
+                    <p class="text-muted small mb-0">
+                        <i class="fa-solid fa-crown text-warning me-1"></i> Crack cineasta
+                    </p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span class="text-muted"><i class="fa-solid fa-envelope me-2"></i>Email</span>
+                        <span class="fw-semibold small" th:text="${ticket.user.email}"></span>
+                    </li>
 <!--                    <li class="list-group-item d-flex justify-content-between">-->
 <!--                        <span class="text-muted"><i class="fa-solid fa-phone me-2"></i>Teléfono</span>-->
 <!--                        <span class="fw-semibold">+34 600 123 456</span>-->
 <!--                    </li>-->
-<!--                    <li class="list-group-item d-flex justify-content-between">-->
-<!--                        <span class="text-muted"><i class="fa-solid fa-receipt me-2"></i>Pedidos</span>-->
-<!--                        <span class="fw-semibold" th:text="${countUserOrders}"></span>-->
-<!--                    </li>-->
-<!--                    <li class="list-group-item d-flex justify-content-between">-->
-<!--                        <span class="text-muted"><i class="fa-solid fa-receipt me-2"></i>Dinero Gastado</span>-->
-<!--                        <span class="fw-semibold" th:text="${totalMoneyUserSpent}"></span>-->
-<!--                    </li>-->
-<!--                </ul>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span class="text-muted"><i class="fa-solid fa-receipt me-2"></i>Compras</span>
+                        <span class="fw-semibold" th:text="${countUserTickets}"></span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span class="text-muted"><i class="fa-solid fa-receipt me-2"></i>Dinero Gastado</span>
+                        <span class="fw-semibold" th:text="${totalMoneyUserSpent}"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
-<!--    &lt;!&ndash; Líneas del pedido &ndash;&gt;-->
+    <!-- formulario con boton finalizar pedido -->
+    <div class="card shadow-sm border-0 mb-4" th:if="${ticket.status.name() != 'FINISHED'}">
+        <div class="card-body">
+            <h5 class="mb-3">Sección de pago</h5>
+            <form th:action="@{/tickets/{id}/finish(id=${ticket.id})}" method="get"
+                  class="row align-items-end justify-content-end gab-3">
+
+                <div class="col">
+                    <button type="submit" class="btn btn-sm btn-success">
+                        <i class="fa-solid fa-credit-card"></i>
+                        Pagar y finalizar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!--    &lt;!&ndash; Líneas del pedido &ndash;&gt;-->
 <!--    <div class="card shadow-sm border-0 mb-4">-->
 <!--        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">-->
 <!--            <h5 class="mb-0">-->

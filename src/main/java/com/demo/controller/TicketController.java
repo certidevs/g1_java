@@ -75,6 +75,13 @@ public class TicketController {
         Ticket ticket = ticketRepository.findById(id).orElseThrow();
         model.addAttribute("ticket", ticket);
 
+        // IVA del 10% para entradas de cine en España
+        Double iva = ticket.getPrice() * 0.10;
+        Double precioSinIva = ticket.getPrice() - iva;
+
+        model.addAttribute("iva", iva);
+        model.addAttribute("precioSinIva", precioSinIva);
+
         // Generamos el QR y lo mandamos a la vista
         String qrBase64 = qrService.generarQr(ticket.getId());
         model.addAttribute("qrCode", qrBase64);
@@ -203,14 +210,9 @@ public class TicketController {
     public String finish(@PathVariable Long id, @RequestParam(required = false) Double iva) {
         Ticket ticket =  ticketRepository.findById(id).orElseThrow();
         ticket.setStatus(TicketStatus.FINISHED);
+
         // TODO Añadir si agrego comida y/o una compra con varios asientos
-//        ticket.setTotalPrice(orderLineRepository.calculateTotalPrice(order.getId()));
-//        // tip, iva, service charge, terrace
-//        if(iva != null && iva > 0){
-//            ticket.setTotalPrice(ticket.getTotalPrice() + iva);
-//        } else{
-//            ticket.setTotalPrice(ticket.getTotalPrice());
-//        }
+//        ticket.setPrice(ticketLineRepository.calculateTotalPrice(order.getId()));
 
         ticketRepository.save(ticket);
         return "redirect:/tickets/" + id;
