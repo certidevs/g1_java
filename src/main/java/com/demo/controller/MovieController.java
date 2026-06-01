@@ -46,6 +46,10 @@ public class MovieController {
             @RequestParam(required = false) MovieStatus movieStatus,
             @RequestParam(required = false) Section section
     ) {
+        if (section == null) {
+            return "redirect:/movies?section=BILLBOARD";
+        }
+
         List<Movie> movies = movieRepository.findActiveFiltering(directorName, genre, title, minAge, movieStatus, section);
 
         model.addAttribute("movies", movies);
@@ -56,7 +60,7 @@ public class MovieController {
         model.addAttribute("directors", directorRepository.findAll());
         model.addAttribute("moviesStatus", MovieStatus.values());
         model.addAttribute("sections", Section.values());
-        model.addAttribute("section", section != null ? section.name() : null);
+        model.addAttribute("section", section.name());
 
         return "movies/movie-list";
     }

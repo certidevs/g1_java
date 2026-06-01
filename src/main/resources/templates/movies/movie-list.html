@@ -46,7 +46,7 @@
 								<ul class="dropdown-menu">
 									<li th:each="genre : ${genres}">
 										<a class="dropdown-item"
-										   th:href="@{/movies(genre=${genre.name()})}"
+										   th:href="@{/movies?section=BILLBOARD(genre=${genre.name()})}"
 										   th:text="${genre.label}">
 										</a>
 									</li>
@@ -56,12 +56,37 @@
 								<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 									Estado
 								</a>
-								<ul class="dropdown-menu">
-									<li th:each="movieStatus : ${moviesStatus}">
-										<a class="dropdown-item"
-										   th:href="@{/movies(movieStatus=${movieStatus.name()})}"
-										   th:text="${movieStatus.label}">
-										</a>
+								<ul class="dropdown-menu" th:if="${section=='BILLBOARD'}">
+									<li>
+										<a th:href="@{/movies(section='BILLBOARD', movieStatus='COMING_SOON')}"
+										   class="dropdown-item">Próximamente</a>
+									</li>
+									<li>
+										<a th:href="@{/movies(section='BILLBOARD', movieStatus='PRE_SALES')}"
+										   class="dropdown-item">Venta anticipada</a>
+									</li>
+									<li>
+										<a th:href="@{/movies(section='BILLBOARD', movieStatus='NOW_SHOWING')}"
+										   class="dropdown-item">En cartelera</a>
+									</li>
+									<li>
+										<a th:href="@{/movies(section='BILLBOARD', movieStatus='LAST_DAYS')}"
+										   class="dropdown-item">Últimos días</a>
+									</li>
+									<li>
+										<a th:href="@{/movies(section='BILLBOARD', movieStatus='FINISHED')}"
+										   class="dropdown-item">Ya no disponible</a>
+									</li>
+								</ul>
+
+								<ul class="dropdown-menu" th:if="${section=='FLUX'}">
+									<li>
+										<a th:href="@{/movies(section='FLUX', movieStatus='IN_VOTING')}"
+										   class="dropdown-item">En votación</a>
+									</li>
+									<li>
+										<a th:href="@{/movies(section='FLUX', movieStatus='VOTED')}"
+										   class="dropdown-item">Emisión lowcost</a>
 									</li>
 								</ul>
 							</li>
@@ -72,7 +97,7 @@
 								<ul class="dropdown-menu">
 									<li th:each="minAge : ${minAges}">
 										<a class="dropdown-item"
-										   th:href="@{/movies(minAge=${minAge.name()})}"
+										   th:href="@{/movies?section=BILLBOARD(minAge=${minAge.name()})}"
 										   th:text="${minAge.label}">
 										</a>
 									</li>
