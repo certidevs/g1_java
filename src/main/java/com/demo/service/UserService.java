@@ -25,6 +25,7 @@ public class UserService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final ReviewRepository reviewRepository;
     private final TicketRepository ticketRepository;
+    private final FavoriteService favoriteService;
 
 
     @Override
@@ -78,7 +79,9 @@ public class UserService implements UserDetailsService {
                 reviewRepository.findByUser_Id(id),
                 ticketRepository.countByUser_Id(id),
                 ticketRepository.findByUser_IdOrderByPurchaseTime(id),
-                ticketRepository.calculateTotalMoneySpentByUserId(id)
+                ticketRepository.calculateTotalMoneySpentByUserId(id),
+                favoriteService.findFavoriteMovies(id)
+
         );
     }
 

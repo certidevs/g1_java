@@ -1,5 +1,6 @@
 package com.demo.dto;
 
+import com.demo.model.Favorite;
 import com.demo.model.Review;
 import com.demo.model.Ticket;
 
@@ -10,5 +11,6 @@ public record UserStats(
         List<Review> reviews,
         long countTickets,
         List<Ticket> tickets,
-        double moneySpent
+        double moneySpent,
+        List<Favorite> favoriteMovies
 ) {}
