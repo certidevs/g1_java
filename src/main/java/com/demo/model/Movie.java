@@ -56,5 +56,5 @@ public class Movie {
 
     @ManyToOne
     @JoinColumn(name = "directorId")
-    private com.demo.model.Director director;
+    private Director director;
 }
