@@ -216,13 +216,13 @@ public class G1JavaApplication {
 
         Room r6 = new Room();
         r6.setName("Sala 6");
-        r6.setCapacity(60);
+        r6.setCapacity(65);
         r6.setPrice(8.99);
         r6.setScreentype(ScreenType.STANDARD);
 
         Room r7 = new Room();
         r7.setName("Sala 7");
-        r7.setCapacity(70);
+        r7.setCapacity(75);
         r7.setPrice(11.95);
         r7.setScreentype(ScreenType.THREE_D);
 
