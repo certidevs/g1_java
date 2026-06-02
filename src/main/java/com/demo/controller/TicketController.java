@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -184,7 +185,7 @@ public class TicketController {
         if (user != null && user.getRole() != Role.ROLE_ADMIN) {
             ticket.setUser(user);
         }
-        ticket.setPurchaseTime(LocalDateTime.now());
+//        ticket.setPurchaseTime(LocalDateTime.now());
         // RECARGAR SESSION COMPLETA DESDE LA BD
         Long sessionId = ticket.getSession().getId();
 
@@ -206,13 +207,31 @@ public class TicketController {
     }
 
 
+    // @PostMapping
     @GetMapping("tickets/{id}/finish")
-    public String finish(@PathVariable Long id, @RequestParam(required = false) Double iva) {
+    public String finish(@PathVariable Long id, @RequestParam(required = false) Double iva
+                         , @RequestParam(required = false) String cardNumber
+                         ,@RequestParam(required = false) String cardOwner
+                         ,@RequestParam(required = false) LocalDate cardExpirationDate
+                         ,@RequestParam(required = false) String cardCode
+
+    ) {
         Ticket ticket =  ticketRepository.findById(id).orElseThrow();
         ticket.setStatus(TicketStatus.FINISHED);
 
+        // TODO registrar datos pago:
+        // ticket.setCardNumber(cardNumber);
+        // ticket.setCardOwner(cardOwner);
+        // ticket.setCardExpirationDate(cardExpirationDate);
+        // ticket.setCardCode(cardCode);
+
         // TODO Añadir si agrego comida y/o una compra con varios asientos
-//        ticket.setPrice(ticketLineRepository.calculateTotalPrice(order.getId()));
+//        ticket.setPrice(ticketLineRepository.calculateTotalPrice(order.getId(
+
+        // TODO generar QR aquí al finalizar compra
+
+        // finalizar compra
+//        ticket.setPurchaseTime(LocalDateTime.now());
 
         ticketRepository.save(ticket);
         return "redirect:/tickets/" + id;

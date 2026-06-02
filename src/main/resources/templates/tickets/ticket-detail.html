@@ -111,7 +111,7 @@
             </div>
         </div>
 
-        <!-- QR del ticket -->
+        <!-- QR del ticket th if status FINISHED-->
         <div class="col-md-4">
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-header bg-dark text-white">
@@ -121,8 +121,10 @@
                 </div>
                 <div class="card-body text-center d-flex flex-column align-items-center justify-content-center gap-3">
 
-                    <!-- Imagen del QR -->
-                    <img th:src="'data:image/png;base64,' + ${qrCode}"
+                    <!-- Imagen del QR
+                    th:if FINISHED
+                    th.if qrCode != null -->
+                    <img  th:src="'data:image/png;base64,' + ${qrCode}"
                          alt="Código QR del ticket"
                          class="img-fluid"
                          style="max-width: 200px;" />
@@ -192,9 +194,12 @@
     <div class="card shadow-sm border-0 mb-4" th:if="${ticket.status.name() != 'FINISHED'}">
         <div class="card-body">
             <h5 class="mb-3">Sección de pago</h5>
+
+            <!-- method post enviar un objeto Ticket o un PaymentDTO (crear una clase para ello) -->
             <form th:action="@{/tickets/{id}/finish(id=${ticket.id})}" method="get"
                   class="row align-items-end justify-content-end gab-3">
 
+                <!-- TODO cardOwner, cardNumber, card.... required -->
                 <div class="col">
                     <button type="submit" class="btn btn-sm btn-success">
                         <i class="fa-solid fa-credit-card"></i>
