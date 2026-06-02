@@ -36,21 +36,22 @@
             <i class="fa-solid fa-clapperboard"></i> Películas destacadas
         </h2>
 
-        <div th:if="${movies == null or movies.isEmpty()}" class="alert alert-info">
-
+        <div th:if="${#lists.isEmpty(movies)}" class="alert alert-info">
             <i class="fa-solid fa-inbox me-2"></i>No hay películas disponibles en este momento.
         </div>
 
-        <div class="row g-4" th:if="${movies != null and !movies.isEmpty()}">
+        <div class="row g-4" th:unless="${#lists.isEmpty(movies)}">
 
-        <div class="col-md-6 col-lg-4 col-xl-3" th:each="movie : ${movies}">
+            <div class="col-md-6 col-lg-4 col-xl-3" th:each="movie : ${movies}" th:if="${movie != null}">
 
                 <div class="card h-100 shadow-sm">
 
-                    <img th:src="${movie.imageUrl}"
-                         class="card-img-top"
-                         alt="movie"
-                         style="height: 300px; object-fit: cover;">
+                    <div style="height: 300px; overflow: hidden; display: flex; align-items: center; justify-content: center; background-color: #f0f0f0;">
+                        <img th:src="${movie.imageUrl}"
+                             class="card-img-top"
+                             alt="movie"
+                             style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                    </div>
 
                     <div class="card-body">
                         <h5 class="card-title"
@@ -77,12 +78,12 @@
             <i class="fa-solid fa-calendar-days"></i> Próximas funciones
         </h2>
 
-        <div th:if="${sessions == null or sessions.isEmpty()}" class="alert alert-info">
+        <div th:if="${#lists.isEmpty(sessions)}" class="alert alert-info">
             <i class="fa-solid fa-inbox me-2"></i>No hay funciones disponibles en este momento.
         </div>
 
-        <div class="card shadow-sm" th:if="${sessions != null and !sessions.isEmpty()}">
-        <div class="card-body">
+        <div class="card shadow-sm" th:unless="${#lists.isEmpty(sessions)}">
+            <div class="card-body">
 
                 <table class="table table-hover mb-0">
                     <thead class="table-dark">
@@ -95,12 +96,12 @@
                     </thead>
 
                     <tbody>
-                    <tr th:each="session : ${sessions}">
-                        <td th:text="${session.movie.title}"></td>
-                        <td th:text="${#temporals.format(session.startTime, 'dd/MM/yyyy HH:mm')}"></td>
-                        <td th:text="${session.room.name}"></td>
+                    <tr th:each="projection : ${projections}">
+                        <td th:text="${projection.movie.title}"></td>
+                        <td th:text="${#temporals.format(projection.startTime, 'dd/MM/yyyy HH:mm')}"></td>
+                        <td th:text="${projection.room.name}"></td>
                         <td>
-                            <a th:href="@{/sessions/{id}(id=${session.id})}" class="btn btn-sm btn-outline-success">
+                            <a th:href="@{/sessions/{id}(id=${projection.id})}" class="btn btn-sm btn-outline-success">
                                 <i class="fa-solid fa-arrow-right me-1"></i>Ver
                             </a>
                         </td>
