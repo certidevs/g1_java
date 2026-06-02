@@ -220,6 +220,10 @@ public class TicketController {
 
 
         ticket.setStatus(TicketStatus.FINISHED);
+        ticket.setCardOwner(paymentForm.getCardOwner());
+        ticket.setCardNumber(paymentForm.getCardNumber());
+        ticket.setCardExpirationDate(paymentForm.getCardExpirationDate());
+        ticket.setCardCode(paymentForm.getCardCode());
 
         // finalizar compra
         ticket.setPurchaseTime(LocalDateTime.now());

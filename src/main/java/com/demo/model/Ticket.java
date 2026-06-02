@@ -64,5 +64,8 @@ public class Ticket {
     private Integer currentUses = 0; // empieza en 0
 
 
-
+    private String cardOwner;
+    private String cardNumber;
+    private String cardExpirationDate;
+    private String cardCode;
 }
