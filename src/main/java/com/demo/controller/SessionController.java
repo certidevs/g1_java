@@ -14,7 +14,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import java.time.LocalDate;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +39,24 @@ public class SessionController {
             @RequestParam(required = false) ScreenType screentype
     ) {
         List<Session> cinemaFunctions = sessionRepository.findActiveFiltering(language, title, screentype);
+        // Lista de días distintos, ordenados y sin repetir
+        List<LocalDate> dias = cinemaFunctions.stream()
+                .map(session -> session.getStartTime().toLocalDate())
+                .distinct()
+                .sorted()
+                .toList();
+
+        // Lista de películas distintas, ordenadas por título y sin repetir
+        List<Movie> peliculas = cinemaFunctions.stream()
+                .map(session -> session.getMovie())
+                .filter(movie -> movie != null)
+                .distinct()
+                .sorted(Comparator.comparing(Movie::getTitle)) //los compara y los ordena
+                .toList();
+
         model.addAttribute("cinemaFunctions", cinemaFunctions);
+        model.addAttribute("dias", dias);
+        model.addAttribute("peliculas", peliculas);
         model.addAttribute("numSessions", cinemaFunctions.size());
         model.addAttribute("title", "Lista de funciones");
         return "sessions/session-list";

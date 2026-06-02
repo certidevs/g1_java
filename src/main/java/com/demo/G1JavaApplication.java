@@ -236,14 +236,22 @@ public class G1JavaApplication {
         roomRepository.saveAll(List.of(r1, r2, r3, r4, r5, r6, r7, r8));
 
         //Datos de SESIONES con las peliculas
+
         List<Movie> peliculas = List.of(movie1, movie2, movie3, movie4, movie5, movie6, movie7, movie8, movieOld1);
 
         for (Movie pelicula : peliculas) {
-            sessionRepository.save(Session.builder().movie(pelicula).startTime(LocalDateTime.now().withHour(14).withMinute(0)).language(Language.ESP).room(r1).numAds(3).build());
-            sessionRepository.save(Session.builder().movie(pelicula).startTime(LocalDateTime.now().withHour(17).withMinute(45)).language(Language.VOSE).room(r2).numAds(3).build());
-            sessionRepository.save(Session.builder().movie(pelicula).startTime(LocalDateTime.now().withHour(19).withMinute(0)).language(Language.VO).room(r3).numAds(3).build());
-            sessionRepository.save(Session.builder().movie(pelicula).startTime(LocalDateTime.now().withHour(22).withMinute(30)).language(Language.ESP).room(r2).numAds(3).build());
-            sessionRepository.save(Session.builder().movie(pelicula).startTime(LocalDateTime.now().withHour(23).withMinute(0)).language(Language.VOSE).room(r4).numAds(3).build());
+            for (int dia = 0; dia < 5; dia++) {   // hoy (0), mañana (1)... hasta 5 días
+                sessionRepository.save(Session.builder().movie(pelicula).startTime(LocalDateTime.now().plusDays(dia).withHour(
+                        14).withMinute(0)).language(Language.ESP).room(r1).numAds(3).build());
+                sessionRepository.save(Session.builder().movie(pelicula).startTime(LocalDateTime.now().plusDays(dia).withHour(
+                        17).withMinute(45)).language(Language.VOSE).room(r2).numAds(3).build());
+                sessionRepository.save(Session.builder().movie(pelicula).startTime(LocalDateTime.now().plusDays(dia).withHour(
+                        19).withMinute(0)).language(Language.VO).room(r2).numAds(3).build());
+                sessionRepository.save(Session.builder().movie(pelicula).startTime(LocalDateTime.now().plusDays(dia).withHour(
+                        22).withMinute(30)).language(Language.ESP).room(r3).numAds(3).build());
+                sessionRepository.save(Session.builder().movie(pelicula).startTime(LocalDateTime.now().plusDays(dia).withHour(
+                        23).withMinute(0)).language(Language.VOSE).room(r4).numAds(3).build());
+            }
         }
 
         // Generar butacas para todas las sesiones

@@ -53,51 +53,69 @@
         </form>
     </div>
 
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
-        <div class="col" th:each="cinemaFunction : ${cinemaFunctions}">
-            <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <i class="fa-solid fa-clock text-primary me-2"></i>
-                        <span th:text="${#temporals.format(cinemaFunction.startTime, 'dd/MM/yyyy HH:mm')}">Horario</span>
-                    </h5>
-                    <p class="card-text">
-                        <strong>Película:</strong>
-                        <span th:text="${cinemaFunction.movie != null ? cinemaFunction.movie.title : 'Sin película'}"></span>
-                    </p>
-                    <p class="card-text">
-                        <strong>Sala:</strong>
-                        <span th:text="${cinemaFunction.room != null ? cinemaFunction.room.name : 'Sin sala'}"></span>
-                    </p>
-                    <p class="card-text">
-                      <span class="badge bg-success">
-                          <i class="fa-solid fa-euro-sign me-1"></i>
-                          <span th:text="${cinemaFunction.room.price}"></span>
-                      </span>
-                        <span class="badge bg-info text-dark ms-1" th:text="${cinemaFunction.language}"></span>
-                        <span class="badge bg-secondary ms-1" th:text="${cinemaFunction.room != null ? cinemaFunction.room.screentype.label : ''}"></span>
-                    </p>
+        <!-- NIVEL 1: por DÍA -->
+        <div th:each="dia : ${dias}" class="mb-4">
 
+            <h4 class="border-bottom pb-2 mb-3">
+                <i class="fa-solid fa-calendar-day text-primary me-2"></i>
+                <span th:text="${#temporals.format(dia, 'dd/MM/yyyy')}">Día</span>
+            </h4>
 
-                </div>
-                <div class="card-footer bg-transparent border-0 pt-0">
-                    <a th:href="@{/sessions/{id}(id=${cinemaFunction.id})}"
-                       class="btn btn-outline-info btn-sm w-100 mb-1">
-                        <i class="fa-regular fa-eye me-1"></i> Ver detalles
-                    </a>
-                    <a sec:authorize="hasRole('ADMIN')" th:href="@{/sessions/edit/{id}(id=${cinemaFunction.id})}"
-                       class="btn btn-outline-info btn-sm w-100 mb-1">
-                        <i class="fa-solid fa-pencil me-1"></i> Editar
-                    </a>
-                    <a sec:authorize="hasRole('ADMIN')" th:href="@{/sessions/deactivate/{id}(id=${cinemaFunction.id})}"
-                       class="btn btn-outline-info btn-sm w-100"
-                       onclick="return confirm('¿Estás seguro de que querés desactivar esta función?')">
-                        <i class="fa-solid fa-ban me-1"></i> Desactivar
-                    </a>
+            <!-- NIVEL 2: por PELÍCULA -->
+            <div class="row row-cols-1 row-cols-md-2 g-3">
+                <div class="col" th:each="pelicula : ${peliculas}">
+                    <div class="card h-100 shadow-sm">
+
+                        <!-- Título de la película -->
+                        <div class="card-header bg-primary text-white">
+                            <i class="fa-solid fa-film me-2"></i>
+                            <span th:text="${pelicula.title}">Película</span>
+                        </div>
+
+                        <!-- NIVEL 3: las sesiones de ESA película en ESE día -->
+                        <div class="card-body">
+                            <div th:each="cinemaFunction : ${cinemaFunctions}"
+                                 th:if="${cinemaFunction.movie != null
+                                    and cinemaFunction.movie.id == pelicula.id
+                                    and cinemaFunction.startTime.toLocalDate() == dia}"
+                                 class="d-flex justify-content-between align-items-center mb-2">
+
+                          <span>
+                              <i class="fa-solid fa-clock text-primary me-1"></i>
+                              <strong th:text="${#temporals.format(cinemaFunction.startTime, 'HH:mm')}">Hora</strong>
+                              <span class="text-muted ms-1" th:text="${cinemaFunction.room != null ?
+                                        cinemaFunction.room.name : ''}">Sala</span>
+                              <span class="badge bg-info text-dark ms-1"
+                                    th:text="${cinemaFunction.language}">Idioma</span>
+                              <span class="badge bg-secondary ms-1" th:text="${cinemaFunction.room != null ?
+                                        cinemaFunction.room.screentype.label : ''}">Pantalla</span>
+                              <span class="badge bg-success ms-1">
+                                  <i class="fa-solid fa-euro-sign me-1"></i><span
+                                      th:text="${cinemaFunction.room.price}">0</span>
+                              </span>
+                          </span>
+
+                                <span>
+                              <a th:href="@{/sessions/{id}(id=${cinemaFunction.id})}" class="btn btn-outline-info btn-sm">
+                                  <i class="fa-regular fa-eye"></i>
+                              </a>
+                              <a sec:authorize="hasRole('ADMIN')"
+                                 th:href="@{/sessions/edit/{id}(id=${cinemaFunction.id})}" class="btn btn-outline-info btn-sm">
+                                  <i class="fa-solid fa-pencil"></i>
+                              </a>
+                              <a sec:authorize="hasRole('ADMIN')"
+                                 th:href="@{/sessions/deactivate/{id}(id=${cinemaFunction.id})}" class="btn btn-outline-info btn-sm"
+                                 onclick="return confirm('¿Seguro que quieres desactivar esta función?')">
+                                  <i class="fa-solid fa-ban"></i>
+                              </a>
+                          </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+
 </main>
 
 <footer th:replace="~{layout/footer :: footer}"></footer>
