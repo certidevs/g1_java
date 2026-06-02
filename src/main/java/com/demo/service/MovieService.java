@@ -1,6 +1,5 @@
 package com.demo.service;
 
-import com.demo.model.Director;
 import com.demo.model.Movie;
 import com.demo.model.enums.MovieStatus;
 import com.demo.model.enums.Section;
@@ -8,24 +7,11 @@ import com.demo.repository.MovieRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @AllArgsConstructor
 public class MovieService {
 
     private final MovieRepository movieRepository;
-    private final DirectorService directorService;
-
-    public Movie createMovie(Movie movie) {
-//        Director director = directorService.findOrCreate(directorName);
-//        movie.setDirector(director);
-        return movieRepository.save(movie);
-    }
-
-    public List<Movie> movieSection(Section section) {
-        return movieRepository.findBySection(section);
-    }
 
     public Movie updateStatus(Movie movie, MovieStatus newStatus) {
         movie.setMovieStatus(newStatus);

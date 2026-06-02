@@ -13,7 +13,6 @@ import com.demo.repository.MovieRepository;
 import com.demo.repository.ReviewRepository;
 import com.demo.repository.SessionRepository;
 import com.demo.service.FileService;
-import com.demo.service.MovieService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +31,6 @@ public class MovieController {
     private final SessionRepository sessionRepository;
     private final DirectorRepository directorRepository;
     private final ReviewRepository reviewRepository;
-    private final MovieService movieService;
     private final FileService fileService;
 
 
@@ -147,13 +145,12 @@ public class MovieController {
     @PostMapping("movies")
     public String saveMovie(
             @ModelAttribute Movie movie,
-//            @RequestParam String directorName,
             @RequestParam("imageFile") MultipartFile imageFile
     ) {
         String imageUrl = fileService.store(imageFile);
         if (imageUrl != null)
             movie.setImageUrl(imageUrl);
-        movieService.createMovie(movie);
+        movieRepository.save(movie);
         return "redirect:/movies/" + movie.getId();
     }
 }
