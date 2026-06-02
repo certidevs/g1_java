@@ -236,70 +236,15 @@ public class G1JavaApplication {
         roomRepository.saveAll(List.of(r1, r2, r3, r4, r5, r6, r7, r8));
 
         //Datos de SESIONES con las peliculas
-        //De lunes a viernes hay 2 sesiones por pelicula, sabado y domingo 3 sesiones por pelicula
-        // l1s1m1 --> Lunes (1 semana) Sesion 1 Movie 1
-        // l1s2m1 --> Lunes (1 semana) Sesion 2 Movie 1
-        Session l1s1m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.now().withHour(20).withMinute(0)).language(Language.ESP).room(r2).numAds(3).build());
-        Session l1s2m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.now().withHour(22).withMinute(0)).language(Language.VOSE).room(r2).numAds(3).build());
-        Session m1s1m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.now().plusDays(1).withHour(20).withMinute(0)).language(Language.ESP).room(r2).numAds(3).build());
-        Session m1s2m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.now().plusDays(1).withHour(22).withMinute(0)).language(Language.VOSE).room(r2).numAds(3).build());
-        Session x1s1m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.of(2026, 4, 8, 17, 30)).language(Language.ESP).room(r2).numAds(3).build());
-        Session x1s2m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.of(2026, 4, 8, 20, 45)).language(Language.VOSE).room(r2).numAds(3).build());
-        Session j1s1m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.of(2026, 4, 9, 17, 30)).language(Language.ESP).room(r2).numAds(3).build());
-        Session j1s2m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.of(2026, 4, 9, 20, 45)).language(Language.VOSE).room(r2).numAds(3).build());
-        Session v1s1m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.of(2026, 4, 10, 12, 40)).language(Language.ESP).room(r3).numAds(3).build());
-        Session v1s2m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.of(2026, 4, 10, 18, 25)).language(Language.VOSE).room(r2).numAds(4).build());
-        Session sa1s1m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.of(2026, 4, 11, 12, 40)).language(Language.ESP).room(r2).numAds(4).build());
-        Session sa1s2m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.of(2026, 4, 11, 16, 30)).language(Language.VOSI).room(r2).numAds(4).build());
-        Session sa1s3m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.of(2026, 4, 11, 21, 00)).language(Language.VOSE).room(r2).numAds(4).build());
-        Session su1s1m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.of(2026, 4, 12, 12, 40)).language(Language.ESP).room(r2).numAds(4).build());
-        Session su1s2m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.of(2026, 4, 12, 16, 30)).language(Language.VOSI).room(r1).numAds(4).build());
-        Session su1s3m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.of(2026, 4, 12, 21, 00)).language(Language.VOSE).room(r4).numAds(4).build());
-        Session l2s1m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.of(2026, 4, 13, 17, 30)).language(Language.ESP).room(r2).numAds(3).build());
-        Session l2s2m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.of(2026, 4, 13, 20, 45)).language(Language.VOSE).room(r2).numAds(3).build());
-        Session m2s1m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.of(2026, 4, 14, 17, 30)).language(Language.ESP).room(r2).numAds(3).build());
-        Session m2s2m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.of(2026, 4, 14, 20, 45)).language(Language.VOSE).room(r2).numAds(3).build());
-        Session x2s1m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.of(2026, 4, 15, 17, 30)).language(Language.ESP).room(r2).numAds(3).build());
-        Session x2s2m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.of(2026, 4, 15, 20, 45)).language(Language.VOSE).room(r2).numAds(3).build());
-        Session j2s1m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.of(2026, 4, 16, 17, 30)).language(Language.ESP).room(r2).numAds(3).build());
-        Session j2s2m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.of(2026, 4, 16, 20, 45)).language(Language.VOSE).room(r2).numAds(3).build());
-        Session v2s1m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.of(2026, 4, 17, 12, 40)).language(Language.ESP).room(r3).numAds(3).build());
-        Session v2s2m1 = sessionRepository.save(Session.builder().movie(movie1).startTime(LocalDateTime.of(2026, 4, 17, 18, 25)).language(Language.VOSE).room(r2).numAds(4).build());
+        List<Movie> peliculas = List.of(movie1, movie2, movie3, movie4, movie5, movie6, movie7, movie8, movieOld1);
 
-
-        // Sesiones para El diablo viste de Prada 2 (movie2)
-        Session m2l1 = sessionRepository.save(Session.builder().movie(movie2).startTime(LocalDateTime.of(2026, 4, 6, 17,0)).language(Language.ESP).room(r1).numAds(3).build());
-        Session m2l2 = sessionRepository.save(Session.builder().movie(movie2).startTime(LocalDateTime.of(2026, 4, 6, 20,0)).language(Language.VOSE).room(r1).numAds(3).build());
-        Session m2m1 = sessionRepository.save(Session.builder().movie(movie2).startTime(LocalDateTime.of(2026, 4, 7, 18,0)).language(Language.ESP).room(r3).numAds(4).build());
-        Session m2sa1 = sessionRepository.save(Session.builder().movie(movie2).startTime(LocalDateTime.of(2026, 4, 11, 16,0)).language(Language.ESP).room(r1).numAds(4).build());
-        Session m2sa2 = sessionRepository.save(Session.builder().movie(movie2).startTime(LocalDateTime.of(2026, 4, 11, 19,30)).language(Language.VOSE).room(r1).numAds(4).build());
-
-        // Sesiones para Michael (movie3)
-        Session m3l1 = sessionRepository.save(Session.builder().movie(movie3).startTime(LocalDateTime.of(2026, 4, 6, 18,0)).language(Language.ESP).room(r4).numAds(2).build());
-        Session m3m1 = sessionRepository.save(Session.builder().movie(movie3).startTime(LocalDateTime.of(2026, 4, 7, 20,30)).language(Language.VOSE).room(r4).numAds(2).build());
-        Session m3x1 = sessionRepository.save(Session.builder().movie(movie3).startTime(LocalDateTime.of(2026, 4, 8, 18,0)).language(Language.ESP).room(r1).numAds(3).build());
-        Session m3sa1 = sessionRepository.save(Session.builder().movie(movie3).startTime(LocalDateTime.of(2026, 4, 11, 20,0)).language(Language.VOSE).room(r3).numAds(4).build());
-        Session m3su1 = sessionRepository.save(Session.builder().movie(movie3).startTime(LocalDateTime.of(2026, 4, 12, 18,30)).language(Language.ESP).room(r4).numAds(4).build());
-
-        // Sesiones para La familia Benetón + 2 (movie4)
-        Session m4l1 = sessionRepository.save(Session.builder().movie(movie4).startTime(LocalDateTime.of(2026, 4, 6, 16,0)).language(Language.ESP).room(r1).numAds(5).build());
-        Session m4m1 = sessionRepository.save(Session.builder().movie(movie4).startTime(LocalDateTime.of(2026, 4, 7, 16,0)).language(Language.ESP).room(r2).numAds(5).build());
-        Session m4sa1 = sessionRepository.save(Session.builder().movie(movie4).startTime(LocalDateTime.of(2026, 4, 11, 12,0)).language(Language.ESP).room(r1).numAds(5).build());
-        Session m4sa2 = sessionRepository.save(Session.builder().movie(movie4).startTime(LocalDateTime.of(2026, 4, 11, 15,0)).language(Language.ESP).room(r2).numAds(5).build());
-        Session m4su1 = sessionRepository.save(Session.builder().movie(movie4).startTime(LocalDateTime.of(2026, 4, 12, 13,0)).language(Language.ESP).room(r1).numAds(5).build());
-
-        // Sesiones para Mortal Kombat II (movie5)
-        Session m5l1 = sessionRepository.save(Session.builder().movie(movie5).startTime(LocalDateTime.of(2026, 4, 6, 21,30)).language(Language.ESP).room(r2).numAds(4).build());
-        Session m5m1 = sessionRepository.save(Session.builder().movie(movie5).startTime(LocalDateTime.of(2026, 4, 7, 21,30)).language(Language.VOSE).room(r3).numAds(4).build());
-        Session m5x1 = sessionRepository.save(Session.builder().movie(movie5).startTime(LocalDateTime.of(2026, 4, 8, 21,30)).language(Language.ESP).room(r2).numAds(4).build());
-        Session m5sa1 = sessionRepository.save(Session.builder().movie(movie5).startTime(LocalDateTime.of(2026, 4, 11, 22,0)).language(Language.VOSE).room(r3).numAds(4).build());
-        Session m5su1 = sessionRepository.save(Session.builder().movie(movie5).startTime(LocalDateTime.of(2026, 4, 12, 22,0)).language(Language.ESP).room(r2).numAds(4).build());
-
-        sessionRepository.saveAll(List.of(l1s1m1,l1s2m1,m1s1m1,m1s2m1,x1s1m1,x1s2m1,j1s1m1,j1s2m1,v1s1m1,v1s2m1,sa1s1m1,sa1s2m1, sa1s3m1,su1s1m1,su1s2m1,su1s3m1,l2s1m1,l2s2m1,m2s1m1,m2s2m1,x2s1m1,x2s2m1,j2s1m1,j2s2m1,v2s1m1,v2s2m1,
-                m2l1, m2l2, m2m1, m2sa1, m2sa2,
-                m3l1, m3m1, m3x1, m3sa1, m3su1,
-                m4l1, m4m1, m4sa1, m4sa2, m4su1,
-                m5l1, m5m1, m5x1, m5sa1, m5su1));
+        for (Movie pelicula : peliculas) {
+            sessionRepository.save(Session.builder().movie(pelicula).startTime(LocalDateTime.now().withHour(14).withMinute(0)).language(Language.ESP).room(r1).numAds(3).build());
+            sessionRepository.save(Session.builder().movie(pelicula).startTime(LocalDateTime.now().withHour(17).withMinute(45)).language(Language.VOSE).room(r2).numAds(3).build());
+            sessionRepository.save(Session.builder().movie(pelicula).startTime(LocalDateTime.now().withHour(19).withMinute(0)).language(Language.VO).room(r3).numAds(3).build());
+            sessionRepository.save(Session.builder().movie(pelicula).startTime(LocalDateTime.now().withHour(22).withMinute(30)).language(Language.ESP).room(r2).numAds(3).build());
+            sessionRepository.save(Session.builder().movie(pelicula).startTime(LocalDateTime.now().withHour(23).withMinute(0)).language(Language.VOSE).room(r4).numAds(3).build());
+        }
 
         // Generar butacas para todas las sesiones
         List<Session> todasLasSesiones = sessionRepository.findAll();
