@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -45,8 +46,6 @@ public class Ticket {
    @Builder.Default
    private TicketStatus status = TicketStatus.IN_PROGRESS; // por defecto activo
 
-//    @Transient  // No se persiste en la base de datos
-//    private Long sessionId;
 
 
     @ToString.Exclude
@@ -54,7 +53,6 @@ public class Ticket {
     private User user;
 
 
-    // por defecto false
     @Builder.Default
     @Column(columnDefinition = "BOOLEAN DEFAULT false")
      private Boolean qrScanned = false;

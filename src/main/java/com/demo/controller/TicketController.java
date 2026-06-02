@@ -1,5 +1,6 @@
 package com.demo.controller;
 
+import com.demo.dto.PaymentForm;
 import com.demo.model.Session;
 import com.demo.model.Ticket;
 import com.demo.model.User;
@@ -100,6 +101,9 @@ public class TicketController {
 
         List<Ticket> tickets = ticketRepository.findBySession_Id(ticket.getSession().getId());
         model.addAttribute("tickets", tickets);
+
+        model.addAttribute("paymentForm", new PaymentForm());
+
         return "tickets/ticket-detail";
     }
 
@@ -208,30 +212,17 @@ public class TicketController {
 
 
     // @PostMapping
-    @GetMapping("tickets/{id}/finish")
-    public String finish(@PathVariable Long id, @RequestParam(required = false) Double iva
-                         , @RequestParam(required = false) String cardNumber
-                         ,@RequestParam(required = false) String cardOwner
-                         ,@RequestParam(required = false) LocalDate cardExpirationDate
-                         ,@RequestParam(required = false) String cardCode
-
+    @PostMapping("tickets/{id}/finish")
+    public String finish(@PathVariable Long id
+                         ,@ModelAttribute PaymentForm paymentForm
     ) {
         Ticket ticket =  ticketRepository.findById(id).orElseThrow();
+
+
         ticket.setStatus(TicketStatus.FINISHED);
 
-        // TODO registrar datos pago:
-        // ticket.setCardNumber(cardNumber);
-        // ticket.setCardOwner(cardOwner);
-        // ticket.setCardExpirationDate(cardExpirationDate);
-        // ticket.setCardCode(cardCode);
-
-        // TODO Añadir si agrego comida y/o una compra con varios asientos
-//        ticket.setPrice(ticketLineRepository.calculateTotalPrice(order.getId(
-
-        // TODO generar QR aquí al finalizar compra
-
         // finalizar compra
-//        ticket.setPurchaseTime(LocalDateTime.now());
+        ticket.setPurchaseTime(LocalDateTime.now());
 
         ticketRepository.save(ticket);
         return "redirect:/tickets/" + id;
