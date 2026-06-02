@@ -6,6 +6,7 @@ import com.demo.model.enums.MovieStatus;
 import com.demo.model.enums.Section;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.EnumSet;
@@ -34,6 +35,7 @@ public class Movie {
     @Enumerated(EnumType.STRING)
     private Set<Genre> genreSet = EnumSet.noneOf(Genre.class);
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate releaseDate;
 
     @Builder.Default

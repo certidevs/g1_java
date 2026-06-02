@@ -147,13 +147,13 @@ public class MovieController {
     @PostMapping("movies")
     public String saveMovie(
             @ModelAttribute Movie movie,
-            @RequestParam String directorName,
+//            @RequestParam String directorName,
             @RequestParam("imageFile") MultipartFile imageFile
     ) {
         String imageUrl = fileService.store(imageFile);
         if (imageUrl != null)
             movie.setImageUrl(imageUrl);
-        movieService.createMovie(movie, directorName);
+        movieService.createMovie(movie);
         return "redirect:/movies/" + movie.getId();
     }
 }

@@ -33,13 +33,12 @@
 
 		<div class="mb-3">
 			<label for="director" class="form-label">Director</label>
-			<select class="form-select" id="director" name="directorName" required>
+			<select class="form-select" id="director" name="director" th:field="*{director}" required>
 				<option value=""></option>
 				<option
 						th:each="director : ${directors}"
-						th:value="${director.name}"
-						th:text="${director.id + ' - ' + director.name}"
-						th:selected="${movie.director != null and movie.director.id == director.id}">
+						th:value="${director.id}"
+						th:text="${director.id + ' - ' + director.name}">
 				</option>
 			</select>
 			<small>¿No encuentras el director?
@@ -52,8 +51,9 @@
 
 		<div class="mb-3">
 			<label for="releaseDate" class="form-label">Fecha de lanzamiento</label>
-			<input type="date" class="form-control" id="releaseDate" placeholder="1985/05/06"
-			       th:value="${#temporals.format(movie.releaseDate, 'yyyy-MM-dd')}" required>
+			<input type="date" class="form-control" id="releaseDate"
+			       th:field="*{releaseDate}" required>
+
 		</div>
 
 		<div class="mb-3">
