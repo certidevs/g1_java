@@ -52,7 +52,10 @@ public class TicketController {
                 tickets = ticketRepository.filterTickets(sessionId, title, price);
             }
 
-            model.addAttribute("tickets", tickets);
+
+            model.addAttribute("tickets",
+                    ticketRepository.findByActiveTrue());
+//            model.addAttribute("tickets", tickets);
             model.addAttribute("sessions", sessionRepository.findAll());
 
         }

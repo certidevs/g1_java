@@ -18,6 +18,8 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     Long countByUser_Id(Long id);
 
+    List<Ticket> findByActiveTrue();
+
     @Query("""
       SELECT COALESCE(SUM(o.price), 0.0) FROM Ticket o 
       WHERE o.user.id = :userId
