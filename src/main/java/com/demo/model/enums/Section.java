@@ -2,7 +2,7 @@ package com.demo.model.enums;
 
 public enum Section {
     BILLBOARD("Cartelera"),
-    FLUX("Sala Flux");
+    FLUX("Emisiones Flux");
 
     private final String label;
 
