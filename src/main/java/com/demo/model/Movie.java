@@ -46,8 +46,9 @@ public class Movie {
     @Enumerated(EnumType.STRING)
     private MovieStatus movieStatus = MovieStatus.FINISHED;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
-    private Section section;
+    private Section section = Section.BILLBOARD;
 
     private Integer duration;
     private String trailerUrl;

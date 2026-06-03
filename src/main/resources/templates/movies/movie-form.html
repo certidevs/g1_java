@@ -16,22 +16,6 @@
 		<input type="hidden" th:field="*{id}">
 
 		<div class="mb-3">
-			<label for="title" class="form-label">Título</label>
-			<input type="text" class="form-control" id="title"
-			       th:field="*{title}" placeholder="El Padrino" required>
-		</div>
-
-		<div class="mb-3">
-			<label class="form-label">Géneros</label>
-			<div class="form-control d-grid gap-2" style="grid-template-columns: auto auto auto;">
-				<div th:each="genre : ${genres}">
-					<input id="genreSet" type="checkbox" th:field="*{genreSet}" th:value="${genre}">
-					<label for="genreSet" th:text="${genre.label}"></label>
-				</div>
-			</div>
-		</div>
-
-		<div class="mb-3">
 			<label for="director" class="form-label">Director</label>
 			<select class="form-select" id="director" name="director" th:field="*{director}" required>
 				<option value=""></option>
@@ -47,6 +31,22 @@
 					Crea uno nuevo
 				</a>
 			</small>
+		</div>
+
+		<div class="mb-3">
+			<label for="title" class="form-label">Título</label>
+			<input type="text" class="form-control" id="title"
+			       th:field="*{title}" placeholder="El Padrino" required>
+		</div>
+
+		<div class="mb-3">
+			<label class="form-label">Géneros</label>
+			<div class="form-control d-grid gap-2" style="grid-template-columns: auto auto auto;">
+				<div th:each="genre : ${genres}">
+					<input id="genreSet" type="checkbox" th:field="*{genreSet}" th:value="${genre}">
+					<label for="genreSet" th:text="${genre.label}"></label>
+				</div>
+			</div>
 		</div>
 
 		<div class="mb-3">
