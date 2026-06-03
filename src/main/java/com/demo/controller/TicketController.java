@@ -9,11 +9,14 @@ import com.demo.model.enums.TicketStatus;
 import com.demo.repository.*;
 import com.demo.service.QrService;
 import com.google.zxing.WriterException;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -206,22 +209,28 @@ public class TicketController {
 
     // @PostMapping
     @PostMapping("tickets/{id}/finish")
-    public String finish(@PathVariable Long id
-                         ,@ModelAttribute PaymentForm paymentForm
+    public String finish(@PathVariable Long id,
+                         @Valid @ModelAttribute PaymentForm paymentForm,
+                         BindingResult bindingResult,
+                         RedirectAttributes redirectAttributes
     ) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("error",
+                    bindingResult.getAllErrors().get(0).getDefaultMessage());
+            return "redirect:/tickets/" + id;
+        }
+
         Ticket ticket =  ticketRepository.findById(id).orElseThrow();
-
-
-        ticket.setStatus(TicketStatus.FINISHED);
         ticket.setCardOwner(paymentForm.getCardOwner());
         ticket.setCardNumber(paymentForm.getCardNumber());
         ticket.setCardExpirationDate(paymentForm.getCardExpirationDate());
         ticket.setCardCode(paymentForm.getCardCode());
-
+        ticket.setStatus(TicketStatus.FINISHED);
         // finalizar compra
         ticket.setPurchaseTime(LocalDateTime.now());
 
         ticketRepository.save(ticket);
+        redirectAttributes.addFlashAttribute("message", "Pedido finalizado correctamente");
         return "redirect:/tickets/" + id;
     }
 

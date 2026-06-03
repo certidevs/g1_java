@@ -54,6 +54,8 @@
         </div>
     </div>
 
+    <div th:if="${message}" class="alert alert-success my-3" th:text="${message}"></div>
+
     <div class="row g-3 mb-4">
 
         <!-- Información del ticket -->
@@ -186,55 +188,69 @@
     <!-- formulario con boton finalizar pedido -->
     <div class="card shadow-sm border-0 mb-4" th:if="${ticket.status.name() != 'FINISHED'}">
         <div class="card-body">
+            <h5 class="mb-3">
+                <i class="fa-solid fa-receipt me-2"></i>Datos del pago y factura
+            </h5>
+
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between">
+                    <span class="text-muted">Titular tarjeta</span>
+                    <span class="fw-semibold" th:text="${ticket.cardOwner}"></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span class="text-muted">Número tarjeta</span>
+                    <span class="fw-semibold"
+                          th:text="|**** **** **** ${#strings.substring(ticket.cardNumber, 12) }|"></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span class="text-muted">Fecha pago</span>
+                    <span class="fw-semibold" th:text="${#temporals.format(ticket.purchaseTime, 'dd/MM/yy HH:mm')}"></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0 mb-4" th:if="${ticket.status.name() != 'FINISHED'}">
+        <div class="card-body">
             <h5 class="mb-3">Sección de pago</h5>
+            <div th:if="${error}" class="alert alert-danger my-3" th:text="${error}"></div>
+
             <form th:action="@{/tickets/{id}/finish(id=${ticket.id})}"
-                  th:object="${paymentForm}"
-                  method="post">
+                  th:object="${paymentForm}" method="post" class="row g-3">
 
-                <div class="row g-3">
 
-                    <div class="col-md-6">
-                        <label>Titular <i class="fa-solid fa-circle-user"></i> </label>
-                        <input class="form-control" th:field="*{cardOwner}"
-                               required autofocus minlength="1" placeholder="Nombre completo">
-                        <div class="invalid-feedback">
-                            Introduce el nombre completo del titular.
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <label>Número tarjeta <i class="fa-solid fa-credit-card"></i> </label>
-                        <input class="form-control" th:field="*{cardNumber}" maxlength="16"
-                               required placeholder="Ejemplo: 1234 5678 9012 3456">
-                        <div class="invalid-feedback">
-                            Introduce una tarjeta válida (16 dígitos).
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <label>Fecha de caducidad <i class="fa-solid fa-calendar"></i> </label>
-                        <input type="month" class="form-control" th:field="*{cardExpirationDate}"
-                               required placeholder="MM/AAAA">
-                        <div class="invalid-feedback">
-                            Fecha incorrecta, inténtalo nuevamente.
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <label>CVV <i class="fa-solid fa-key"></i> </label>
-                        <input type="password"
-                               class="form-control" th:field="*{cardCode}" maxlength="3"
-                               required placeholder="Ejemplo: 123">
-                        <div class="invalid-feedback">
-                            Introduce un CVV válido (3 dígitos).
-                        </div>
-                    </div>
-
+                <div class="col-md-6">
+                    <label class="form-label" for="cardOwner">Titular de la tarjeta</label>
+                    <input type="text" id="cardOwner" name="cardOwner"
+                           class="form-control" required>
+                    <small class="text-muted">Tu nombre completo</small>
                 </div>
 
-                <div class="mt-3 text-end">
-                    <button type="submit"
-                            class="btn btn-success">
+                <div class="col-md-6">
+                    <label class="form-label" for="cardNumber">Número de la tarjeta</label>
+                    <input type="text" id="cardNumber" name="cardNumber"
+                           class="form-control" maxlength="16" required>
+                    <small class="text-muted">Formato: 1111222233334444</small>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label" for="cardExpirationDate">Fecha expiración tarjeta</label>
+                    <input type="text" id="cardExpirationDate" name="cardExpirationDate"
+                           class="form-control" maxlength="5" required>
+                    <small class="text-muted">Formato: MM/YY</small>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label" for="cardCode">CVV Código tarjeta</label>
+                    <input type="text" id="cardCode" name="cardCode"
+                           class="form-control" maxlength="3" required>
+                    <small class="text-muted">Formato: 111</small>
+                </div>
+
+
+
+                <div class="col-12 text-end">
+                    <button type="submit" class="btn btn-sm btn-success">
                         <i class="fa-solid fa-credit-card"></i>
                         Pagar y finalizar
                     </button>
@@ -313,95 +329,9 @@
 <!--                    </td>-->
 <!--                    <td th:if="${order.status.name() != 'ENTREGADO'}" class="text-center">-->
 
-<!--                        &lt;!&ndash; <form> &ndash;&gt;-->
-<!--                        <form th:action="@{/orders/{orderId}/lines/{lineId}(orderId=${order.id},lineId=${line.id})}"-->
-<!--                              method="post" class="d-flex align-items-center justify-content-center gap-1">-->
-<!--                            <input name="quantity" type="number" min="1" style="width: 80px;"-->
-<!--                                   th:value="${line.quantity}" class="form-control form-control-sm me-2">-->
-<!--                            <button class="btn btn-sm btn-success">-->
-<!--                                <i class="fa-solid fa-floppy-disk"></i>-->
-<!--                            </button>-->
-<!--                        </form>-->
 
-<!--                    </td>-->
-<!--                    <td class="text-center" th:if="${order.status.name() != 'ENTREGADO'}">-->
-<!--                        <a class="btn btn-sm btn-danger text-center"-->
-<!--                           th:href="@{/orders/{orderId}/lines/{lineId}/delete(orderId=${order.id},lineId=${line.id})}">-->
-<!--                            <i class="fa-solid fa-trash"></i>-->
-<!--                        </a>-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--                </tbody>-->
-<!--            </table>-->
-<!--        </div>-->
 
-<!--        &lt;!&ndash; Totales &ndash;&gt;-->
-<!--        <div class="card-footer bg-white">-->
-<!--            <div class="row justify-content-end">-->
-<!--                <div class="col-md-5 col-lg-4">-->
-<!--                    <dl class="row mb-0">-->
-<!--                        <dt class="col-7 fs-5 mb-0">Total</dt>-->
-<!--                        <dd class="col-5 text-end fs-5 fw-bold text-success mb-0">-->
-<!--                            <span th:text="${#numbers.formatDecimal(order.totalPrice, 1, 2)}"></span> €-->
-<!--                        </dd>-->
 
-<!--                        <dd>-->
-
-<!--                        </dd>-->
-<!--                    </dl>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    &lt;!&ndash; formulario propina con boton finalizar pedido &ndash;&gt;-->
-<!--    <div class="card shadow-sm border-0 mb-4" th:if="${order.status.name() != 'ENTREGADO'}">-->
-<!--        <div class="card-body">-->
-<!--            <h5 class="mb-3">Sección de pago</h5>-->
-<!--            <form th:action="@{/orders/{id}/entregado(id=${order.id})}" method="get"-->
-<!--                  class="row align-items-end justify-content-end gab-3">-->
-
-<!--                &lt;!&ndash; Si enviamos info sencible mejor cambiar el "get" a "post" &ndash;&gt;-->
-<!--                <div class="col">-->
-<!--                    <label class="form-label" for="tip">Propina(€)</label>-->
-<!--                    <input type="number" id="tip" name="tip" min="0"-->
-<!--                           step="0.01" class="form-control" value="0.00" >-->
-<!--                </div>-->
-
-<!--                <div class="col">-->
-<!--                    <button type="submit" class="btn btn-sm btn-success">-->
-<!--                        <i class="fa-solid fa-credit-card"></i>-->
-<!--                        Pagar y finalizar-->
-<!--                    </button>-->
-<!--                </div>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    &lt;!&ndash; TODO MOSTRAR LOS PRODUCTOS A ELEGIR PARA EL PEDIDO EN PRPGRESO &ndash;&gt;-->
-<!--    <div th:if="${order.status.name() != 'ENTREGADO'}">-->
-<!--        <h2 class="mt-4">Selecciona los productos deseados</h2>-->
-
-<!--        <div class="row row-cols-1 row-cols-md-3 g-4">-->
-<!--            <div class="col" th:each="producto : ${productos}">-->
-<!--                <div class="card h-100">-->
-<!--                    <div class="card-body">-->
-<!--                        <h5 class="card-title" th:text="${producto.nameProduct}"></h5>-->
-<!--                        <p class="text-muted small" th:text="${producto.description}"></p>-->
-<!--                        <strong th:text="|${#numbers.formatDecimal(producto.price, 1, 2)} €|"></strong>-->
-<!--                    </div>-->
-
-<!--                    <div class="card-footer">-->
-
-<!--                        <form th:action="@{/orders/{id}/lines(id=${order.id})}" method="post">-->
-<!--                            <input type="hidden" name="productoId" th:value="${producto.id}">-->
-<!--                            <button class="btn btn-sm btn-success">-->
-<!--                                <i class="fa-solid fa-plus"></i>-->
-<!--                                Añadir-->
-<!--                            </button>-->
-<!--                        </form>-->
-<!--                    </div>-->
-
-<!--                </div>-->
 </main>
 
 <footer th:replace="~{layout/footer :: footer}"></footer>
@@ -409,9 +339,7 @@
 <script>
     (() => {
         'use strict';
-
         const forms = document.querySelectorAll('form');
-
         Array.from(forms).forEach(form => {
             form.addEventListener('submit', event => {
                 if (!form.checkValidity()) {
