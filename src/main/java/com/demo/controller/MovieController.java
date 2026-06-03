@@ -1,10 +1,7 @@
 package com.demo.controller;
 
 import com.demo.model.*;
-import com.demo.model.enums.Genre;
-import com.demo.model.enums.MinAge;
-import com.demo.model.enums.MovieStatus;
-import com.demo.model.enums.Section;
+import com.demo.model.enums.*;
 import com.demo.repository.DirectorRepository;
 import com.demo.repository.MovieRepository;
 import com.demo.repository.ReviewRepository;
@@ -110,10 +107,10 @@ public class MovieController {
             LocalDateTime end = date.atTime(LocalTime.MAX);
             List<Session> projections = sessionRepository.findByMovie_IdAndStartTimeBetween(id, start, end);
 
-            Map<Room, List<Session>> projectionsByRoom = new LinkedHashMap<>();
+            Map<ScreenType, List<Session>> projectionsByRoom = new LinkedHashMap<>();
             for (Session session : projections) {
                 projectionsByRoom
-                        .computeIfAbsent(session.getRoom(), room -> new ArrayList<>())
+                        .computeIfAbsent(session.getRoom().getScreentype(), room -> new ArrayList<>())
                         .add(session);
             }
 
