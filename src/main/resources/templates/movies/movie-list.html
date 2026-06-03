@@ -129,6 +129,22 @@
 							   class="btn btn-outline-primary btn-sm w-100 mb-2">
 								<i class="fa-regular fa-eye me-1"></i>Ver película
 							</a>
+							<form sec:authorize="isAuthenticated()" th:action="@{/favorites/toggle}" method="post">
+								<input type="hidden" name="type" th:value="MOVIE">
+								<input type="hidden" name="targetId" th:value="${movie.id}">
+								<input type="hidden" name="redirectUrl" th:value="@{/movies/{id}(id=${movie.id})}">
+
+								<button th:classappend="${favoriteMovieIds.contains(movie.id)} ?
+								'btn-danger' : 'btn-outline-danger'" class="btn btn-sm w-100" type="submit">
+
+									<i th:class="${favoriteMovieIds.contains(movie.id)} ?
+									'fa-solid fa-heart' : 'fa-regular fa-heart'"></i>
+
+									<span th:if="${favoriteMovieIds.contains(movie.id)}">Quitar favorito</span>
+									<span th:unless="${favoriteMovieIds.contains(movie.id)}">Añadir favorito</span>
+
+								</button>
+							</form>
 							<a sec:authorize="hasRole('ADMIN')" th:href="@{/movies/edit/{id}(id=${movie.id})}"
 							   class="btn btn-outline-primary btn-sm w-100 mb-2">
 								<i class="fa-solid fa-pencil me-1"></i>Editar

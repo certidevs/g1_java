@@ -1,9 +1,6 @@
 package com.demo.controller;
 
-import com.demo.model.Movie;
-import com.demo.model.Review;
-import com.demo.model.Room;
-import com.demo.model.Session;
+import com.demo.model.*;
 import com.demo.model.enums.Genre;
 import com.demo.model.enums.MinAge;
 import com.demo.model.enums.MovieStatus;
@@ -12,8 +9,10 @@ import com.demo.repository.DirectorRepository;
 import com.demo.repository.MovieRepository;
 import com.demo.repository.ReviewRepository;
 import com.demo.repository.SessionRepository;
+import com.demo.service.FavoriteService;
 import com.demo.service.FileService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +31,7 @@ public class MovieController {
     private final DirectorRepository directorRepository;
     private final ReviewRepository reviewRepository;
     private final FileService fileService;
+    private final FavoriteService favoriteService;
 
 
     @GetMapping("movies")
@@ -42,7 +42,8 @@ public class MovieController {
             @RequestParam(required = false) String title,
             @RequestParam(required = false) MinAge minAge,
             @RequestParam(required = false) MovieStatus movieStatus,
-            @RequestParam(required = false) Section section
+            @RequestParam(required = false) Section section,
+            @AuthenticationPrincipal User user
     ) {
         if (section == null) {
             return "redirect:/movies?section=BILLBOARD";
@@ -60,6 +61,11 @@ public class MovieController {
         model.addAttribute("sections", Section.values());
         model.addAttribute("section", section.name());
 
+        if(user != null) {
+            model.addAttribute("favoriteMovieIds",
+                    favoriteService.findMovieIdsByUserId(user.getId()));
+        }
+
         return "movies/movie-list";
     }
 
@@ -75,13 +81,22 @@ public class MovieController {
 
 
     @GetMapping("movies/{id}")
-    public String movie(Model model, @PathVariable Long id, @RequestParam(required = false) LocalDate date) {
+    public String movie(
+            Model model,
+            @PathVariable Long id,
+            @RequestParam(required = false) LocalDate date,
+            @AuthenticationPrincipal User user
+    ) {
         Movie movie = movieRepository.findById(id).orElseThrow();
         model.addAttribute("movie", movie);
         model.addAttribute("selectedDate", date);
 
         List<Review> reviews = reviewRepository.findByMovie_IdOrderByCreationDateDesc(movie.getId());
         model.addAttribute("reviews", reviews);
+        if(user != null) {
+            model.addAttribute("favoriteMovieIds",
+                    favoriteService.findMovieIdsByUserId(user.getId()));
+        }
 
         List<LocalDate> availableDates = new ArrayList<>();
         LocalDate today = LocalDate.now();
