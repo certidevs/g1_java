@@ -4,6 +4,8 @@ package com.demo.dto;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.Year;
+import java.time.YearMonth;
 
 @Getter
 @Setter

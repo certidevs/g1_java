@@ -196,26 +196,38 @@
                     <div class="col-md-6">
                         <label>Titular <i class="fa-solid fa-circle-user"></i> </label>
                         <input class="form-control" th:field="*{cardOwner}"
-                               required autofocus>
+                               required autofocus minlength="1">
+                        <div class="invalid-feedback">
+                            Introduce el nombre completo del titular.
+                        </div>
                     </div>
 
                     <div class="col-md-6">
                         <label>Número tarjeta <i class="fa-solid fa-credit-card"></i> </label>
-                        <input class="form-control" th:field="*{cardNumber}"
+                        <input class="form-control" th:field="*{cardNumber}" maxlength="16"
                                required>
+                        <div class="invalid-feedback">
+                            Introduce una tarjeta válida (16 dígitos).
+                        </div>
                     </div>
 
                     <div class="col-md-4">
                         <label>Fecha de caducidad <i class="fa-solid fa-calendar"></i> </label>
-                        <input class="form-control" th:field="*{cardExpirationDate}"
+                        <input type="month" class="form-control" th:field="*{cardExpirationDate}"
                                required>
+                        <div class="invalid-feedback">
+                            Fecha incorrecta, inténtalo nuevamente.
+                        </div>
                     </div>
 
                     <div class="col-md-4">
                         <label>CVV <i class="fa-solid fa-key"></i> </label>
                         <input type="password"
-                               class="form-control" th:field="*{cardCode}"
+                               class="form-control" th:field="*{cardCode}" maxlength="3"
                                required>
+                        <div class="invalid-feedback">
+                            Introduce un CVV válido (3 dígitos).
+                        </div>
                     </div>
 
                 </div>
@@ -394,7 +406,24 @@
 
 <footer th:replace="~{layout/footer :: footer}"></footer>
 <script th:replace="~{layout/footer :: scripts}"></script>
+<script>
+    (() => {
+        'use strict';
 
+        const forms = document.querySelectorAll('form');
+
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+
+                form.classList.add('was-validated');
+            }, false);
+        });
+    })();
+</script>
 </body>
 </html>
 
