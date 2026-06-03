@@ -120,7 +120,9 @@
 								No hay sesiones disponibles
 							</div>
 							<div th:each="entry : ${projectionsByRoom}" class="mb-3">
-								<h6 class="fw-bold" th:text="${entry.key.label}"></h6>
+								<h6 th:text="'Sesión ' + ${entry.key.screentype.label} + ': ' + ${entry.key.price} + '€'"
+								    class="fw-bold">
+								</h6>
 								<div class="d-flex flex-wrap gap-2">
 									<a th:each="projection : ${entry.value}"
 									   th:href="@{/sessions/{id}(id=${projection.id})}"
