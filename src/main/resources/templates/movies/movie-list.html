@@ -46,7 +46,7 @@
 								<ul class="dropdown-menu">
 									<li th:each="genre : ${genres}">
 										<a class="dropdown-item"
-										   th:href="@{/movies?section=BILLBOARD(genre=${genre.name()})}"
+										   th:href="@{/movies(section=${section}, genre=${genre.name()})}"
 										   th:text="${genre.label}">
 										</a>
 									</li>
@@ -97,7 +97,7 @@
 								<ul class="dropdown-menu">
 									<li th:each="minAge : ${minAges}">
 										<a class="dropdown-item"
-										   th:href="@{/movies?section=BILLBOARD(minAge=${minAge.name()})}"
+										   th:href="@{/movies(section=${section}, minAge=${minAge.name()})}"
 										   th:text="${minAge.label}">
 										</a>
 									</li>
@@ -105,7 +105,7 @@
 							</li>
 						</ul>
 					</div>
-					<form class="d-flex" role="search">
+					<form class="d-flex" role="search" th:action="@{/movies}">
 						<input type="search" name="title" class="form-control form-control-sm me-2"
 						       placeholder="Busca por título..." th:value="${param.title}" list="movies">
 						<datalist th:each="movie : ${movies}" id="movies">
@@ -113,6 +113,7 @@
 							        th:text="${movie.title}">
 							</option>
 						</datalist>
+						<input type="hidden" name="section" th:value="${section}">
 						<button type="submit" class="btn btn-primary btn-sm">
 							<i class="fa-solid fa-magnifying-glass"></i>
 						</button>
