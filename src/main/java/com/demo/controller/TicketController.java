@@ -39,37 +39,27 @@ public class TicketController {
             @RequestParam(required = false) Long sessionId,
             @RequestParam(required = false) String title,
             @RequestParam(required = false) Double price,
-            @RequestParam(required = false) LocalDateTime purchaseTime,
+            @RequestParam(required = false) LocalDate purchaseDate,
             @AuthenticationPrincipal User user){
         // ADMIN
-        if(user != null && user.getRole() == Role.ROLE_ADMIN){
+        if (user != null && user.getRole() == Role.ROLE_ADMIN) {
 
-            List<Ticket> tickets;
+            LocalDateTime startOfDay = purchaseDate != null ? purchaseDate.atStartOfDay() : null;
+            LocalDateTime endOfDay = purchaseDate != null ? purchaseDate.atTime(23, 59, 59) : null;
 
-            if(purchaseTime != null) {
-                tickets = ticketRepository.findByPurchaseTime(purchaseTime);
-            } else {
-                tickets = ticketRepository.filterTickets(sessionId, title, price);
-            }
+            List<Ticket> tickets = ticketRepository.filterTickets(sessionId, title, price, startOfDay, endOfDay);
 
+            model.addAttribute("tickets", tickets); //usa la variable filtrada
+            model.addAttribute("sessions", ticketRepository.findSessionsFromPurchasedTickets());
+//            model.addAttribute("sessions", sessionRepository.findAll());
 
+        } else if (user != null) {
             model.addAttribute("tickets",
-                    ticketRepository.findByActiveTrue());
-//            model.addAttribute("tickets", tickets);
-            model.addAttribute("sessions", sessionRepository.findAll());
-
-        }
-        // USER NORMAL
-        else if(user != null){
-            model.addAttribute(
-                    "tickets",
-                    ticketRepository.findByUser_IdOrderByPurchaseTime(user.getId())
-            );
-        }
-        // VISITANTE SIN LOGIN
-        else {
+                    ticketRepository.findByUser_IdOrderByPurchaseTime(user.getId()));
+        } else {
             model.addAttribute("tickets", ticketRepository.findAll());
         }
+
         return "tickets/ticket-list";
     }
 

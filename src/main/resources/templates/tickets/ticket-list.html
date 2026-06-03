@@ -17,6 +17,7 @@
     <div class="mb-3">
         <h5>Búsqueda avanzada</h5>
         <form th:action="@{/tickets}" method="get" class="row align-items-end">
+
             <!-- Filtro por palabra en titulo-->
             <div class="col-auto">
                 <label class="form-label form-label-sm">Título</label>
@@ -41,7 +42,7 @@
 
                     <option th:each="movieSession : ${sessions}"
                             th:value="${movieSession.id}"
-                            th:text="${movieSession.movie.title}"
+                            th:text="|${movieSession.movie.title} - ${#temporals.format(movieSession.startTime, 'dd/MM HH:mm')}|"
                             th:selected="${param.sessionId == movieSession.id}">
                     </option>
 
@@ -51,9 +52,10 @@
             <!-- Filtro por fecha de compra -->
             <div sec:authorize="hasRole('ADMIN')"  class="col-auto" >
                 <label class="form-label form-label-sm">Fecha de Compra</label>
-                <input type="datetime-local" name="purchaseTime" class="form-control form-control-sm"
-                       placeholder="Selecciona una fecha..." th:value="${param.purchaseTime}">
+                <input type="date" name="purchaseDate" class="form-control form-control-sm"
+                       placeholder="Selecciona una fecha..." th:value="${param.purchaseDate}">
             </div>
+
 
             <div class="col-auto">
                 <button type="submit" class="btn btn-primary btn-sm"><i class="fa-solid fa-magnifying-glass"></i>
@@ -80,6 +82,9 @@
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <h5 class="card-title">Detalles del ticket</h5>
+                            <p class="card-text">
+                                <strong>Pelicula:</strong> <span th:text="${ticket.session.movie.title}">Titulo</span>
+                            </p>
                             <p class="card-text">
                                 <strong>ID:</strong> <span th:text="${ticket.id}">0</span>
                             </p>

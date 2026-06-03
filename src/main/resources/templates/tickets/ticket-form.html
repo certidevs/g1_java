@@ -18,11 +18,11 @@
         <!-- campos del ticket-->
         <div class="mb-3">
             <label for="session.id" class="form-label">Función</label>
-            <select class="form-select" id="session.id" th:field="*{session.id}">
+            <select class="form-select" id="session.id" th:field="*{session.id}" readonly="true">
                 <option value=""></option>
                 <option th:each="projection : ${projections}"
                         th:value="${projection.id}"
-                        th:text="${projection.movie.title + ' - ' + projection.language + ' - ' + projection.startTime}">
+                        th:text="${projection.movie.title + ' - ' + projection.language + ' - ' + projection.startTime}" >
                 </option>
             </select>
         </div>

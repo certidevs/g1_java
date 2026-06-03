@@ -196,7 +196,7 @@
                     <div class="col-md-6">
                         <label>Titular <i class="fa-solid fa-circle-user"></i> </label>
                         <input class="form-control" th:field="*{cardOwner}"
-                               required autofocus minlength="1">
+                               required autofocus minlength="1" placeholder="Nombre completo">
                         <div class="invalid-feedback">
                             Introduce el nombre completo del titular.
                         </div>
@@ -205,7 +205,7 @@
                     <div class="col-md-6">
                         <label>Número tarjeta <i class="fa-solid fa-credit-card"></i> </label>
                         <input class="form-control" th:field="*{cardNumber}" maxlength="16"
-                               required>
+                               required placeholder="Ejemplo: 1234 5678 9012 3456">
                         <div class="invalid-feedback">
                             Introduce una tarjeta válida (16 dígitos).
                         </div>
@@ -214,7 +214,7 @@
                     <div class="col-md-4">
                         <label>Fecha de caducidad <i class="fa-solid fa-calendar"></i> </label>
                         <input type="month" class="form-control" th:field="*{cardExpirationDate}"
-                               required>
+                               required placeholder="MM/AAAA">
                         <div class="invalid-feedback">
                             Fecha incorrecta, inténtalo nuevamente.
                         </div>
@@ -224,7 +224,7 @@
                         <label>CVV <i class="fa-solid fa-key"></i> </label>
                         <input type="password"
                                class="form-control" th:field="*{cardCode}" maxlength="3"
-                               required>
+                               required placeholder="Ejemplo: 123">
                         <div class="invalid-feedback">
                             Introduce un CVV válido (3 dígitos).
                         </div>
