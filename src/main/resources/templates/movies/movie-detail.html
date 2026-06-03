@@ -53,20 +53,22 @@
 
 					<div class="col-md-4">
 						<div class="p-4">
+							<form sec:authorize="isAuthenticated()" th:action="@{/favorites/toggle}" method="post"
+							      class="position-absolute m-2" style="z-index: 2;top: 2rem;right: 2rem;">
+								<input type="hidden" name="type" th:value="MOVIE">
+								<input type="hidden" name="targetId" th:value="${movie.id}">
+								<input type="hidden" name="redirectUrl" th:value="@{/movies/{id}(id=${movie.id},
+								date=${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')})}">
+
+								<button class="btn btn-light btn-sm rounded-circle shadow-sm p-2 d-inline-flex
+								align-content-center justify-content-center" type="submit"
+								        th:title="${favoriteMovieIds.contains(movie.id)} ?
+						                'Quitar de favoritos' : 'Añadir a favoritos'">
+									<i class="fa-heart text-danger fs-5" th:classappend="${favoriteMovieIds.contains(movie.id)} ?
+									'fa-solid' : 'fa-regular'"></i>
+								</button>
+							</form>
 							<img th:src="${movie.getImageUrl}" class="rounded img-fluid mb-3" alt="Film card">
-							<div class="d-flex justify-content-end">
-								<form sec:authorize="isAuthenticated()" th:action="@{/favorites/toggle}" method="post">
-									<input type="hidden" name="type" th:value="Movie">
-									<input type="hidden" name="targetId" th:value="${movie.id}">
-									<input type="hidden" name="redirectUrl" th:value="@{/movie/{id}(id=${movie.id})}">
-									<button th:classappend="${favoriteMovieIds.contains(movie.id)} ?
-									'btn-danger' : 'btn-outline-danger'" class="btn btn-sm" type="submit">
-										<i th:class="${favoriteMovieIds.contains(movie.id)} ?
-                                        'fa-solid fa-heart' : 'fa-regular fa-heart'"></i>
-										Guardar favorito
-									</button>
-								</form>
-							</div>
 						</div>
 						<div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
 					</div>
@@ -104,7 +106,9 @@
 								th:selected="${selectedDate != null and selectedDate == availableDate}">
 						</option>
 					</select>
-					<button type="submit" class="btn btn-primary">Buscar</button>
+					<button type="submit" class="btn btn-primary">
+						<i class="fa-solid fa-magnifying-glass"></i>
+					</button>
 				</div>
 			</form>
 			<div class="card">
