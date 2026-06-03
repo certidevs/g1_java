@@ -107,10 +107,10 @@ public class MovieController {
             LocalDateTime end = date.atTime(LocalTime.MAX);
             List<Session> projections = sessionRepository.findByMovie_IdAndStartTimeBetween(id, start, end);
 
-            Map<ScreenType, List<Session>> projectionsByRoom = new LinkedHashMap<>();
+            Map<Room, List<Session>> projectionsByRoom = new LinkedHashMap<>();
             for (Session session : projections) {
                 projectionsByRoom
-                        .computeIfAbsent(session.getRoom().getScreentype(), room -> new ArrayList<>())
+                        .computeIfAbsent(session.getRoom(), room -> new ArrayList<>())
                         .add(session);
             }
 
