@@ -39,6 +39,9 @@
             <input type="number" id="rating" class="form-control"
                    th:field="*{rating}" min="1" max="5" required>
         </div>
+        <a class="btn btn-secondary" th:href="@{/reviews/{id}(id=${review.id})}">
+            <i class="fa-solid fa-xmark mr-2"></i> Cancelar
+        </a>
         <button type="submit" class="btn btn-success">
             <i class="fa-solid fa-floppy-disk"></i>Enviar
         </button>
