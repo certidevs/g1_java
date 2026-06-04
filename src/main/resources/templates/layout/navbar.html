@@ -19,7 +19,7 @@
 						<i class="fa-regular fa-circle-play"></i> Películas
 					</a>
 				</li>
-				<li class="nav-item">
+				<li class="nav-item" sec:authorize="hasRole('ADMIN')">
 					<a class="nav-link" th:href="@{/rooms}">
 						<i class="fa-solid fa-person-booth"></i> Salas
 					</a>
