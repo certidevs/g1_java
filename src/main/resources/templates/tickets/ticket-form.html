@@ -5,80 +5,188 @@
 
 <nav th:replace="~{layout/navbar :: navbar}"></nav>
 
-<main class="container flex-grow-1">
+<main class="container flex-grow-1 my-4">
 
-    <h1 class="mb-0">
-        <i class="fa-solid fa-ticket text-primary me-2"></i>Formulario de ticket
+    <h1 class="mb-4">
+        <i class="fa-solid fa-ticket text-primary me-2"></i> Ticket seleccionado 😎
     </h1>
 
-    <!-- TODO formulario para crear o editar un ticket -->
     <form th:action="@{/tickets}" method="post" th:object="${ticket}">
         <input type="hidden" th:field="*{id}">
+        <input type="hidden" id="priceComboHidden" th:field="*{priceCombo}">
 
-        <!-- campos del ticket-->
-        <div class="mb-3">
-            <label for="session.id" class="form-label">Función</label>
-            <select class="form-select" id="session.id" th:field="*{session.id}" readonly="true">
-                <option value=""></option>
-                <option th:each="projection : ${projections}"
-                        th:value="${projection.id}"
-                        th:text="${projection.movie.title + ' - ' + projection.language + ' - ' + projection.startTime}" >
-                </option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label for="seatRow" class="form-label">Fila</label>
-            <input type="text" class="form-control" id="seatRow"
-                   th:field="*{seatRow}" placeholder="Ejemplo: A, B, C..." required readonly>
-        </div>
-        <div class="mb-3">
-            <label for="seatNumber" class="form-label">Numero de asiento</label>
-            <input type="number" class="form-control" id="seatNumber"
-                   th:field="*{seatNumber}" step="1" min="1" placeholder="Ejemplo: 1, 2, 3..." required readonly>
-        </div>
-        <div class="mb-3">
-            <label for="price" class="form-label">Precio</label>
-            <input type="number" class="form-control" id="price"
-                   th:field="*{price}" step="0.1" min="0" readonly>
-                <small class="form-text text-muted">Precio calculado por sala seleccionada</small>
+        <!-- Datos del ticket compactos -->
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0"><i class="fa-solid fa-ticket me-2"></i>Datos del ticket</h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label form-label-sm">Función</label>
+                        <input type="text" class="form-control form-control-sm" readonly
+                               th:value="${ticket.session != null ? ticket.session.movie.title + ' - '
+                               + ticket.session.language + ' - ' + ticket.session.startTime : ''}">
+                        <input type="hidden" th:field="*{session.id}">
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label form-label-sm">Fila</label>
+                        <input type="text" class="form-control form-control-sm"
+                               th:field="*{seatRow}" placeholder="A, B, C..." required readonly>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label form-label-sm">Asiento</label>
+                        <input type="number" class="form-control form-control-sm"
+                               th:field="*{seatNumber}" min="1" required readonly>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label form-label-sm">Precio</label>
+                        <div class="input-group input-group-sm">
+                            <input type="number" class="form-control form-control-sm"
+                                   th:field="*{price}" step="0.1" min="0" readonly>
+                            <span class="input-group-text">€</span>
+                        </div>
+                    </div>
 
-        </div>
-
-        <div class="mb-3" sec:authorize="hasRole('ADMIN')">
-            <label for="user" class="form-label">Usuario cliente</label>
-            <select class="form-select" id="user" th:field="*{user}" required>
-                <option value=""></option>
-                <option
-                        th:each="user : ${users}"
-                        th:value="${user.id}"
-                        th:text="${user.id + ' - ' + user.username + '-' + user.email}">
-                </option>
-            </select>
-        </div>
-
-        <!-- TODO combos opcionales € -->
-        <div class="mb-3">
-            <label for="priceCombo" class="form-label">Precio combo comida opcional</label>
-            <select class="form-select" id="priceCombo" th:field="*{priceCombo}">
-                <option value=""></option>
-                <option value="5">Palomitas 5 Euros</option>
-                <option value="8">Palomitas + Bebida 8 Euros</option>
-                <option value="15">Palomitas + Bebida + Lacasitos 15 Euros</option>
-            </select>
-
+                    <!-- Usuario (solo admin) -->
+                    <div class="col-md-6" sec:authorize="hasRole('ADMIN')">
+                        <label class="form-label form-label-sm">Usuario cliente</label>
+                        <select class="form-select form-select-sm" th:field="*{user}" required>
+                            <option value=""></option>
+                            <option th:each="user : ${users}"
+                                    th:value="${user.id}"
+                                    th:text="${user.id + ' - ' + user.username + ' - ' + user.email}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- maxUses type number  de 1 a 5 por ejemplo-->
+        <!-- Combos de comida -->
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-header bg-warning text-dark">
+                <h5 class="mb-0"><i class="fa-solid fa-popcorn me-2"></i>Agrega tu combo favorito (Opcional)🍿🥤</h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted small mb-3">Haz clic en un combo para seleccionarlo. Vuelve a pulsar para deseleccionarlo.</p>
+                <div class="row g-3 justify-content-center">
 
-        <button type="submit" class="btn btn-success">
-            <i class="fa-solid fa-floppy-disk"></i> Guardar
-        </button>
+                    <!-- Combo 1 -->
+                    <div class="col-md-4">
+                    <div class="combo-card text-center p-3 border rounded-3 h-100"
+                         onclick="selectCombo(this, 8)" data-value="8" style="cursor:pointer; transition: all 0.2s;">
+                        <img th:src="@{/images/combo1.png}" alt="Palomitas y bebida"
+                             class="img-fluid rounded mb-2" style="max-height: 150px; object-fit: cover; width: 100%;">
+                        <h6 class="fw-bold mt-2">Palomitas + Bebida</h6>
+                        <p class="text-muted small mb-2">El clásico del cine</p>
+                        <span class="badge bg-success fs-6">8 €</span>
+                    </div>
+                    </div>
+                    <!-- Combo 2 -->
+                    <div class="col-md-4">
+                        <div class="combo-card text-center p-3 border rounded-3 h-100"
+                             onclick="selectCombo(this, 10)" data-value="8" style="cursor:pointer; transition: all 0.2s;">
+                            <img th:src="@{/images/combo2.png}" alt="Palomitas, bebida y lacasitos"
+                                 class="img-fluid rounded mb-2" style="max-height: 150px; object-fit: cover; width: 100%;">
+                            <h6 class="fw-bold mt-2">Palomitas + Bebida + Lacasitos</h6>
+                            <p class="text-muted small mb-2">Para los más golosos</p>
+                            <span class="badge bg-success fs-6">10 €</span>
+                        </div>
+                    </div>
 
-        <a th:href="@{/tickets}" class="btn btn-secondary">Cancelar</a>
+                    <!-- Combo 3 -->
+                    <div class="col-md-4">
+                        <div class="combo-card text-center p-3 border rounded-3 h-100"
+                             onclick="selectCombo(this, 15)" data-value="8" style="cursor:pointer; transition: all 0.2s;">
+                            <img th:src="@{/images/combo3.png}" alt="Hamburguesa, bebida y patatas"
+                                 class="img-fluid rounded mb-2" style="max-height: 150px; object-fit: cover; width: 100%;">
+                            <h6 class="fw-bold mt-2">Hamburguesa + Bebida + patatas</h6>
+                            <p class="text-muted small mb-2">¿Hambre? ¡Ni loc@!</p>
+                            <span class="badge bg-success fs-6">15 €</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Resumen del precio -->
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-header bg-dark text-white">
+                <h5 class="mb-0"><i class="fa-solid fa-euro-sign me-2"></i>Resumen del pedido</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span class="text-muted">Precio ticket</span>
+                        <span class="fw-semibold" id="resumenTicket">-</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span class="text-muted">Combo seleccionado</span>
+                        <span class="fw-semibold" id="resumenCombo">Sin combo</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between fs-5">
+                        <span class="fw-bold">Total</span>
+                        <span class="fw-bold text-success" id="resumenTotal">-</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-success">
+                <i class="fa-solid fa-floppy-disk me-1"></i>Avanzar
+            </button>
+            <a th:href="@{/tickets}" class="btn btn-secondary">Cancelar</a>
+        </div>
+
     </form>
 </main>
+
 <footer th:replace="~{layout/footer :: footer}"></footer>
 <script th:replace="~{layout/footer :: scripts}"></script>
+
+<script>
+    // Precio base del ticket
+    const precioTicket = parseFloat(document.getElementById('price').value) || 0;
+    document.getElementById('resumenTicket').textContent = precioTicket.toFixed(2) + ' €';
+    document.getElementById('resumenTotal').textContent = precioTicket.toFixed(2) + ' €';
+
+    function selectCombo(card, value) {
+        const allCards = document.querySelectorAll('.combo-card');
+        const hidden = document.getElementById('priceComboHidden');
+
+        if (card.classList.contains('selected-combo')) {
+            card.classList.remove('selected-combo');
+            card.style.backgroundColor = '';
+            card.style.borderColor = '';
+            card.style.transform = '';
+            hidden.value = '';
+            document.getElementById('resumenCombo').textContent = 'Sin combo';
+            document.getElementById('resumenTotal').textContent = precioTicket.toFixed(2) + ' €';
+            return;
+        }
+
+        allCards.forEach(c => {
+            c.classList.remove('selected-combo');
+            c.style.backgroundColor = '';
+            c.style.borderColor = '';
+            c.style.transform = '';
+        });
+
+        card.classList.add('selected-combo');
+        card.style.backgroundColor = '#d1e7dd';
+        card.style.borderColor = '#198754';
+        card.style.transform = 'scale(1.03)';
+        hidden.value = value;
+
+        const total = precioTicket + value;
+        document.getElementById('resumenCombo').textContent = value.toFixed(2) + ' €';
+        document.getElementById('resumenTotal').textContent = total.toFixed(2) + ' €';
+    }
+</script>
 
 </body>
 </html>
