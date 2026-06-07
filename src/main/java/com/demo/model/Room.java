@@ -36,6 +36,7 @@ public class Room {
     @Column(columnDefinition = "BOOLEAN DEFAULT true")
     private Boolean active = true;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "room")
     private List<Session> sessions;
 }
