@@ -138,8 +138,8 @@
 							'fa-solid' : 'fa-regular'"></i>
 						</button>
 					</form>
-					<div>
-						<img style="height: 24rem" th:src="${movie.getImageUrl}" class="card-img-top" alt="Film card">
+					<div class="ratio" style="--bs-aspect-ratio: 140%;">
+						<img th:src="${movie.getImageUrl}" class="card-img-top object-fit-cover" alt="Film card">
 					</div>
 					<div class="card-body">
 						<h5 class="card-title mb-3" th:text="${movie.title}">Nombre</h5>
