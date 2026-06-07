@@ -2,6 +2,7 @@ package com.demo.controller;
 
 import com.demo.model.User;
 import com.demo.model.enums.Role;
+import com.demo.repository.UserRepository;
 import com.demo.service.FileService;
 import com.demo.service.UserService;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class UserController {
     private final FileService fileService;
     private final UserService userService;
+    private final UserRepository userRepository;
 
     // user list
     @GetMapping("admin/users")
@@ -56,6 +58,26 @@ public class UserController {
         model.addAttribute("roles", Role.values());
         model.addAttribute("edit", true);
         return "users/user-form";
+    }
+
+    @GetMapping("/admin/users/deactivate/{id}")
+    public String deactivateUser(@PathVariable Long id, RedirectAttributes ra) {
+        User user = userRepository.findById(id).orElseThrow();
+        user.setActive(false);
+        userRepository.save(user);
+        ra.addFlashAttribute("message", "Usuario desactivado");
+        log.info("Usuario desactivado {}", id);
+        return "redirect:/admin/users";
+    }
+
+    @GetMapping("/admin/users/activate/{id}")
+    public String activateUser(@PathVariable Long id, RedirectAttributes ra) {
+        User user = userRepository.findById(id).orElseThrow();
+        user.setActive(true);
+        userRepository.save(user);
+        ra.addFlashAttribute("message", "Usuario activado");
+        log.info("Usuario activado {}", id);
+        return "redirect:/admin/users";
     }
 
     @PostMapping("admin/users")
