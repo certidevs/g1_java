@@ -10,6 +10,7 @@
     </h1>
     <form th:action="@{/sessions}" method="post" th:object="${proyeccion}">
         <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{active}">
 
 <!--        Campos de session-->
         <div class="mb-3">
