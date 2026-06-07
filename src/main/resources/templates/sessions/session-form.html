@@ -16,7 +16,7 @@
         <div class="mb-3">
             <label for="language" class="form-label">Idioma</label>
             <select class="form-select" id="language" th:field="*{language}" required>
-                <option value=""></option>
+                <option value="">Selecciona un idioma</option>
                 <option
                         th:each="language : ${languages}"
                         th:value="${language}"
@@ -30,7 +30,7 @@
         <div class="mb-3">
             <label for="movie" class="form-label">Película</label>
             <select class="form-select" id="movie" th:field="*{movie}" required>
-                <option value=""></option>
+                <option value="">Selecciona una pelicula</option>
                 <option th:each="movie : ${movies}"
                         th:value="${movie.id}"
                         th:text="${movie.title}">
@@ -42,7 +42,7 @@
         <div class="mb-3">
             <label for="room" class="form-label">Sala</label>
             <select class="form-select" id="room" th:field="*{room}" required>
-                <option value=""></option>
+                <option value="">Selecciona una sala</option>
                 <option th:each="room : ${rooms}"
                         th:value="${room.id}"
                         th:text="${room.name}">

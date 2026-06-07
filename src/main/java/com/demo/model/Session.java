@@ -26,9 +26,9 @@ public class Session {
    //private Double price; // 5 euros
     private Integer numAds;
 
-    @Builder.Default
+
     @Enumerated(EnumType.STRING)
-    private Language language = Language.ESP;
+    private Language language;
 
     @Builder.Default
     @Column(columnDefinition = "BOOLEAN DEFAULT true")
