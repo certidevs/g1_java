@@ -44,7 +44,7 @@ public class Movie {
 
     @Builder.Default
     @Enumerated(EnumType.STRING)
-    private MovieStatus movieStatus = MovieStatus.FINISHED;
+    private MovieStatus movieStatus = MovieStatus.COMING_SOON;
 
     @Builder.Default
     @Enumerated(EnumType.STRING)
