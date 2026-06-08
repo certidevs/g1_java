@@ -19,13 +19,20 @@
         <form th:action="@{/tickets}" method="get" class="row align-items-end">
 
             <!-- Filtro por palabra en titulo-->
-            <div class="col-auto">
+            <div class="col-md-3">
                 <label class="form-label form-label-sm">Título</label>
                 <input type="text" name="title" class="form-control form-control-sm"
-                       placeholder="Busca por título de película..." th:value="${param.title}">
+                       placeholder="Busca por título de película..."
+                       th:value="${param.title}" list="movieTitles">
+                <datalist id="movieTitles">
+                    <option th:each="movieSession : ${sessions}"
+                            th:value="${movieSession.movie.title}"
+                            th:text="${movieSession.movie.title}">
+                    </option>
+                </datalist>
             </div>
             <!-- Filtro por precio-->
-            <div class="col-auto">
+            <div class="col-md-3">
                 <label for="price" class="form-label form-label-sm">Precio del ticket</label>
                 <input type="number" min="5" id="price" step="0.01" name="price"
                        class="form-control form-control-sm"
@@ -33,7 +40,7 @@
             </div>
 
             <!-- Filtro por sessions-->
-            <div class="col-auto">
+            <div class="col-md-3">
                 <label class="form-label form-label-sm">Función</label>
 
                 <select name="sessionId" class="form-select form-select-sm">

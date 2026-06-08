@@ -57,10 +57,18 @@ public class TicketController {
 //            model.addAttribute("sessions", sessionRepository.findAll());
 
         } else if (user != null) {
-            model.addAttribute("tickets",
-                    ticketRepository.findByUser_IdOrderByPurchaseTime(user.getId()));
-        } else {
-            model.addAttribute("tickets", ticketRepository.findAll());
+                LocalDateTime startOfDay = purchaseDate != null ? purchaseDate.atStartOfDay() : null;
+                LocalDateTime endOfDay = purchaseDate != null ? purchaseDate.atTime(23, 59, 59) : null;
+
+                List<Ticket> tickets = ticketRepository.filterTicketsByUser(
+                        user.getId(), sessionId, title, price, startOfDay, endOfDay);
+
+                model.addAttribute("tickets", tickets);
+                model.addAttribute("sessions",
+                        ticketRepository.findSessionsFromPurchasedTicketsByUser(user.getId()));
+
+            } else {
+                model.addAttribute("tickets", ticketRepository.findAll());
         }
 
         return "tickets/ticket-list";
