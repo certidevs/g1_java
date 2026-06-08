@@ -3,7 +3,81 @@
 
 :root {
     --brand-primary: #c0392b;
+    --hero-bg: #2D2724;
+    --hero-color: #F3E8C7;
+    --hero-title-highlight-bg: linear-gradient(90deg, #952D0E, #CD8562);
 }
+
+.hero {
+    background-color: var(--hero-bg);
+    color: var(--hero-color);
+    overflow: hidden;
+    position: relative;
+}
+
+.hero-bg {
+    height: 200vh;
+    position: absolute;
+    width: 300vh;
+    left: -8rem;
+    top: -5rem;
+    transform: rotate(11deg);
+}
+
+.hero-bg-img {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 45%;
+    object-fit: cover;
+    opacity: 0.4;
+}
+
+.hero-title {
+    margin-bottom: 2.5rem;
+}
+
+.hero-title-highlight {
+    background: var(--hero-title-highlight-bg);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+    padding-right: 3rem;
+}
+
+@media (max-width: 576px) {
+    .hero-title {
+        padding: 0 1rem;
+        margin-bottom: 1.5rem;
+    }
+    .hero-subtitle {
+        padding: 0 3rem 0 1rem;
+    }
+}
+
+.ribbon {
+    position: absolute;
+    top: 16px;
+    right: -30px;
+    width: 130px;
+    text-align: center;
+    padding: 4px 0;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transform: rotate(45deg);
+    z-index: 2;
+}
+
+.ribbon-danger     { background-color: #dc3545; color: #fff; }
+.ribbon-secondary  { background-color: #6c757d; color: #fff; }
+.ribbon-warning    { background-color: #ffc107; color: #000; }
+.ribbon-success    { background-color: #198754; color: #fff; }
+.ribbon-dark       { background-color: #212529; color: #fff; }
 
 body {
     font-family: 'Roboto', system-ui, -apple-system, sans-serif;

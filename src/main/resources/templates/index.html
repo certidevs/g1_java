@@ -1,153 +1,118 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:replace="~{layout/head :: head('Inicio | Godzilla Cinema')}"></head>
+<head th:replace="~{layout/head :: head('Inicio | FluxFilms')}"></head>
 
 <body class="d-flex flex-column min-vh-100 bg-light">
 
-<nav th:replace="~{layout/navbar :: navbar}"></nav>
+<main class="container-fluid px-0">
 
-<main class="container flex-grow-1 my-4">
+	<!-- Hero -->
+	<section class="hero pt-5 pb-4 py-sm-5 mb-5">
+		<img src="/images/bg.png" class="hero-bg-img d-none d-lg-block">
+		<div class="container py-5 my-sm-4">
+			<div class="row align-items-center">
+				<div class="col-12 col-lg-6 position-relative">
+					<h1 class="hero-title display-5 fw-bold">Bienvenido a <span class="hero-title-highlight">FluxFilms</span></h1>
+					<p class="hero-subtitle fs-5">Descubre las mejores películas en cartelera y reserva tu entrada online</p>
+					<a th:href="@{/movies/billboard}" class="btn btn-light btn-lg me-2">
+						<i class="fa-solid fa-clapperboard me-2"></i>Ver cartelera
+					</a>
+					<a th:href="@{/movies/flux}" class="btn btn-outline-light btn-lg">
+						<i class="fa-solid fa-film me-2"></i>Sala Flux
+					</a>
+				</div>
+				<div class="col-12 col-lg-4 offset-lg-1 mt-4 mt-lg-0">
+					<div class="card shadow-lg border-0">
+						<div class="card-body p-4">
+							<h5 class="card-title fw-bold mb-1">Accede a tu cuenta</h5>
+							<p class="text-muted mb-4 small">Elige tu tipo de acceso</p>
+							<div class="d-grid gap-3">
+								<a th:href="@{/login}" class="btn btn-danger btn-lg">
+									<i class="fa-regular fa-user me-2"></i>Entrar como usuario
+								</a>
+								<a th:href="@{/login}" class="btn btn-outline-secondary btn-lg">
+									<i class="fa-solid fa-id-badge me-2"></i>Acceso empleados
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 
-    <!-- HERO -->
-    <section class="bg-dark text-white rounded-4 p-5 mb-5 text-center shadow">
-        <h1 class="display-4 fw-bold">
-            <i class="fa-solid fa-film"></i> Bienvenido a Godzilla Cinema
-        </h1>
-        <p class="lead mt-3">
-            Compra tus entradas y disfruta de la mejor experiencia de cine
-        </p>
+	<div class="container">
 
-        <div class="mt-4">
-            <a th:href="@{/movies}" class="btn btn-danger btn-lg me-2">
-                <i class="fa-solid fa-play me-2"></i>Ver cartelera
-            </a>
+		<!-- Películas destacadas -->
+		<section class="mb-5">
+			<h2 class="fw-bold mb-4">
+				<i class="fa-solid fa-star text-warning me-2"></i>Películas destacadas
+			</h2>
+			<div class="row g-3">
+				<div class="col-6 col-md-3" th:each="movie : ${movies}">
+					<div th:replace="~{fragments/movie-card :: movieCard(${movie}, ${favoriteMovieIds})}"></div>
+				</div>
+			</div>
+		</section>
 
-            <a th:href="@{/sessions}" class="btn btn-outline-light btn-lg">
-                <i class="fa-solid fa-ticket me-2"></i>Comprar entradas
-            </a>
-        </div>
-    </section>
+		<!-- Próximas sesiones -->
+		<section class="mb-5">
+			<h2 class="fw-bold mb-4">
+				<i class="fa-regular fa-clock text-primary me-2"></i>Próximas sesiones
+			</h2>
+			<div class="row g-3">
+				<div class="col-12 col-md-6 col-lg-4" th:each="projection : ${projections}">
+					<div class="card shadow-sm h-100">
+						<div class="card-body d-flex align-items-center gap-3">
+							<img th:src="${projection.movie.imageUrl}"
+							     style="width: 60px; height: 80px; object-fit: cover; border-radius: 6px;"
+							     alt="poster">
+							<div>
+								<h6 class="mb-1 fw-bold" th:text="${projection.movie.title}">Título</h6>
+								<small class="text-muted d-block">
+									<i class="fa-regular fa-calendar me-1"></i>
+									<span th:text="${#temporals.format(projection.startTime, 'dd/MM/yyyy')}"></span>
+								</small>
+								<small class="text-muted d-block">
+									<i class="fa-regular fa-clock me-1"></i>
+									<span th:text="${#temporals.format(projection.startTime, 'HH:mm')}"></span>
+								</small>
+								<small class="text-muted d-block">
+									<i class="fa-solid fa-door-open me-1"></i>
+									<span th:text="${projection.room.name}"></span>
+								</small>
+							</div>
+						</div>
+						<div class="card-footer bg-transparent border-0">
+							<a th:href="@{/movies/{id}(id=${projection.movie.id}, date=${#temporals.format(projection.startTime, 'yyyy-MM-dd')})}"
+							   class="btn btn-outline-primary btn-sm w-100">
+								<i class="fa-solid fa-ticket me-1"></i>Ver sesión
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
 
+		<!-- CTA Flux -->
+		<section class="mb-5">
+			<div class="card bg-dark text-white shadow">
+				<div class="card-body py-4 px-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
+					<div>
+						<h4 class="fw-bold mb-1">
+							<i class="fa-solid fa-film me-2 text-warning"></i>Sala Flux
+						</h4>
+						<p class="mb-0 text-white-50">Vota por tus películas favoritas y vuelve a verlas en pantalla grande</p>
+					</div>
+					<a th:href="@{/movies/flux}" class="btn btn-warning">
+						<i class="fa-solid fa-arrow-right me-1"></i>Ir a Sala Flux
+					</a>
+				</div>
+			</div>
+		</section>
 
-    <!-- PELÍCULAS -->
-    <section class="mb-5">
-        <h2 class="mb-4">
-            <i class="fa-solid fa-clapperboard"></i> Películas destacadas
-        </h2>
-
-        <div th:if="${#lists.isEmpty(movies)}" class="alert alert-info">
-            <i class="fa-solid fa-inbox me-2"></i>No hay películas disponibles en este momento.
-        </div>
-
-        <div class="row g-4" th:unless="${#lists.isEmpty(movies)}">
-
-            <div class="col-md-6 col-lg-4 col-xl-3" th:each="movie : ${movies}" th:if="${movie != null}">
-
-                <div class="card h-100 shadow-sm">
-
-                    <div style="height: 300px; overflow: hidden; display: flex; align-items: center; justify-content: center; background-color: #f0f0f0;">
-                        <img th:src="${movie.imageUrl}"
-                             class="card-img-top"
-                             alt="movie"
-                             style="max-height: 100%; max-width: 100%; object-fit: contain;">
-                    </div>
-
-                    <div class="card-body">
-                        <h5 class="card-title"
-                            th:text="${movie.title}"></h5>
-
-                        <p class="card-text text-muted small"
-                           th:text="${movie.genreSet}"></p>
-                    </div>
-
-                    <div class="card-footer bg-white">
-                        <a th:href="@{/movies/{id}(id=${movie.id})}" class="btn btn-sm btn-outline-primary">
-                            <i class="fa-solid fa-eye me-1"></i>Ver
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- FUNCIONES -->
-    <section class="mb-5">
-        <h2 class="mb-4">
-            <i class="fa-solid fa-calendar-days"></i> Próximas funciones
-        </h2>
-
-        <div th:if="${#lists.isEmpty(sessions)}" class="alert alert-info">
-            <i class="fa-solid fa-inbox me-2"></i>No hay funciones disponibles en este momento.
-        </div>
-
-        <div class="card shadow-sm" th:unless="${#lists.isEmpty(sessions)}">
-            <div class="card-body">
-
-                <table class="table table-hover mb-0">
-                    <thead class="table-dark">
-                    <tr>
-                        <th><i class="fa-solid fa-film me-2"></i>Película</th>
-                        <th><i class="fa-solid fa-clock me-2"></i>Hora</th>
-                        <th><i class="fa-solid fa-door-open me-2"></i>Sala</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-
-                    <tbody>
-                    <tr th:each="projection : ${projections}">
-                        <td th:text="${projection.movie.title}"></td>
-                        <td th:text="${#temporals.format(projection.startTime, 'dd/MM/yyyy HH:mm')}"></td>
-                        <td th:text="${projection.room.name}"></td>
-                        <td>
-                            <a th:href="@{/sessions/{id}(id=${projection.id})}" class="btn btn-sm btn-outline-success">
-                                <i class="fa-solid fa-arrow-right me-1"></i>Ver
-                            </a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-
-            </div>
-        </div>
-    </section>
-
-
-    <!-- PROMOS -->
-    <section class="mb-5">
-        <h2 class="mb-4">
-            <i class="fa-solid fa-tags"></i> Promociones
-        </h2>
-
-        <div class="row g-3">
-
-            <div class="col-md-4">
-                <div class="card text-center shadow-sm p-4 h-100">
-                    <i class="fa-solid fa-burger text-warning fa-3x mb-3"></i>
-                    <h4>Combo Familiar</h4>
-                    <p>Ideal para disfrutar en familia.</p>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card text-center shadow-sm p-4 h-100">
-                    <i class="fa-solid fa-ticket text-danger fa-3x mb-3"></i>
-                    <h4>2x1 Miércoles</h4>
-                    <p>Todos los miércoles.</p>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card text-center shadow-sm p-4 h-100">
-                    <i class="fa-solid fa-graduation-cap text-info fa-3x mb-3"></i>
-                    <h4>Estudiantes</h4>
-                    <p>20% de descuento.</p>
-                </div>
-            </div>
-
-        </div>
-    </section>
+	</div>
 
 </main>
 

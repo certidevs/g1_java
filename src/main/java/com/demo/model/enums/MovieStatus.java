@@ -4,11 +4,12 @@ public enum MovieStatus {
 
     COMING_SOON("Próximamente"),
     PRE_SALES("Venta anticipada"),
+    NEW_RELEASE("Estreno"),
     NOW_SHOWING("En cartelera"),
     LAST_DAYS("Últimos días"),
     FINISHED("Ya no disponible"),
     IN_VOTING("En votación"),
-    VOTED("Emisión lowcost");
+    VOTED("Votado");
 
     private final String label;
 
