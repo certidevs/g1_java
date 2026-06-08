@@ -59,57 +59,67 @@
     <div class="row g-3 mb-4">
 
         <!-- Información del ticket -->
-        <div class="col-md-4">
+        <div class="col-12">
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-header bg-success text-white">
                     <h5 class="mb-0">
                         <i class="fa-solid fa-ticket me-2"></i>Ticket
                     </h5>
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span class="text-muted"><i class="fa-solid fa-film me-2"></i>Título de película</span>
-                        <span class="fw-semibold" th:text="${ticket.session.movie.title}"></span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span class="text-muted"><i class="fa-solid fa-clock me-2"></i>Función</span>
-                        <span th:text="${#temporals.format(ticket.session.startTime, 'dd/MM/yyyy HH:mm')}">Fecha y hora Función</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span class="text-muted"><i class="fa-solid fa-door-open me-2"></i>Sala</span>
-                        <span class="fw-semibold" th:text="${ticket.session.room.name}"></span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span class="text-muted"><i class="fa-solid fa-chair me-2"></i>Asiento</span>
-                        <span class="fw-semibold">
-                                    <span th:text="${ticket.seatRow + ticket.seatNumber}"></span>
-                                </span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span class="text-muted"><i class="fa-solid fa-percent me-2"></i>IVA (10%)</span>
-                        <span class="fw-semibold">
-        <span th:text="${#numbers.formatDecimal(iva, 1, 2)}"></span> €
-                        </span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span class="text-muted"><i class="fa-solid fa-building me-2"></i>Base imponible</span>
-                        <span class="fw-semibold">
-        <span th:text="${#numbers.formatDecimal(precioSinIva, 1, 2)}"></span> €
-                        </span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span class="text-muted"><i class="fa-solid fa-euro-sign me-2"></i>Precio total</span>
-                        <span class="fw-semibold">
-                                    <span th:text="${#numbers.formatDecimal(ticket.price, 1, 2)}">Precio total</span>
-                                </span>
-                    </li>
 
-                </ul>
+
+                <div class="row g-0">
+                    <!-- Imagen a la izquierda -->
+                    <div class="col-md-3">
+                        <img th:if="${ticket.session.movie.imageUrl != null}"
+                             th:src="${ticket.session.movie.imageUrl}"
+                             th:alt="${ticket.session.movie.title}"
+                             class="img-fluid object-fit-cover rounded-start"
+                             style="height: 100%; max-height: 350px; width: 100%;">
+                        <div th:unless="${ticket.session.movie.imageUrl != null}"
+                             class="bg-secondary d-flex align-items-center justify-content-center h-100">
+                            <i class="fa-solid fa-film fa-3x text-white"></i>
+                        </div>
+                    </div>
+                    <!-- Datos a la derecha -->
+                    <div class="col-md-9">
+                        <ul class="list-group list-group-flush h-100">
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span class="text-muted"><i class="fa-solid fa-film me-2"></i>Título de película</span>
+                                <span class="fw-semibold" th:text="${ticket.session.movie.title}"></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span class="text-muted"><i class="fa-solid fa-clock me-2"></i>Función</span>
+                                <span th:text="${#temporals.format(ticket.session.startTime, 'dd/MM/yyyy HH:mm')}"></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span class="text-muted"><i class="fa-solid fa-door-open me-2"></i>Sala</span>
+                                <span class="fw-semibold" th:text="${ticket.session.room.name}"></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span class="text-muted"><i class="fa-solid fa-chair me-2"></i>Asiento</span>
+                                <span class="fw-semibold" th:text="${ticket.seatRow + ticket.seatNumber}"></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span class="text-muted"><i class="fa-solid fa-percent me-2"></i>IVA (10%)</span>
+                                <span class="fw-semibold"><span th:text="${#numbers.formatDecimal(iva, 1, 2)}"></span> €</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span class="text-muted"><i class="fa-solid fa-building me-2"></i>Base imponible</span>
+                                <span class="fw-semibold"><span th:text="${#numbers.formatDecimal(precioSinIva, 1, 2)}"></span> €</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span class="text-muted"><i class="fa-solid fa-euro-sign me-2"></i>Precio total</span>
+                                <span class="fw-semibold" th:text="${#numbers.formatDecimal(ticket.price, 1, 2)}"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- QR del ticket -->
-        <div class="col-md-4"  th:if="${ticket.status.name() == 'FINISHED'}">
+        <div class="col-md-6" th:if="${ticket.status.name() == 'FINISHED'}">
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-header bg-dark text-white">
                     <h5 class="mb-0">
@@ -117,30 +127,23 @@
                     </h5>
                 </div>
                 <div class="card-body text-center d-flex flex-column align-items-center justify-content-center gap-3">
-
-                    <!-- Imagen del QR -->
                     <img th:src="'data:image/png;base64,' + ${qrCode}"
                          alt="Código QR del ticket"
                          class="img-fluid"
                          style="max-width: 200px;" />
-
-                    <!-- Estado del QR -->
                     <span th:if="${ticket.currentUses >= ticket.maxUses}" class="badge bg-danger fs-6">
-                      <i class="fa-solid fa-circle-xmark me-1"></i>Ya utilizado
-                     </span>
+                    <i class="fa-solid fa-circle-xmark me-1"></i>Ya utilizado
+                </span>
                     <span th:unless="${ticket.currentUses >= ticket.maxUses}" class="badge bg-success fs-6">
-                         <i class="fa-solid fa-circle-check me-1"></i>Válido
-                    </span>
-
-                    <p class="text-muted small mb-0">
-                        Muestra este QR en la entrada de la sala
-                    </p>
+                    <i class="fa-solid fa-circle-check me-1"></i>Válido
+                </span>
+                    <p class="text-muted small mb-0">Muestra este QR en la entrada de la sala</p>
                 </div>
             </div>
         </div>
 
         <!-- Pantalla del cliente -->
-        <div class="col-md-4" th:if="${ticket.user != null}">
+        <div class="col-md-6" th:if="${ticket.user != null}">
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-header bg-primary text-white">
                     <h5 class="mb-0">
@@ -154,7 +157,7 @@
                     </div>
                     <div th:if="${ticket.user.imageUrl}" class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center mb-2"
                          style="width: 64px; height: 64px;">
-                        <img th:if="${ticket.user.imageUrl != null}" th:src="${ticket.user.imageUrl}"
+                        <img th:src="${ticket.user.imageUrl}"
                              class="rounded-circle object-fit-cover"
                              width="64" height="64" alt="Foto perfil">
                     </div>
@@ -168,47 +171,18 @@
                         <span class="text-muted"><i class="fa-solid fa-envelope me-2"></i>Email</span>
                         <span class="fw-semibold small" th:text="${ticket.user.email}"></span>
                     </li>
-<!--                    <li class="list-group-item d-flex justify-content-between">-->
-<!--                        <span class="text-muted"><i class="fa-solid fa-phone me-2"></i>Teléfono</span>-->
-<!--                        <span class="fw-semibold">+34 600 123 456</span>-->
-<!--                    </li>-->
                     <li class="list-group-item d-flex justify-content-between">
                         <span class="text-muted"><i class="fa-solid fa-receipt me-2"></i>Compras</span>
                         <span class="fw-semibold" th:text="${countUserTickets}"></span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between">
                         <span class="text-muted"><i class="fa-solid fa-receipt me-2"></i>Dinero Gastado</span>
-boton                         <span class="fw-semibold" th:text="|${#numbers.formatDecimal(totalMoneyUserSpent, 1, 2)} €|"></span>
+                        <span class="fw-semibold" th:text="|${#numbers.formatDecimal(totalMoneyUserSpent, 1, 2)} €|"></span>
                     </li>
                 </ul>
             </div>
         </div>
-    </div>
 
-    <!-- formulario con boton finalizar pedido -->
-    <div class="card shadow-sm border-0 mb-4" th:if="${ticket.status.name() == 'FINISHED'}">
-        <div class="card-body">
-            <h5 class="mb-3">
-                <i class="fa-solid fa-receipt me-2"></i>Datos del pago y factura
-            </h5>
-            <div th:if="${ticket.status.name() == 'FINISHED'}">
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex justify-content-between">
-                    <span class="text-muted">Titular tarjeta</span>
-                    <span class="fw-semibold" th:text="${ticket.cardOwner}"></span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between">
-                    <span class="text-muted">Número tarjeta</span>
-                    <span class="fw-semibold"
-                          th:text="|**** **** **** ${#strings.substring(ticket.cardNumber, 12) }|"></span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between">
-                    <span class="text-muted">Fecha pago</span>
-                    <span class="fw-semibold" th:text="${#temporals.format(ticket.purchaseTime, 'dd/MM/yy HH:mm')}"></span>
-                </li>
-            </ul>
-            </div>
-        </div>
     </div>
 
     <div class="card shadow-sm border-0 mb-4" th:if="${ticket.status.name() != 'FINISHED'}">
