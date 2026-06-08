@@ -51,7 +51,7 @@ public class HomeController {
                 .limit(6)
                 .collect(Collectors.toList());
 
-        model.addAttribute("sessions", upcoming);
+        model.addAttribute("projections", upcoming);
 
         return "index";
     }
