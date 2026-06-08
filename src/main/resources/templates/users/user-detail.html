@@ -97,15 +97,17 @@
 						<dd class="col-sm-6" th:text="${ticket.seatRow}"></dd>
 						<dt class="col-sm-6">Numero Asiento</dt>
 						<dd class="col-sm-6" th:text="${ticket.seatNumber}"></dd>
-						<dt class="col-sm-6">Hora de compra</dt>
-						<dd class="col-sm-6" th:text="${ticket.purchaseTime}"></dd>
+						<dt class="col-sm-6">Fecha de compra</dt>
+						<dd class="col-sm-6" th:if="${ticket.purchaseTime != null}"
+						    th:text="${#temporals.format(ticket.purchaseTime, 'dd/MM/yyyy HH:mm')}"></dd>
 						<dt class="col-sm-6">Precio total</dt>
-						<dd class="col-sm-6" th:text="${ticket.price}"></dd>
+						<dd class="col-sm-6" th:text="|${#numbers.formatDecimal(ticket.price, 1, 2)} €|"></dd>
 					</dl>
 				</div>
 				<div class="card-footer text-muted small bg-transparent">
 					<i class="fa-regular fa-calendar me-1"></i>
-					<span th:text="${ticket.purchaseTime}"></span>
+					<span th:if="${ticket.purchaseTime != null}"
+					      th:text="${#temporals.format(ticket.purchaseTime, 'dd/MM/yyyy HH:mm')}"></span>
 				</div>
 			</div>
 		</div>
