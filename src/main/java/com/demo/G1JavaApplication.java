@@ -54,9 +54,18 @@ public class G1JavaApplication {
         Director directorOld1 = new Director();
         directorOld1.setName("Honda");
 
+        Director directorOld2 = new Director();
+        directorOld2.setName("Curtiz");
+
+        Director directorOld3 = new Director();
+        directorOld3.setName("Reed");
+
+        Director directorOld4 = new Director();
+        directorOld4.setName("Lumet");
+
         directorRepository.saveAll(
                 List.of(director1, director2, director3, director4, director5,  director6, director7, director8,
-                        directorOld1)
+                        directorOld1,  directorOld2, directorOld3, directorOld4)
         );
 
         Movie movie1 = new Movie();
@@ -179,8 +188,48 @@ public class G1JavaApplication {
         movieOld1.setSinopsis("Los Estados Unidos hacen una pruebas de armamento nuclear que resultan en la creación de " +
                 "una terrible e imparable bestia similar a un dinosaurio.");
 
+        Movie movieOld2 = new Movie();
+        movieOld2.setTitle("Casablanca");
+        movieOld2.setGenreSet(EnumSet.of(Genre.DRAMA, Genre.ROMANCE));
+        movieOld2.setDirector(directorOld2);
+        movieOld2.setReleaseDate(LocalDate.of(1946, 12, 19));
+        movieOld2.setMinAge(MinAge.AGE_16);
+        movieService.updateStatus(movieOld2, MovieStatus.VOTED);
+        movieOld2.setDuration(102);
+        movieOld2.setTrailerUrl("https://www.youtube.com/embed/nqlROp1TIgo");
+        movieOld2.setImageUrl("/uploads/Casablanca.jpg");
+        movieOld2.setSinopsis("Un cínico expatriado norteamericano, dueño de un café, se debate entre ayudar " +
+                "o no a su antigua amante y a su marido fugitivo a escapar de los nazis en el Marruecos francés.");
+
+        Movie movieOld3 = new Movie();
+        movieOld3.setTitle("El tercer hombre");
+        movieOld3.setGenreSet(EnumSet.of(Genre.THRILLER, Genre.MYSTERY));
+        movieOld3.setDirector(directorOld3);
+        movieOld3.setReleaseDate(LocalDate.of(1950, 4, 8));
+        movieOld3.setMinAge(MinAge.AGE_12);
+        movieService.updateStatus(movieOld3, MovieStatus.VOTED);
+        movieOld3.setDuration(104);
+        movieOld3.setTrailerUrl("https://www.youtube.com/embed/zEZPP5-sJGE");
+        movieOld3.setImageUrl("/uploads/ElTercerHombre.jpg");
+        movieOld3.setSinopsis("El escritor de novelas pulp Holly Martins viaja a la sombría Viena de la posguerra " +
+                "para investigar la misteriosa muerte de un viejo amigo, Harry Lime.");
+
+        Movie movieOld4 = new Movie();
+        movieOld4.setTitle("12 hombres sin piedad");
+        movieOld4.setGenreSet(EnumSet.of(Genre.CRIME, Genre.DRAMA));
+        movieOld4.setDirector(directorOld4);
+        movieOld4.setReleaseDate(LocalDate.of(1958, 2, 3));
+        movieOld4.setMinAge(MinAge.AGE_12);
+        movieService.updateStatus(movieOld4, MovieStatus.VOTED);
+        movieOld4.setDuration(96);
+        movieOld4.setTrailerUrl("https://www.youtube.com/embed/hiyJZP-MlxM");
+        movieOld4.setImageUrl("/uploads/12HombresSinPiedad.jpg");
+        movieOld4.setSinopsis("Un miembro del jurado trata de evitar un error judicial obligando al resto del jurado " +
+                "a reconsiderar las pruebas.");
+
         movieRepository.saveAll(
-                List.of(movie1, movie2, movie3, movie4, movie5,  movie6, movie7, movie8, movieOld1)
+                List.of(movie1, movie2, movie3, movie4, movie5,  movie6, movie7, movie8,
+                        movieOld1, movieOld2, movieOld3, movieOld4)
         );
 
 
