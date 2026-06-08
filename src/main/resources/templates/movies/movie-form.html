@@ -27,7 +27,7 @@
 			</select>
 			<small>¿No encuentras el director?
 				<a th:href="${movie.id != null ? '/directors/new?returnTo=/movies/edit/' + movie.id :
-				'/directors/new?returnTo=/movies/new'}">
+            '/directors/new?returnTo=/movies/new'}">
 					Crea uno nuevo
 				</a>
 			</small>
@@ -53,48 +53,41 @@
 			<label for="releaseDate" class="form-label">Fecha de lanzamiento</label>
 			<input type="date" class="form-control" id="releaseDate"
 			       th:field="*{releaseDate}" required>
-
 		</div>
 
 		<div class="mb-3">
-			<label class="form-label" for="section">Sección</label>
-			<select class="form-select" id="section" th:field="*{section}" required>
-				<option value=""></option>
-
-				<option
-						th:each="section : ${sections}"
-						th:value="${section}"
-						th:text="${section.label}">
-				</option>
-
-			</select>
+			<div class="form-check">
+				<input type="checkbox" class="form-check-input" id="isFlux"
+				       name="isFlux" value="true"
+				       th:checked="${movie.section != null and movie.section.name() == 'FLUX'}">
+				<label class="form-check-label" for="isFlux">Votado</label>
+			</div>
 		</div>
 
 		<div class="mb-3">
-			<label class="form-label" for="movieStatus">Estado</label>
-			<select class="form-select" id="movieStatus" th:field="*{movieStatus}" required>
-				<option value=""></option>
-
-				<option
-						th:each="movieStatus : ${moviesStatus}"
-						th:value="${movieStatus}"
-						th:text="${movieStatus.label}">
+			<label class="form-label" for="fluxStatus">Estado Flux</label>
+			<select class="form-select" id="fluxStatus" name="fluxStatus">
+				<option value="IN_VOTING"
+				        th:selected="${movie.movieStatus != null and movie.movieStatus.name() == 'IN_VOTING'}">
+					En votación
 				</option>
-
+				<option value="VOTED"
+				        th:selected="${movie.movieStatus != null and movie.movieStatus.name() == 'VOTED'}">
+					Votado
+				</option>
 			</select>
+			<small class="text-muted">Solo se aplica si la película es una emisión Flux</small>
 		</div>
 
 		<div class="mb-3">
 			<label class="form-label" for="minAge">Edad mínima</label>
 			<select class="form-select" id="minAge" th:field="*{minAge}" required>
 				<option value=""></option>
-
 				<option
 						th:each="minAge : ${minAges}"
 						th:value="${minAge}"
 						th:text="${minAge.label}">
 				</option>
-
 			</select>
 		</div>
 
@@ -109,21 +102,18 @@
 			<input type="text" class="form-control" id="trailerUrl"
 			       th:field="*{trailerUrl}" required>
 		</div>
-		<!-- TODO mostrar preview del trailer de youtube para ver como quedaría el trailer cargado-->
 
 		<div class="mb-3">
 			<label for="sinopsis" class="form-label">Sinopsis</label>
 			<textarea class="form-control" id="sinopsis" th:field="*{sinopsis}"
 			          rows="3" maxlength="500" placeholder="Año 1941. Las tropas alemanas..." required>
-			</textarea>
+        </textarea>
 		</div>
 
 		<div class="mb-3">
 			<label for="imageFile" class="form-label">Imagen</label>
 			<input type="hidden" th:field="*{imageUrl}">
-
 			<input type="file" class="form-control" id="imageFile" name="imageFile" accept="image/*">
-
 			<img id="preview" alt="Previsualización" class="mt-2 rounded"
 			     style="max-height:150px; display:none"
 			     th:src="${movie != null and movie.imageUrl != null ? movie.imageUrl : null}">
@@ -137,9 +127,7 @@
 		   onclick="return confirm('¿Estás seguro de que querés desactivar esta función?')">
 			<i class="fa-solid fa-ban me-1"></i> Desactivar
 		</a>
-
 		<a th:href="@{/movies}" class="btn btn-secondary">Cancelar</a>
-
 
 	</form>
 

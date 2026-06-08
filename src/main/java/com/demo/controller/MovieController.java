@@ -8,6 +8,7 @@ import com.demo.repository.ReviewRepository;
 import com.demo.repository.SessionRepository;
 import com.demo.service.FavoriteService;
 import com.demo.service.FileService;
+import com.demo.service.MovieService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,7 @@ public class MovieController {
     private final ReviewRepository reviewRepository;
     private final FileService fileService;
     private final FavoriteService favoriteService;
+    private final MovieService movieService;
 
 
     @GetMapping("movies")
@@ -47,6 +49,8 @@ public class MovieController {
         }
 
         List<Movie> movies = movieRepository.findActiveFiltering(directorName, genre, title, minAge, movieStatus, section);
+
+        movies.forEach(movieService::updateStatusByDate);
 
         model.addAttribute("movies", movies);
         model.addAttribute("numMovies", movies.size());
@@ -157,12 +161,22 @@ public class MovieController {
     @PostMapping("movies")
     public String saveMovie(
             @ModelAttribute Movie movie,
-            @RequestParam("imageFile") MultipartFile imageFile
+            @RequestParam("imageFile") MultipartFile imageFile,
+            @RequestParam(required = false) String isFlux,
+            @RequestParam(required = false) MovieStatus fluxStatus
     ) {
         String imageUrl = fileService.store(imageFile);
         if (imageUrl != null)
             movie.setImageUrl(imageUrl);
-        movieRepository.save(movie);
-        return "redirect:/movies/" + movie.getId();
+
+        if ("true".equals(isFlux) && fluxStatus != null
+                && (fluxStatus == MovieStatus.IN_VOTING || fluxStatus == MovieStatus.VOTED)) {
+            movieService.updateStatus(movie, fluxStatus);
+        } else {
+            movieService.updateStatusByDate(movie);
+        }
+
+        Movie saved = movieRepository.save(movie);
+        return "redirect:/movies/" + saved.getId();
     }
 }
