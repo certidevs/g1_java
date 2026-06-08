@@ -61,7 +61,7 @@
 .ribbon {
     position: absolute;
     top: 16px;
-    right: -30px;
+    left: -30px;
     width: 130px;
     text-align: center;
     padding: 4px 0;
@@ -69,7 +69,7 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    transform: rotate(45deg);
+    transform: rotate(-45deg);
     z-index: 2;
 }
 
