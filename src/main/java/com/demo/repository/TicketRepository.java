@@ -18,6 +18,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     List<Ticket> findByUser_IdOrderByPurchaseTime(Long id);
 
     Long countByUser_Id(Long id);
+    Long countBySession_IdAndPurchaseTimeIsNotNull(Long sessionId);
 
 
 
