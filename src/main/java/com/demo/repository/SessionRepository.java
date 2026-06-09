@@ -23,6 +23,8 @@ public interface SessionRepository extends JpaRepository<Session, Long> {
 
     List<Session> findByRoom_Id(Long id);
 
+    List<Session> findByStartTimeBetweenAndActiveTrue(LocalDateTime start, LocalDateTime end);
+
     @Query("""
       SELECT s FROM Session s
       WHERE s.active = true
