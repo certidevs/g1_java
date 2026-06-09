@@ -353,6 +353,73 @@ public class G1JavaApplication {
                 .build();
 
         reviewRepository.saveAll(List.of(review1, review2, review3, review4));
+
+
+
+        Movie superMario = movieRepository.findAll().stream()
+                .filter(m -> "Super Mario Galaxy".equalsIgnoreCase(m.getTitle()))
+                .findFirst()
+                .orElseGet(() -> {
+                    Movie m = new Movie();
+                    m.setTitle("Super Mario Galaxy");
+                    m.setActive(Boolean.TRUE);
+                    m.setSinopsis("A wonderful space adventure with Mario.");
+                    m.setReleaseDate(LocalDate.of(2024, 12, 1));
+                    m.setDuration(95);
+                    m.setImageUrl("/uploads/SuperMarioGalaxy.jpg");
+                    return movieRepository.save(m);
+                });
+
+        // Buscamos o creamos la película "Hokum" (mala)
+        Movie hokum = movieRepository.findAll().stream()
+                .filter(m -> "Hokum".equalsIgnoreCase(m.getTitle()))
+                .findFirst()
+                .orElseGet(() -> {
+                    Movie m = new Movie();
+                    m.setTitle("Hokum");
+                    m.setActive(Boolean.TRUE);
+                    m.setSinopsis("A controversial low-rated title.");
+                    m.setReleaseDate(LocalDate.of(2025, 1, 1));
+                    m.setDuration(80);
+                    m.setImageUrl("/uploads/Hokum.jpg");
+                    return movieRepository.save(m);
+                });
+
+        java.util.Random rnd = new java.util.Random();
+
+        // Rellenar reseñas para Super Mario Galaxy con ratings elevados (cercanos a 5)
+        for (int i = 1; i <= 12; i++) {
+            int r;
+            int pick = rnd.nextInt(100);
+            if (pick < 70) r = 5; // 70%  -> 5
+            else if (pick < 90) r = 4; // 20% -> 4
+            else r = 3; // 10% -> 3
+
+            Review rev = Review.builder()
+                    .title("Reseña " + i + " - Super Mario Galaxy")
+                    .description("Gran película, disfrutable y llena de nostalgia.")
+                    .rating(r)
+                    .movie(superMario)
+                    .build();
+            reviewRepository.save(rev);
+        }
+
+        // Rellenar reseñas para Hokum con ratings bajos (cercanos a 1)
+        for (int i = 1; i <= 12; i++) {
+            int r;
+            int pick = rnd.nextInt(100);
+            if (pick < 70) r = 1; // 70% -> 1
+            else if (pick < 90) r = 2; // 20% -> 2
+            else r = 3; // 10% -> 3
+
+            Review rev = Review.builder()
+                    .title("Reseña " + i + " - Hokum")
+                    .description("No recomendada: mala ejecución y trama pobre.")
+                    .rating(r)
+                    .movie(hokum)
+                    .build();
+            reviewRepository.save(rev);
+        }
     }
 
 }

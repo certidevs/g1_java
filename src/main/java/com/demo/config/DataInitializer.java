@@ -9,6 +9,8 @@ import com.demo.model.enums.Role;
 import com.demo.repository.DirectorRepository;
 import com.demo.repository.FavoriteRepository;
 import com.demo.repository.MovieRepository;
+import com.demo.repository.ReviewRepository;
+import com.demo.model.Review;
 import com.demo.repository.UserRepository;
 import com.demo.service.FavoriteService;
 import com.demo.service.UserService;
@@ -30,6 +32,7 @@ public class DataInitializer implements ApplicationRunner {
 
     private final FavoriteRepository favoriteRepository;
     private final MovieRepository movieRepository;
+    private final ReviewRepository reviewRepository;
   //  private final DirectorRepository directorRepository;
     private final UserService userService;
     private final UserRepository userRepository;
@@ -80,6 +83,86 @@ public class DataInitializer implements ApplicationRunner {
 
         // guardarlos como favoritos de un usuario
         // así los podemos mostrar en el user-detail.html
+
+        // ------ Insertar reseñas de ejemplo para dos películas ------
+        // Buscamos o creamos la película "Super Mario Galaxy" (buena)
+//        Movie superMario = movieRepository.findAll().stream()
+//                .filter(m -> "Super Mario Galaxy".equalsIgnoreCase(m.getTitle()))
+//                .findFirst()
+//                .orElseGet(() -> {
+//                    Movie m = new Movie();
+//                    m.setTitle("Super Mario Galaxy");
+//                    m.setActive(Boolean.TRUE);
+//                    m.setSinopsis("A wonderful space adventure with Mario.");
+//                    m.setReleaseDate(LocalDate.of(2024, 12, 1));
+//                    m.setDuration(95);
+//                    m.setImageUrl("/uploads/SuperMarioGalaxy.jpg");
+//                    return movieRepository.save(m);
+//                });
+//
+//        // Buscamos o creamos la película "Hokum" (mala)
+//        Movie hokum = movieRepository.findAll().stream()
+//                .filter(m -> "Hokum".equalsIgnoreCase(m.getTitle()))
+//                .findFirst()
+//                .orElseGet(() -> {
+//                    Movie m = new Movie();
+//                    m.setTitle("Hokum");
+//                    m.setActive(Boolean.TRUE);
+//                    m.setSinopsis("A controversial low-rated title.");
+//                    m.setReleaseDate(LocalDate.of(2025, 1, 1));
+//                    m.setDuration(80);
+//                    m.setImageUrl("/uploads/Hokum.jpg");
+//                    return movieRepository.save(m);
+//                });
+//
+//        // Crear otro usuario para variar autores de reseñas
+//        User reviewer = userRepository.findByUsername("reviewer").orElseGet(() ->
+//                userRepository.save(User.builder()
+//                        .username("reviewer")
+//                        .email("reviewer@gmail.com")
+//                        .password(passwordEncoder.encode("reviewer"))
+//                        .role(Role.ROLE_USER)
+//                        .active(true)
+//                        .build())
+//        );
+//
+//        java.util.Random rnd = new java.util.Random();
+//
+//        // Rellenar reseñas para Super Mario Galaxy con ratings elevados (cercanos a 5)
+//        for (int i = 1; i <= 12; i++) {
+//            int r;
+//            int pick = rnd.nextInt(100);
+//            if (pick < 70) r = 5; // 70%  -> 5
+//            else if (pick < 90) r = 4; // 20% -> 4
+//            else r = 3; // 10% -> 3
+//
+//            Review rev = Review.builder()
+//                    .title("Reseña " + i + " - Super Mario Galaxy")
+//                    .description("Gran película, disfrutable y llena de nostalgia.")
+//                    .rating(r)
+//                    .movie(superMario)
+//                    .user(rnd.nextBoolean() ? user : reviewer)
+//                    .build();
+//            reviewRepository.save(rev);
+//        }
+//
+//        // Rellenar reseñas para Hokum con ratings bajos (cercanos a 1)
+//        for (int i = 1; i <= 12; i++) {
+//            int r;
+//            int pick = rnd.nextInt(100);
+//            if (pick < 70) r = 1; // 70% -> 1
+//            else if (pick < 90) r = 2; // 20% -> 2
+//            else r = 3; // 10% -> 3
+//
+//            Review rev = Review.builder()
+//                    .title("Reseña " + i + " - Hokum")
+//                    .description("No recomendada: mala ejecución y trama pobre.")
+//                    .rating(r)
+//                    .movie(hokum)
+//                    .user(rnd.nextBoolean() ? user : reviewer)
+//                    .build();
+//            reviewRepository.save(rev);
+//        }
 
 
     }

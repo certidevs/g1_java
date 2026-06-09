@@ -94,6 +94,11 @@ public class MovieController {
 
         List<Review> reviews = reviewRepository.findByMovie_IdOrderByCreationDateDesc(movie.getId());
         model.addAttribute("reviews", reviews);
+
+        // agregar calculos de reviews:
+        model.addAttribute("avgRating", reviewRepository.calculateAverageRatingByMovieId(movie.getId()));
+        model.addAttribute("countReviews", reviewRepository.countByMovie_Id(movie.getId()));
+
         if(user != null) {
             model.addAttribute("favoriteMovieIds",
                     favoriteService.findMovieIdsByUserId(user.getId()));
