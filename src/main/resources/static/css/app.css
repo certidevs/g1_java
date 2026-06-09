@@ -2,36 +2,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
 :root {
-    --brand-primary: #c0392b;
-    --hero-bg: #2D2724;
-    --hero-color: #F3E8C7;
-    --hero-title-highlight-bg: linear-gradient(90deg, #952D0E, #CD8562);
+    /*Paleta de color*/
+    --flux-dark:#2D2724;
+    --flux-cream:#F3E8C7;
+    --flux-red:#952D0E;
+    --flux-copper:#CD8562;
+    --flux-gold:#FFC438;
+
+    /*Colores del hero*/
+    --hero-bg: var(--flux-dark);
+    --hero-color: var(--flux-cream);
+    --hero-title-highlight-bg: linear-gradient(90deg, var(--flux-red), var(--flux-copper));
 }
 
 .hero {
     background-color: var(--hero-bg);
     color: var(--hero-color);
-    overflow: hidden;
-    position: relative;
-}
-
-.hero-bg {
-    height: 200vh;
-    position: absolute;
-    width: 300vh;
-    left: -8rem;
-    top: -5rem;
-    transform: rotate(11deg);
 }
 
 .hero-bg-img {
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-    width: 45%;
-    object-fit: cover;
-    opacity: 0.4;
+    background: url(../images/bg.png);
+    right: -18rem;
+    top: 3rem;
+    height: 100vh;
+    transform: rotate(4deg);
 }
 
 .hero-title {
@@ -56,6 +50,33 @@
     .hero-subtitle {
         padding: 0 3rem 0 1rem;
     }
+}
+
+.ticket {
+    background-color: var(--flux-cream);
+    border-radius: 8px;
+    position: relative;
+    padding: 1.5rem;
+}
+
+.ticket::before,
+.ticket::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background-size: 20px 20px;
+}
+
+.ticket::before {
+    top: -10px;
+    background-image: radial-gradient(circle at 50% 0%, transparent 10px, #F3E8C7 10px);
+}
+
+.ticket::after {
+    bottom: -10px;
+    background-image: radial-gradient(circle at 50% 100%, transparent 10px, #F3E8C7 10px);
 }
 
 .ribbon {
