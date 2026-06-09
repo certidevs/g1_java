@@ -160,6 +160,7 @@ public class MovieController {
         model.addAttribute("minAges", MinAge.values());
         model.addAttribute("moviesStatus", MovieStatus.values());
         model.addAttribute("sections", Section.values());
+        model.addAttribute("edit", true);
         return "movies/movie-form";
     }
 
