@@ -9,6 +9,7 @@ import com.demo.model.enums.TicketStatus;
 import com.demo.repository.*;
 import com.demo.service.QrService;
 import com.google.zxing.WriterException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -77,7 +78,7 @@ public class TicketController {
 
     // detail
     @GetMapping("tickets/{id}")
-    public String ticketDetail(@PathVariable Long id, Model model) throws WriterException, IOException {
+    public String ticketDetail(@PathVariable Long id, Model model, HttpServletRequest request) throws WriterException, IOException {
         Ticket ticket = ticketRepository.findById(id).orElseThrow();
         model.addAttribute("ticket", ticket);
 
@@ -89,7 +90,7 @@ public class TicketController {
         model.addAttribute("precioSinIva", precioSinIva);
 
         // Generamos el QR y lo mandamos a la vista
-        String qrBase64 = qrService.generarQr(ticket.getId());
+        String qrBase64 = qrService.generarQr(ticket.getId(), request);
         model.addAttribute("qrCode", qrBase64);
 
         if (ticket.getUser() == null) {

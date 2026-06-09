@@ -6,6 +6,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +17,13 @@ import java.util.Base64;
 @Service
 @AllArgsConstructor
 public class QrService {
-    public String generarQr(Long ticketId) throws WriterException, IOException {
+    public String generarQr(Long ticketId, HttpServletRequest request) throws WriterException, IOException {
 
-        // 1. La URL que va dentro del QR
-        String url = "http://localhost:8080/tickets/qr-scan/" + ticketId;
+        // 1. La URL que va dentro del QR - usando la IP real de la máquina
+        String host = request.getServerName();
+        int port = request.getServerPort();
+        String protocol = request.getScheme();
+        String url = protocol + "://" + host + ":" + port + "/tickets/qr-scan/" + ticketId;
 
         // 2. Generamos la matriz de puntos del QR
         QRCodeWriter writer = new QRCodeWriter();
