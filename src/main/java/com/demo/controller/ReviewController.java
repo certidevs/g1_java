@@ -5,10 +5,12 @@ import com.demo.model.User;
 import com.demo.repository.MovieRepository;
 import com.demo.repository.ReviewRepository;
 import com.demo.repository.UserRepository;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -67,8 +69,16 @@ public class ReviewController {
     }
 
     @PostMapping("reviews")
-    public String saveReview(@ModelAttribute Review review, @AuthenticationPrincipal User user, RedirectAttributes redirectAttributes) {
+    public String saveReview(
+            @Valid @ModelAttribute Review review,
+            BindingResult bindingResult,
+            @AuthenticationPrincipal User user,
+            RedirectAttributes redirectAttributes) {
         //  usuario que crea/modifica la review
+        if (bindingResult.hasErrors()) {
+            return "reviews/review-form";
+        }
+
         review.setUser(user);
 
         if (review.getMovie() != null && review.getMovie().getId() != null) {
