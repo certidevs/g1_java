@@ -77,31 +77,6 @@ public class HomeController {
         Long vipRooms = roomRepository.countByScreentypeAndActiveTrue(ScreenType.VIP);
         model.addAttribute("vipRoomsCount", vipRooms);
 
-//        List<Session> featured = sessionRepository.findAll().stream()
-//                .filter(s -> Boolean.TRUE.equals(s.getActive()))
-//                .filter(s -> s.getStartTime() != null)
-//                .filter(s -> s.getStartTime().isAfter(now) && s.getStartTime().isBefore(now.plusHours(2)))
-//                .filter(s -> {
-//                    long sold = ticketRepository.findBySession_Id(s.getId()).stream()
-//                            .filter(t -> t.getPurchaseTime() != null)
-//                            .count();
-//                    return sold < s.getRoom().getCapacity() * 0.5;
-//                })
-//                .sorted(Comparator.comparing(Session::getStartTime))
-//                .limit(1)
-//                .collect(Collectors.toList());
-//
-//        if (!featured.isEmpty()) {
-//            Session featuredSession = featured.get(0);
-//            model.addAttribute("featuredSession", featuredSession);
-//            long soldTickets = ticketRepository.findBySession_Id(featuredSession.getId()).stream()
-//                    .filter(t -> t.getPurchaseTime() != null)
-//                    .count();
-//            model.addAttribute("availableSeats", featuredSession.getRoom().getCapacity() - soldTickets);
-//        } else {
-//            model.addAttribute("featuredSession", null);
-//        }
-
         List<Session> sessions = sessionRepository.findAll();
 
         Session featuredSession = null;
