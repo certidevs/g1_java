@@ -58,31 +58,27 @@
 
     <div class="row g-3 mb-4">
 
-        <!-- Información del ticket -->
-        <div class="col-12">
-            <div class="card shadow-sm border-0 h-100">
+        <!-- Ticket 70% -->
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0">
                 <div class="card-header bg-success text-white">
                     <h5 class="mb-0">
                         <i class="fa-solid fa-ticket me-2"></i>Ticket
                     </h5>
                 </div>
-
-
                 <div class="row g-0">
-                    <!-- Imagen a la izquierda -->
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <img th:if="${ticket.session.movie.imageUrl != null}"
                              th:src="${ticket.session.movie.imageUrl}"
                              th:alt="${ticket.session.movie.title}"
                              class="img-fluid object-fit-cover rounded-start"
-                             style="height: 100%; max-height: 350px; width: 100%;">
+                             style="height: 100%; max-height: 400px; width: 100%;">
                         <div th:unless="${ticket.session.movie.imageUrl != null}"
                              class="bg-secondary d-flex align-items-center justify-content-center h-100">
                             <i class="fa-solid fa-film fa-3x text-white"></i>
                         </div>
                     </div>
-                    <!-- Datos a la derecha -->
-                    <div class="col-md-9">
+                    <div class="col-md-8">
                         <ul class="list-group list-group-flush h-100">
                             <li class="list-group-item d-flex justify-content-between">
                                 <span class="text-muted"><i class="fa-solid fa-film me-2"></i>Título de película</span>
@@ -115,6 +111,41 @@
                         </ul>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Mensaje duración 30% -->
+        <div class="col-md-4" th:if="${ticket.status.name() == 'FINISHED'}">
+            <div class="h-100 p-3 text-center d-flex flex-column align-items-center justify-content-center"
+                 style="background: linear-gradient(135deg, #1a1a2e, #16213e); color: white; border-radius: 16px;">
+
+                <i class="fa-solid fa-clapperboard fa-2x mb-3 text-warning"></i>
+                <h5 class="fw-bold text-warning mb-1">¡Todo listo! 🎬</h5>
+                <p class="text-white-50 small mb-3">Organiza bien tu tiempo</p>
+
+                <div class="mb-3">
+                    <div class="text-white-50 small mb-1">
+                        <i class="fa-solid fa-circle-play me-1 text-success"></i>Inicio
+                    </div>
+                    <div class="fs-5 fw-bold text-success"
+                         th:text="${#temporals.format(ticket.session.startTime, 'dd/MM/yyyy HH:mm')}">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="text-white-50 small mb-1">
+                        <i class="fa-solid fa-circle-stop me-1 text-danger"></i>Fin
+                    </div>
+                    <div class="fs-5 fw-bold text-danger"
+                         th:text="${#temporals.format(ticket.session.startTime.plusMinutes(ticket.session.movie.duration + ticket.session.numAds), 'dd/MM/yyyy HH:mm')}">
+                    </div>
+                </div>
+
+<!--                <p class="mb-0 text-white-50 small">-->
+<!--                    <i class="fa-solid fa-clock me-1"></i>-->
+<!--                    <span th:text="${ticket.session.movie.duration}"></span> min película-->
+<!--                    + <span th:text="${ticket.session.numAds}"></span> min anuncios-->
+<!--                </p>-->
             </div>
         </div>
 
