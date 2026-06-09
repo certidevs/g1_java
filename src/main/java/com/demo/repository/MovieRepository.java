@@ -41,4 +41,13 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
             @Param("movieStatus") MovieStatus movieStatus,
             @Param("section") Section section
     );
+
+    @Query("""
+        SELECT m from Movie m
+        WHERE m.active = false
+        AND (:section IS NULL OR m.section = :section)
+    """)
+    List<Movie> findInactiveFiltering(
+            @Param("section") Section section
+    );
 }

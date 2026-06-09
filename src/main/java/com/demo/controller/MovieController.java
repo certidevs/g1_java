@@ -80,6 +80,14 @@ public class MovieController {
         return "redirect:/movies?section=FLUX";
     }
 
+    @GetMapping("movies/inactive")
+    public String inactiveMovies(Model model,
+                                 @RequestParam(required = false) Section section) {
+        List<Movie> movies = movieRepository.findInactiveFiltering(section);
+        model.addAttribute("movies", movies);
+        return "movies/movie-list";
+    }
+
 
     @GetMapping("movies/{id}")
     public String movie(
