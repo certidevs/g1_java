@@ -20,6 +20,8 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     // List<Room> findByActiveTrue();
     Optional<Room> findByIdAndActiveTrue(Long id);
 
+    Long countByScreentypeAndActiveTrue(ScreenType screentype);
+
     // Query con filtros:
     @Query("""
            SELECT r from Room r
