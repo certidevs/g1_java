@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -22,6 +23,8 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     List<Movie> findByMinAge(MinAge minAge);
 
     List<Movie> findBySection(Section section);
+
+    List<Movie> findByReleaseDateBetweenAndActiveTrue(LocalDate start, LocalDate end);
 
     @Query("""
         SELECT m from Movie m
@@ -39,6 +42,15 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
             @Param("title") String title,
             @Param("minAge") MinAge minAge,
             @Param("movieStatus") MovieStatus movieStatus,
+            @Param("section") Section section
+    );
+
+    @Query("""
+        SELECT m from Movie m
+        WHERE m.active = false
+        AND (:section IS NULL OR m.section = :section)
+    """)
+    List<Movie> findInactiveFiltering(
             @Param("section") Section section
     );
 }

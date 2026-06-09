@@ -80,6 +80,14 @@ public class MovieController {
         return "redirect:/movies?section=FLUX";
     }
 
+    @GetMapping("movies/inactive")
+    public String inactiveMovies(Model model,
+                                 @RequestParam(required = false) Section section) {
+        List<Movie> movies = movieRepository.findInactiveFiltering(section);
+        model.addAttribute("movies", movies);
+        return "movies/movie-list";
+    }
+
 
     @GetMapping("movies/{id}")
     public String movie(
@@ -160,6 +168,7 @@ public class MovieController {
         model.addAttribute("minAges", MinAge.values());
         model.addAttribute("moviesStatus", MovieStatus.values());
         model.addAttribute("sections", Section.values());
+        model.addAttribute("edit", true);
         return "movies/movie-form";
     }
 

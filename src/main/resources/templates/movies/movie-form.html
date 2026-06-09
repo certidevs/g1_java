@@ -15,6 +15,11 @@
 
 		<input type="hidden" th:field="*{id}">
 
+		<div sec:authorize="hasRole('ADMIN')"  class="mb-3 form-check" th:if="${edit}">
+			<input type="checkbox" class="form-check-input" id="active" th:field="*{active}">
+			<label class="form-check-label" for="active">Activo</label>
+		</div>
+
 		<div class="mb-3">
 			<label for="director" class="form-label">Director</label>
 			<select class="form-select" id="director" name="director" th:field="*{director}" required>
@@ -60,7 +65,7 @@
 				<input type="checkbox" class="form-check-input" id="isFlux"
 				       name="isFlux" value="true"
 				       th:checked="${movie.section != null and movie.section.name() == 'FLUX'}">
-				<label class="form-check-label" for="isFlux">Votado</label>
+				<label class="form-check-label" for="isFlux">Emisión Flux</label>
 			</div>
 		</div>
 
@@ -122,11 +127,6 @@
 		<button type="submit" class="btn btn-success">
 			<i class="fa-solid fa-floppy-disk"></i> Guardar
 		</button>
-		<a sec:authorize="hasRole('ADMIN')" th:href="@{/movies/deactivate/{id}(id=${movie.id})}"
-		   class="btn btn-warning" th:if="${movie.id != null}"
-		   onclick="return confirm('¿Estás seguro de que querés desactivar esta función?')">
-			<i class="fa-solid fa-ban me-1"></i> Desactivar
-		</a>
 		<a th:href="@{/movies}" class="btn btn-secondary">Cancelar</a>
 
 	</form>
