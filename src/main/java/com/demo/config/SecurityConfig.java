@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
 
 import java.util.Optional;
@@ -23,6 +24,11 @@ public class SecurityConfig  {
     // securityFilterChain para proteger acceso a rutas
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+        // para poder redireccionar a la última página visitada después de hacer login
+        SavedRequestAwareAuthenticationSuccessHandler handler =
+                new SavedRequestAwareAuthenticationSuccessHandler();
+        handler.setDefaultTargetUrl("/movies");
 
         http.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"));
 
@@ -68,14 +74,14 @@ public class SecurityConfig  {
                         .requestMatchers(HttpMethod.GET, "/reviews/edit/*").hasRole("USER")
                         .requestMatchers(HttpMethod.GET, "/reviews/delete/*").hasRole("ADMIN")
 
-                        // hecho por jose
+                        // hecho así para que tanto usuarios normales como admins puedan comprar entradas y ver sus tickets
                         .requestMatchers(HttpMethod.GET, "/tickets").authenticated()
                         .requestMatchers(HttpMethod.GET, "/tickets/*").authenticated()
                         .requestMatchers(HttpMethod.POST, "/tickets").authenticated()
                         .requestMatchers(HttpMethod.GET, "/tickets/new").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/tickets/edit/*").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/tickets/delete/*").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/tickets/buy/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/tickets/buy/*").authenticated()
 
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         // lo demás autenticado si o si
@@ -91,7 +97,7 @@ public class SecurityConfig  {
         );
         http.formLogin(form ->
                 form.loginPage("/login")
-                        .defaultSuccessUrl("/movies", true)
+                        .successHandler(handler)
                         .permitAll()
         );
 
