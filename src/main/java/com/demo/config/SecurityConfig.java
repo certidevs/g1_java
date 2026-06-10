@@ -30,7 +30,7 @@ public class SecurityConfig  {
                 new SavedRequestAwareAuthenticationSuccessHandler();
         handler.setDefaultTargetUrl("/movies");
 
-        http.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"));
+        http.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**", "/api/v1/**"));
 
         http.headers(headers -> headers.frameOptions(frame -> frame.sameOrigin())); // h2 usa iframes
         //Para proteger las rutas
@@ -38,8 +38,10 @@ public class SecurityConfig  {
                 auth -> auth
 
                         // rutas públicas tanto GET como POST
-                        .requestMatchers("/login", "/register", "/uploads/**",
-                                "/css/**", "/images/**", "/webjars/**").permitAll()
+                        .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/api/v1/**").permitAll()
+
+                        .requestMatchers("/login", "/register", "/uploads/**", "/css/**", "/images/**", "/webjars/**").permitAll()
 
                         // separado de una en una
 
