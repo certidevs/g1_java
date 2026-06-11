@@ -34,7 +34,7 @@ public class MovieRestController {
     }
 
     @PostMapping
-    public ResponseEntity<Movie> save(@RequestBody Movie movie) {
+    public ResponseEntity<Movie> create(@RequestBody Movie movie) {
         if (movie.getId() != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Movie ID must be null");
         }
@@ -43,4 +43,23 @@ public class MovieRestController {
         return ResponseEntity.created(URI.create("/api/v1/movies/" + saved.getId())).body(saved);
     }
 
+    // actualizar movie
+    @PutMapping("{id}")
+    public ResponseEntity<Movie> update(@PathVariable Long id, @RequestBody Movie movie) {
+        Movie existing = movieRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie " + id + " not found")
+        );
+        existing.setTitle(movie.getTitle());
+        existing.setReleaseDate(movie.getReleaseDate());
+        existing.setDirector(movie.getDirector());
+        existing.setSection(movie.getSection());
+        existing.setImageUrl(movie.getImageUrl());
+        existing.setActive(movie.getActive());
+        existing.setGenreSet(movie.getGenreSet());
+        existing.setTrailerUrl(movie.getTrailerUrl());
+        // como alternativa se podría usar DTOs y mappers
+        // existing.setStartDate(restaurant.getStartDate()); // conservar fecha original
+
+        return ResponseEntity.ok(movieRepository.save(existing));
+    }
 }
