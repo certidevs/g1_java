@@ -58,8 +58,9 @@
 
     <div class="row g-3 mb-4">
 
-        <!-- Ticket 70% -->
-        <div class="col-md-8">
+        <!-- Ticket siempre col-md-8 si FINISHED, col-md-7 si no -->
+        <div th:classappend="${ticket.status.name() == 'FINISHED'} ? 'col-md-8' : 'col-md-7'"
+             class="col-12">
             <div class="card shadow-sm border-0">
                 <div class="card-header bg-success text-white">
                     <h5 class="mb-0">
@@ -114,15 +115,13 @@
             </div>
         </div>
 
-        <!-- Mensaje duración 30% -->
+        <!-- Mensaje duración - solo FINISHED -->
         <div class="col-md-4" th:if="${ticket.status.name() == 'FINISHED'}">
             <div class="h-100 p-3 text-center d-flex flex-column align-items-center justify-content-center"
                  style="background: linear-gradient(135deg, #1a1a2e, #16213e); color: white; border-radius: 16px;">
-
                 <i class="fa-solid fa-clapperboard fa-2x mb-3 text-warning"></i>
                 <h5 class="fw-bold text-warning mb-1">¡Todo listo! 🎬</h5>
                 <p class="text-white-50 small mb-3">Organiza bien tu tiempo</p>
-
                 <div class="mb-3">
                     <div class="text-white-50 small mb-1">
                         <i class="fa-solid fa-circle-play me-1 text-success"></i>Inicio
@@ -131,25 +130,59 @@
                          th:text="${#temporals.format(ticket.session.startTime, 'dd/MM/yyyy HH:mm')}">
                     </div>
                 </div>
-
                 <div class="mb-3">
                     <div class="text-white-50 small mb-1">
-                        <i class="fa-solid fa-circle-stop me-1 text-danger"></i>Fin
+                        <i class="fa-solid fa-circle-stop me-1 text-primary"></i>Fin
                     </div>
-                    <div class="fs-5 fw-bold text-danger"
+                    <div class="fs-5 fw-bold text-primary"
                          th:text="${#temporals.format(ticket.session.startTime.plusMinutes(ticket.session.movie.duration + ticket.session.numAds), 'dd/MM/yyyy HH:mm')}">
                     </div>
                 </div>
-
-<!--                <p class="mb-0 text-white-50 small">-->
-<!--                    <i class="fa-solid fa-clock me-1"></i>-->
-<!--                    <span th:text="${ticket.session.movie.duration}"></span> min película-->
-<!--                    + <span th:text="${ticket.session.numAds}"></span> min anuncios-->
-<!--                </p>-->
             </div>
         </div>
 
-        <!-- QR del ticket -->
+        <!-- Cliente al lado del ticket cuando IN_PROGRESS -->
+        <div class="col-md-5" th:if="${ticket.user != null and ticket.status.name() != 'FINISHED'}">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="fa-solid fa-user me-2"></i> Cliente
+                    </h5>
+                </div>
+                <div class="card-body text-center pb-2">
+                    <div th:unless="${ticket.user.imageUrl}" class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center mb-2"
+                         style="width: 64px; height: 64px;">
+                        <i class="fa-solid fa-user fa-2x text-primary"></i>
+                    </div>
+                    <div th:if="${ticket.user.imageUrl}" class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center mb-2"
+                         style="width: 64px; height: 64px;">
+                        <img th:src="${ticket.user.imageUrl}"
+                             class="rounded-circle object-fit-cover"
+                             width="64" height="64" alt="Foto perfil">
+                    </div>
+                    <h5 class="card-title mb-0" th:text="${ticket.user.username}"></h5>
+                    <p class="text-muted small mb-0">
+                        <i class="fa-solid fa-crown text-warning me-1"></i> Crack cineasta
+                    </p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span class="text-muted"><i class="fa-solid fa-envelope me-2"></i>Email</span>
+                        <span class="fw-semibold small" th:text="${ticket.user.email}"></span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span class="text-muted"><i class="fa-solid fa-receipt me-2"></i>Compras</span>
+                        <span class="fw-semibold" th:text="${countUserTickets}"></span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span class="text-muted"><i class="fa-solid fa-receipt me-2"></i>Dinero Gastado</span>
+                        <span class="fw-semibold" th:text="|${#numbers.formatDecimal(totalMoneyUserSpent, 1, 2)} €|"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- QR - solo FINISHED -->
         <div class="col-md-6" th:if="${ticket.status.name() == 'FINISHED'}">
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-header bg-dark text-white">
@@ -163,7 +196,7 @@
                          class="img-fluid"
                          style="max-width: 200px;" />
                     <span th:if="${ticket.currentUses >= ticket.maxUses}" class="badge bg-danger fs-6">
-                    <i class="fa-solid fa-circle-xmark me-1"></i>Ya utilizado
+                    <i class="fa-solid fa-circle-xmark me-1"></i>Ticket ya utilizado
                 </span>
                     <span th:unless="${ticket.currentUses >= ticket.maxUses}" class="badge bg-success fs-6">
                     <i class="fa-solid fa-circle-check me-1"></i>Válido
@@ -173,8 +206,8 @@
             </div>
         </div>
 
-        <!-- Pantalla del cliente -->
-        <div class="col-md-6" th:if="${ticket.user != null}">
+        <!-- Cliente abajo - solo FINISHED -->
+        <div class="col-md-6" th:if="${ticket.user != null and ticket.status.name() == 'FINISHED'}">
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-header bg-primary text-white">
                     <h5 class="mb-0">
