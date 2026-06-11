@@ -4,6 +4,8 @@ package com.demo.controller.api;
 
 import com.demo.model.Movie;
 import com.demo.repository.MovieRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +19,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/movies")
 @AllArgsConstructor
+@Tag(name = "Movies" , description = "CRUD para gestionar las películas")
 public class MovieRestController {
 
     private MovieRepository movieRepository;
+
+    @Operation(
+            summary = "Ver todas las pelis",
+            description = "Trae todas las pelis, filtrados por active true en el futuro")
 
     @GetMapping
     List<Movie> findAll() {
@@ -91,11 +98,11 @@ public class MovieRestController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie " + id + " not found");
 
         // hard delete: intenta borrar la movie completamente, pero fallará si hay asociaciones:
-        try {
-            movieRepository.deleteById(id);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Movie can't be deleted because it has relationships");
-        }
+      //  try {
+         movieRepository.deleteById(id);
+//        } catch (Exception e) {
+//            throw new ResponseStatusException(HttpStatus.CONFLICT, "Movie can't be deleted because it has relationships");
+//        }
 
         // soft delete: solo desactivarlo
         // findById  setActive false   save
