@@ -43,7 +43,7 @@ public class MovieRestController {
         return ResponseEntity.created(URI.create("/api/v1/movies/" + saved.getId())).body(saved);
     }
 
-    // actualizar movie
+    // actualizar movie (si un campo se manda null, cambiará a null)
     @PutMapping("{id}")
     public ResponseEntity<Movie> update(@PathVariable Long id, @RequestBody Movie movie) {
         Movie existing = movieRepository.findById(id).orElseThrow(
@@ -57,9 +57,31 @@ public class MovieRestController {
         existing.setActive(movie.getActive());
         existing.setGenreSet(movie.getGenreSet());
         existing.setTrailerUrl(movie.getTrailerUrl());
+        existing.setSinopsis(movie.getSinopsis());
         // como alternativa se podría usar DTOs y mappers
         // existing.setStartDate(restaurant.getStartDate()); // conservar fecha original
 
         return ResponseEntity.ok(movieRepository.save(existing));
     }
+
+    // actualizar restaurante: actualización parcial, si viene a null no se toca
+    // la diferencia es que PUT setea todos los campos, y PATCH solo los que llegaron no nulos
+    @PatchMapping("{id}")
+    public ResponseEntity<Movie> updatePartial(@PathVariable Long id, @RequestBody Movie movie) {
+        Movie existing = movieRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie " + id + " not found")
+        );
+        if(movie.getTitle() != null) existing.setTitle(movie.getTitle());
+        if(movie.getReleaseDate() != null) existing.setReleaseDate(movie.getReleaseDate());
+        if(movie.getDirector() != null) existing.setDirector(movie.getDirector());
+        if(movie.getSection() != null) existing.setSection(movie.getSection());
+        if(movie.getImageUrl() != null) existing.setImageUrl(movie.getImageUrl());
+        if(movie.getActive() != null) existing.setActive(movie.getActive());
+        if(movie.getGenreSet() != null) existing.setGenreSet(movie.getGenreSet());
+        if(movie.getTrailerUrl() != null) existing.setTrailerUrl(movie.getTrailerUrl());
+        if(movie.getSinopsis() != null) existing.setSinopsis(movie.getSinopsis());
+
+        return ResponseEntity.ok(movieRepository.save(existing));
+    }
+
 }
