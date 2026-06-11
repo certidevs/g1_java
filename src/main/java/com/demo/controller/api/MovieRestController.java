@@ -84,4 +84,21 @@ public class MovieRestController {
         return ResponseEntity.ok(movieRepository.save(existing));
     }
 
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT) // 204
+    public void delete(@PathVariable Long id) {
+        if(!movieRepository.existsById(id))
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie " + id + " not found");
+
+        // hard delete: intenta borrar la movie completamente, pero fallará si hay asociaciones:
+        try {
+            movieRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Movie can't be deleted because it has relationships");
+        }
+
+        // soft delete: solo desactivarlo
+        // findById  setActive false   save
+    }
+
 }
