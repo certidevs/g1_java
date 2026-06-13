@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
-<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark mb-5 shadow-sm">
+<nav th:fragment="navbar" class="navbar flux-navbar navbar-expand-lg mb-5">
 	<div class="container">
 		<a class="navbar-brand d-flex align-items-center" th:href="@{/}">
-			<img th:src="@{/images/logo.png}" alt="Cine" height="32" class="me-2 rounded-3">
+			<img th:src="@{/images/navLogo.png}" alt="Cine" height="64" class="me-2 rounded-3">
 			<span>FluxFilms</span>
 		</a>
 		<button class="navbar-toggler" type="button"
 		        data-bs-toggle="collapse" data-bs-target="#mainNav"
 		        aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
+			<button class="navbar-toggler border-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+				<i class="fa-solid fa-bars text-secondary"></i>
+			</button>
 		</button>
 		<div class="collapse navbar-collapse" id="mainNav">
 			<ul class="navbar-nav me-auto">
@@ -45,40 +47,31 @@
 					</a>
 				</li>
 			</ul>
-
-			<div sec:authorize="!isAuthenticated()" class="d-flex justify-content-end">
-				<a class="btn btn-outline-light btn-sm" th:href="@{/login}">
+			<div class="flux-navbar-user d-flex align-items-center justify-content-start justify-content-lg-end"
+			     sec:authorize="!isAuthenticated()">
+				<a class="btn btn-outline-secondary btn-sm" th:href="@{/login}">
 					<i class="fa-solid fa-sign-in"></i> Entrar
 				</a>
-				<a class="btn btn-light btn-sm ms-2" th:href="@{/register}">
+				<a class="btn btn-primary btn-sm ms-2" th:href="@{/register}">
 					<i class="fa-solid fa-circle-user"></i> Registro
 				</a>
 			</div>
-
-			<div sec:authorize="isAuthenticated()" class="d-flex align-items-center justify-content-end">
-
+			<div class="d-flex align-items-center justify-content-start justify-content-lg-end"
+			     sec:authorize="isAuthenticated()">
 				<a class="d-flex align-items-center text-light text-decoration-none me-3" th:href="@{/profile}">
-					<img
-							th:src="${#authentication.principal.imageUrl != null ?
-                        #authentication.principal.imageUrl : '/images/avatar.svg'}"
-							alt="avatar" width="32" height="32"
-							class="rounded-circle object-fit-cover me-2 border border-2 border-light bg-white">
-
+					<img alt="avatar" width="32" height="32" th:src="${#authentication.principal.imageUrl != null ?
+					#authentication.principal.imageUrl : '/images/avatar.svg'}"
+					     class="rounded-circle object-fit-cover me-2 border border-2 border-light bg-white">
 					<span sec:authentication="name"></span>
-
 				</a>
 				<form th:action="@{/logout}" method="post" class="d-inline">
 					<button class="btn btn-outline-light btn-sm ms-2">
 						<i class="fa-solid fa-sign-out"></i> Salir
 					</button>
 				</form>
-
 			</div>
-
 		</div>
 	</div>
 </nav>
 </body>
 </html>
-
-
