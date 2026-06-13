@@ -3,58 +3,51 @@
       xmlns:sec="http://www.thymeleaf.org/extras/springsecurity6">
 <body>
 
-<div th:fragment="movieCard(movie, favoriteMovieIds)" class="card h-100 shadow-sm overflow-hidden">
-
-	<!-- Badge cinta diagonal -->
+<div th:fragment="movieCard(movie, favoriteMovieIds)" class="ticket h-100 position-relative overflow-hidden">
 	<div class="ribbon position-absolute"
 	     th:classappend="${movie.movieStatus.name() == 'NEW_RELEASE'} ? 'ribbon-danger' :
                     (${movie.movieStatus.name() == 'COMING_SOON'} ? 'ribbon-secondary' :
                     (${movie.movieStatus.name() == 'PRE_SALES'} ? 'ribbon-warning' :
                     (${movie.movieStatus.name() == 'LAST_DAYS'} ? 'ribbon-warning' :
                     (${movie.movieStatus.name() == 'FINISHED'} ? 'ribbon-dark' : 'ribbon-success'))))"
-	     th:text="${movie.movieStatus.label}"
-	     style="z-index:2;">
+	     th:text="${movie.movieStatus.label}">
 	</div>
-
-	<!-- Favorito -->
 	<form sec:authorize="isAuthenticated()" th:action="@{/favorites/toggle}" method="post"
-	      class="position-absolute top-0 end-0 m-2" style="z-index:2;">
+	      class="position-absolute top-0 end-0 m-3 z-3">
 		<input type="hidden" name="type" th:value="MOVIE">
 		<input type="hidden" name="targetId" th:value="${movie.id}">
 		<input type="hidden" name="redirectUrl" th:value="@{/movies}">
-		<button class="btn btn-light btn-sm rounded-circle shadow-sm p-2 d-inline-flex align-content-center justify-content-center"
-		        type="submit"
-		        th:title="${favoriteMovieIds != null and favoriteMovieIds.contains(movie.id)} ? 'Quitar de favoritos' : 'Añadir a favoritos'">
-			<i class="fa-heart text-danger fs-5"
-			   th:classappend="${favoriteMovieIds != null and favoriteMovieIds.contains(movie.id)} ? 'fa-solid' : 'fa-regular'"></i>
+		<button class="btn btn-light rounded-circle shadow-sm p-2" type="submit">
+			<i class="fa-heart text-primary fs-5"
+			   th:classappend="${favoriteMovieIds != null and favoriteMovieIds.contains(movie.id)} ? 'fa-solid' : 'fa-regular'">
+			</i>
 		</button>
 	</form>
-
-	<!-- Imagen -->
-	<div class="ratio" style="--bs-aspect-ratio: 140%;">
-		<img th:src="${movie.imageUrl}" class="card-img-top object-fit-cover" alt="Film card">
+	<div class="ratio mb-3" style="--bs-aspect-ratio:140%;">
+		<img th:src="${movie.imageUrl}" class="object-fit-cover rounded" alt="Poster">
 	</div>
-
-	<!-- Cuerpo -->
-	<div class="card-body">
-		<h5 class="card-title mb-3" th:text="${movie.title}">Nombre</h5>
-		<div class="card-footer bg-transparent border-0 pt-0">
-			<a th:href="@{/movies/{id}(id=${movie.id}, date=${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')})}"
-			   class="btn btn-outline-primary btn-sm w-100 mb-2">
-				<i class="fa-regular fa-eye me-1"></i>Ver película
-			</a>
-			<a sec:authorize="hasRole('ADMIN')" th:href="@{/movies/edit/{id}(id=${movie.id})}"
-			   class="btn btn-outline-primary btn-sm w-100 mb-2">
-				<i class="fa-solid fa-pencil me-1"></i>Editar
-			</a>
-			<a sec:authorize="hasRole('ADMIN')" th:href="@{/movies/deactivate/{id}(id=${movie.id})}"
-			   class="btn btn-outline-danger btn-sm w-100"
-			   onclick="return confirm('¿Estás seguro de que querés desactivar esta función?')">
-				<i class="fa-solid fa-ban me-1"></i> Desactivar
-			</a>
-		</div>
+	<p class="text-uppercase fw-bold small text-primary mb-1" th:text="${'★ ' + movie.section.label + ' ★'}"></p>
+	<h5 class="fw-bold text-uppercase mb-3" th:text="${movie.title}">Nombre</h5>
+	<hr>
+	<div class="d-grid gap-2">
+		<a th:href="@{/movies/{id}(id=${movie.id}, date=${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')})}"
+		   class="btn btn-primary">
+			<i class="fa-regular fa-eye me-2"></i>
+			Ver película
+		</a>
+		<a sec:authorize="hasRole('ADMIN')"
+		   th:href="@{/movies/edit/{id}(id=${movie.id})}" class="btn btn-outline-accent">
+			<i class="fa-solid fa-pencil me-2"></i>
+			Editar
+		</a>
+		<a sec:authorize="hasRole('ADMIN')"
+		   th:href="@{/movies/deactivate/{id}(id=${movie.id})}" class="btn btn-outline-danger">
+			<i class="fa-solid fa-ban me-2"></i>
+			Desactivar
+		</a>
 	</div>
-
+	<hr class="mt-3">
+	<p class="text-center mb-0 small text-primary">★ VIVE EL CINE ★</p>
 </div>
 
 </body>
