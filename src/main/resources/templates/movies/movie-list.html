@@ -6,130 +6,117 @@
 <header th:replace="~{layout/navbar :: navbar}"></header>
 
 <main class="container flex-grow-1">
-	<div sec:authorize="hasRole('ADMIN')" class="d-flex justify-content-between align-items-center mb-4">
-		<p class="fs-3 fw-bold mb-0">¡Quieto todo el mundo! Ha llegado el admin... 👀</p>
-		<div>
-			<a th:href="@{/movies/inactive}" class="btn btn-outline-secondary me-1">
-				<i class="fa-solid fa-ban me-1"></i> Ver películas desactivadas
-			</a>
-			<a th:href="@{/movies/new}" class="btn btn-primary">
-				<i class="fa-solid fa-plus"></i>
-				Crear película
-			</a>
+	<div class="mb-4">
+		<div sec:authorize="hasRole('ADMIN')" class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+			<div>
+				<h2 class="mb-0 fw-bold">Películas</h2>
+				<small class="text-muted">
+					Gestión y catálogo
+				</small>
+			</div>
+			<div class="d-flex flex-wrap gap-2">
+				<a th:href="@{/movies/inactive}" class="btn btn-outline-primary">
+					<i class="fa-solid fa-ban me-2"></i>
+					Desactivadas
+				</a>
+				<a th:href="@{/movies/new}" class="btn btn-primary">
+					<i class="fa-solid fa-plus me-2"></i>
+					Crear película
+				</a>
+			</div>
 		</div>
-	</div>
-
-	<ul class="nav nav-tabs rounded-top bg-danger pt-3 px-3 border-bottom-0">
-		<li class="nav-item">
-			<a class="nav-link"
-			   th:classappend="${section == 'BILLBOARD'} ? 'active bg-primary-subtle' : 'text-white'"
-			   th:href="@{/movies/billboard}">Cartelera</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link"
-			   th:classappend="${section == 'FLUX'} ? 'active bg-primary-subtle' : 'text-white'"
-			   th:href="@{/movies/flux}">Emisiones Flux</a>
-		</li>
-	</ul>
-
-	<div class="card rounded-top-0 border-top-0">
-		<div class="mb-4">
-			<nav class="navbar navbar-expand-lg bg-primary-subtle">
-				<div class="container-fluid">
-					<a class="nav-link" th:href="@{/movies(section=${section})}">
-						<h1 class="fs-5 mb-0">Volver a todas las películas</h1>
-					</a>
-					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-						<span class="navbar-toggler-icon"></span>
-					</button>
-					<div class="collapse navbar-collapse" id="navbarSupportedContent">
-						<ul class="navbar-nav ms-auto me-2 mb-2 mb-lg-0">
-							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-									Género
+		<div class="movies-toolbar">
+			<hr class="my-4">
+			<div class="d-flex flex-column flex-lg-row justify-content-between gap-3">
+				<div class="d-flex flex-wrap gap-2">
+					<div class="dropdown my-auto">
+						<a class="text-primary text-decoration-none dropdown-toggle" type="button" data-bs-toggle="dropdown">
+							Género
+						</a>
+						<ul class="dropdown-menu">
+							<li th:each="genre : ${genres}">
+								<a class="dropdown-item" th:href="@{/movies(section=${section}, genre=${genre.name()})}"
+								   th:text="${genre.label}">
 								</a>
-								<ul class="dropdown-menu">
-									<li th:each="genre : ${genres}">
-										<a class="dropdown-item"
-										   th:href="@{/movies(section=${section}, genre=${genre.name()})}"
-										   th:text="${genre.label}">
-										</a>
-									</li>
-								</ul>
-							</li>
-							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-									Estado
-								</a>
-								<ul class="dropdown-menu" th:if="${section=='BILLBOARD'}">
-									<li>
-										<a th:href="@{/movies(section='BILLBOARD', movieStatus='COMING_SOON')}"
-										   class="dropdown-item">Próximamente</a>
-									</li>
-									<li>
-										<a th:href="@{/movies(section='BILLBOARD', movieStatus='PRE_SALES')}"
-										   class="dropdown-item">Venta anticipada</a>
-									</li>
-									<li>
-										<a th:href="@{/movies(section='BILLBOARD', movieStatus='NOW_SHOWING')}"
-										   class="dropdown-item">En cartelera</a>
-									</li>
-									<li>
-										<a th:href="@{/movies(section='BILLBOARD', movieStatus='LAST_DAYS')}"
-										   class="dropdown-item">Últimos días</a>
-									</li>
-									<li>
-										<a th:href="@{/movies(section='BILLBOARD', movieStatus='FINISHED')}"
-										   class="dropdown-item">Ya no disponible</a>
-									</li>
-								</ul>
-
-								<ul class="dropdown-menu" th:if="${section=='FLUX'}">
-									<li>
-										<a th:href="@{/movies(section='FLUX', movieStatus='IN_VOTING')}"
-										   class="dropdown-item">En votación</a>
-									</li>
-									<li>
-										<a th:href="@{/movies(section='FLUX', movieStatus='VOTED')}"
-										   class="dropdown-item">Votado</a>
-									</li>
-								</ul>
-							</li>
-							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-									Edad mínima
-								</a>
-								<ul class="dropdown-menu">
-									<li th:each="minAge : ${minAges}">
-										<a class="dropdown-item"
-										   th:href="@{/movies(section=${section}, minAge=${minAge.name()})}"
-										   th:text="${minAge.label}">
-										</a>
-									</li>
-								</ul>
 							</li>
 						</ul>
 					</div>
-					<form class="d-flex" role="search" th:action="@{/movies}">
-						<input type="search" name="title" class="form-control form-control-sm me-2"
-						       placeholder="Busca por título..." th:value="${param.title}" list="movies">
-						<datalist th:each="movie : ${movies}" id="movies">
-							<option th:each="movie : ${movies}"
-							        th:text="${movie.title}">
-							</option>
-						</datalist>
-						<input type="hidden" name="section" th:value="${section}">
-						<button type="submit" class="btn btn-primary btn-sm">
-							<i class="fa-solid fa-magnifying-glass"></i>
-						</button>
-					</form>
+					<div class="dropdown my-auto">
+						<a class="text-primary text-decoration-none dropdown-toggle" type="button" data-bs-toggle="dropdown">
+							Estado
+						</a>
+						<ul class="dropdown-menu" th:if="${section=='BILLBOARD'}">
+							<li>
+								<a th:href="@{/movies(section='BILLBOARD', movieStatus='COMING_SOON')}"
+								   class="dropdown-item">Próximamente</a>
+							</li>
+							<li>
+								<a th:href="@{/movies(section='BILLBOARD', movieStatus='PRE_SALES')}"
+								   class="dropdown-item">Venta anticipada</a>
+							</li>
+							<li>
+								<a th:href="@{/movies(section='BILLBOARD', movieStatus='NOW_SHOWING')}"
+								   class="dropdown-item">En cartelera</a>
+							</li>
+							<li>
+								<a th:href="@{/movies(section='BILLBOARD', movieStatus='LAST_DAYS')}"
+								   class="dropdown-item">Últimos días</a>
+							</li>
+							<li>
+								<a th:href="@{/movies(section='BILLBOARD', movieStatus='FINISHED')}"
+								   class="dropdown-item">Ya no disponible</a>
+							</li>
+						</ul>
+						<ul class="dropdown-menu" th:if="${section=='FLUX'}">
+							<li>
+								<a th:href="@{/movies(section='FLUX', movieStatus='IN_VOTING')}"
+								   class="dropdown-item">En votación</a>
+							</li>
+							<li>
+								<a th:href="@{/movies(section='FLUX', movieStatus='VOTED')}"
+								   class="dropdown-item">Votado</a>
+							</li>
+						</ul>
+					</div>
+					<div class="dropdown my-auto">
+						<a class="text-primary text-decoration-none dropdown-toggle" type="button" data-bs-toggle="dropdown">
+							Edad mínima
+						</a>
+						<ul class="dropdown-menu">
+							<li th:each="minAge : ${minAges}">
+								<a class="dropdown-item"
+								   th:href="@{/movies(section=${section}, minAge=${minAge.name()})}"
+								   th:text="${minAge.label}">
+								</a>
+							</li>
+						</ul>
+					</div>
+					<a th:if="${section == 'FLUX'}" th:href="@{/movies/billboard}" class="ms-2 btn btn-primary">
+						Volver a la cartelera
+					</a>
+					<a th:unless="${section == 'FLUX'}" th:href="@{/movies/flux}" class="ms-2 btn btn-secondary">
+						Ver emisiones Flux
+					</a>
 				</div>
-			</nav>
-		</div>
-		<div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 p-3 g-3">
-			<div class="col" th:each="movie : ${movies}">
-				<div th:replace="~{fragments/movie-card :: movieCard(${movie}, ${favoriteMovieIds})}"></div>
+				<form class="d-flex gap-2" th:action="@{/movies}">
+					<input type="search" name="title" class="form-control" placeholder="Buscar película..."
+					       th:value="${param.title}" list="movies">
+					<datalist id="movies">
+						<option th:each="movie : ${movies}"
+						        th:value="${movie.title}">
+						</option>
+					</datalist>
+					<input type="hidden" name="section" th:value="${section}">
+					<button type="submit" class="btn btn-primary">
+						<i class="fa-solid fa-magnifying-glass"></i>
+					</button>
+				</form>
 			</div>
+		</div>
+	</div>
+	<div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
+		<div class="col" th:each="movie : ${movies}">
+			<div th:replace="~{fragments/movie-card :: movieCard(${movie}, ${favoriteMovieIds})}"></div>
 		</div>
 	</div>
 </main>
