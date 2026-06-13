@@ -39,6 +39,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     SELECT t
     FROM Ticket t
     WHERE t.active = true
+    AND t.purchaseTime IS NOT NULL
     AND (:sessionId IS NULL OR t.session.id = :sessionId)
     AND (:sessionId IS NULL OR t.status = com.demo.model.enums.TicketStatus.FINISHED)
     AND (:title IS NULL OR LOWER(t.session.movie.title)

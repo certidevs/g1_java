@@ -26,7 +26,8 @@
                         <label class="form-label form-label-sm">Función</label>
                         <input type="text" class="form-control form-control-sm" readonly
                                th:value="${ticket.session != null ? ticket.session.movie.title + ' - '
-                               + ticket.session.language + ' - ' + ticket.session.startTime : ''}">
+                               + ticket.session.language + ' - ' + #temporals.format(ticket.session.startTime,
+                               'dd/MM/yyyy HH:mm') : ''}">
                         <input type="hidden" th:field="*{session.id}">
                     </div>
                     <div class="col-md-2">
