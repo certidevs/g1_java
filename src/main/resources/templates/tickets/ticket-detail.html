@@ -282,16 +282,10 @@
 
                 <div class="col-md-4">
                     <label class="form-label" for="cardCode">CVV Código tarjeta</label>
-                    <div class="input-group">
-                        <input type="password" id="cardCode" name="cardCode"
-                               class="form-control" maxlength="3" required>
-                        <button class="btn btn-outline-secondary" type="button" id="toggleCvv">
-                            <i class="fa-solid fa-eye" id="iconCvv"></i>
-                        </button>
-                    </div>
+                    <input type="password" id="cardCode" name="cardCode"
+                           class="form-control" maxlength="3" required>
                     <small class="text-muted">Formato: 111</small>
                 </div>
-
 
 
                 <div class="col-12 text-end">
@@ -314,38 +308,38 @@
 
 <footer th:replace="~{layout/footer :: footer}"></footer>
 <script th:replace="~{layout/footer :: scripts}"></script>
-<script>
-    (() => {
-        'use strict';
-        const forms = document.querySelectorAll('form');
-        Array.from(forms).forEach(form => {
-            form.addEventListener('submit', event => {
-                if (!form.checkValidity()) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                }
+<!--<script>-->
+<!--    (() => {-->
+<!--        'use strict';-->
+<!--        const forms = document.querySelectorAll('form');-->
+<!--        Array.from(forms).forEach(form => {-->
+<!--            form.addEventListener('submit', event => {-->
+<!--                if (!form.checkValidity()) {-->
+<!--                    event.preventDefault();-->
+<!--                    event.stopPropagation();-->
+<!--                }-->
 
-                form.classList.add('was-validated');
-            }, false);
-        });
-    })();
-</script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('toggleCvv').addEventListener('click', function() {
-            const input = document.getElementById('cardCode');
-            const icon = document.getElementById('iconCvv');
+<!--                form.classList.add('was-validated');-->
+<!--            }, false);-->
+<!--        });-->
+<!--    })();-->
+<!--</script>-->
+<!--<script>-->
+<!--    document.addEventListener('DOMContentLoaded', function() {-->
+<!--        document.getElementById('toggleCvv').addEventListener('click', function() {-->
+<!--            const input = document.getElementById('cardCode');-->
+<!--            const icon = document.getElementById('iconCvv');-->
 
-            if (input.type === 'password') {
-                input.type = 'text';
-                icon.classList.replace('fa-eye', 'fa-eye-slash');
-            } else {
-                input.type = 'password';
-                icon.classList.replace('fa-eye-slash', 'fa-eye');
-            }
-        });
-    });
-</script>
+<!--            if (input.type === 'password') {-->
+<!--                input.type = 'text';-->
+<!--                icon.classList.replace('fa-eye', 'fa-eye-slash');-->
+<!--            } else {-->
+<!--                input.type = 'password';-->
+<!--                icon.classList.replace('fa-eye-slash', 'fa-eye');-->
+<!--            }-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
 </body>
 </html>
 
