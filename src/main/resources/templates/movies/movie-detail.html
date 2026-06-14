@@ -1,179 +1,167 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="~{layout/head :: head('Detalle Película')}"></head>
 <body class="d-flex flex-column min-vh-100">
 
 <header th:replace="~{layout/navbar :: navbar}"></header>
 
-<main class="container flex-grow-1 mb-3">
-	<div class="row mb-5">
-		<div class="col-md-9">
-			<div class="card shadow-sm">
-				<div class="row g-0">
-					<div class="col-md-8">
-						<div class="card-body m-4">
-							<div class="d-flex align-items-center gap-2">
-								<h5 class="card-title mb-3 fs-1" th:text="${movie.title}">Título</h5>
-								<span th:text="'(' + ${movie.duration} + 'min)'">0</span>
-							</div>
-							<div class="card-text">
-								<p class="fw-bold mb-1">
-									Dirigida por:
-									<span th:text="${movie.director != null ? movie.director.name : 'Sin director'}"
-									      class="fw-normal" ></span>
-								</p>
-								<p class="fw-bold mb-1">
-									Año de lanzamiento:
-									<span class="fw-normal" th:text="${movie.releaseDate}"></span>
-								</p>
-								<p class="fw-bold mb-1">
-									Edad mínima:
-									<span class="fw-normal" th:text="${movie.minAge.label}"></span>
-								</p>
-							</div>
-							<div class="mb-2">
-								<span class="badge bg-info text-black">
-	                                <span th:each="g : ${movie.genreSet}"
-	                                      th:text="${g.label} + ' '">
-									</span>
-	                            </span>
-							</div>
-							<p class="card-text" th:text="${movie.sinopsis}"></p>
-							<a sec:authorize="hasRole('ADMIN')" th:href="@{/movies/edit/{id}(id=${movie.id})}"
-							   class="btn btn-success btn-sm">
-								<i class="fa-solid fa-pencil me-1"></i> Editar
-							</a>
-							<a sec:authorize="hasRole('ADMIN')" th:href="@{/movies/deactivate/{id}(id=${movie.id})}"
-							   class="btn btn-warning btn-sm"
-							   onclick="return confirm('¿Estás seguro de que querés desactivar esta función?')">
-								<i class="fa-solid fa-ban me-1"></i> Desactivar
-							</a>
+<main class="flex-grow-1 mb-5">
+	<section class="hero position-relative overflow-hidden py-5 mb-5">
+		<div class="container position-relative">
+			<div class="row g-4 align-items-start">
+				<div class="col-12 col-lg-4">
+					<div class="ticket d-none d-lg-block">
+						<form sec:authorize="isAuthenticated()" th:action="@{/favorites/toggle}" method="post"
+						      class="position-absolute top-0 end-0 m-3 z-3">
+							<input type="hidden" name="type" th:value='MOVIE'>
+							<input type="hidden" name="targetId" th:value="${movie.id}">
+							<input type="hidden" name="redirectUrl"
+							       th:value="@{/movies/{id}(id=${movie.id}, date=${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')})}">
+							<button class="btn btn-light rounded-circle shadow-sm p-2" type="submit">
+								<i class="fa-heart text-primary fs-5"
+								   th:classappend="${favoriteMovieIds != null and favoriteMovieIds.contains(movie.id)} ? 'fa-solid' : 'fa-regular'"></i>
+							</button>
+						</form>
+						<div class="ratio" style="--bs-aspect-ratio: 145%;">
+							<img th:src="${movie.imageUrl}" class="object-fit-cover rounded" alt="Poster">
 						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div class="p-4">
-							<form sec:authorize="isAuthenticated()" th:action="@{/favorites/toggle}" method="post"
-							      class="position-absolute m-2" style="z-index: 2;top: 2rem;right: 2rem;">
-								<input type="hidden" name="type" th:value="MOVIE">
-								<input type="hidden" name="targetId" th:value="${movie.id}">
-								<input type="hidden" name="redirectUrl" th:value="@{/movies/{id}(id=${movie.id},
-								date=${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')})}">
-
-								<button class="btn btn-light btn-sm rounded-circle shadow-sm p-2 d-inline-flex
-								align-content-center justify-content-center" type="submit"
-								        th:title="${favoriteMovieIds.contains(movie.id)} ?
-						                'Quitar de favoritos' : 'Añadir a favoritos'">
-									<i class="fa-heart text-danger fs-5" th:classappend="${favoriteMovieIds.contains(movie.id)} ?
-									'fa-solid' : 'fa-regular'"></i>
-								</button>
-							</form>
-							<img th:src="${movie.getImageUrl}" class="rounded img-fluid mb-3" alt="Film card">
-						</div>
-						<div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col">
-						<div class="d-flex justify-content-center mb-4">
-							<a class="btn btn-primary px-5" data-bs-toggle="collapse" href="#collapseExample" role="button"
-							   aria-expanded="false" aria-controls="collapseExample">
-								Ver trailer
-							</a>
-						</div>
-						<div class="collapse" id="collapseExample">
-							<div class="d-flex justify-content-center m-4 p-3">
-								<iframe width="560" height="315" th:src="${movie.trailerUrl}" allowfullscreen
-								        referrerpolicy="strict-origin-when-cross-origin" title="YouTube video player"
-								        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;
-							        picture-in-picture; web-share" class="rounded">
+				<div class="col-12 col-lg-5 text-white">
+					<p class="ticket-subtitle text-secondary text-uppercase fw-bold mb-2"
+					   th:text="${'★ ' + movie.section.label + ' ★'}">★ Cartelera ★</p>
+					<h1 class="display-6 fw-bold mb-3" th:text="${movie.title}">Título</h1>
+					<div class="d-flex flex-wrap gap-3 mb-4 text-white-50">
+						<span>
+							<i class="fa-regular fa-clock me-1 text-secondary"></i>
+							<span th:text="${movie.duration + ' min'}">120 min</span>
+						</span>
+						<span>
+							<i class="fa-solid fa-user-shield me-1 text-secondary"></i>
+							<span th:text="${movie.minAge.label}">Edad</span>
+						</span>
+						<span>
+							<i class="fa-regular fa-calendar me-1 text-secondary"></i>
+							<span th:text="${movie.releaseDate}">2026</span>
+						</span>
+					</div>
+					<div class="mb-3">
+						<span class="text-black badge rounded-pill text-bg-secondary me-1 mb-1"
+						      th:text="${g.label}" th:each="g : ${movie.genreSet}">
+							Género
+						</span>
+					</div>
+					<p class="fs-5 mb-4" th:text="${movie.sinopsis}">
+						Sinopsis de la película.
+					</p>
+					<p class="mb-4">
+						<span class="fw-bold text-secondary">Dirigida por:</span>
+						<span th:text="${movie.director != null ? movie.director.name : 'Sin director'}"></span>
+					</p>
+					<div class="d-flex flex-wrap gap-2">
+						<a class="btn btn-secondary" data-bs-toggle="collapse" href="#movieTrailerCollapse" role="button"
+						   aria-expanded="false" aria-controls="movieTrailerCollapse">
+							<i class="fa-solid fa-play me-2"></i>
+							Ver trailer
+						</a>
+						<a sec:authorize="hasRole('ADMIN')" th:href="@{/movies/edit/{id}(id=${movie.id})}"
+						   class="btn btn-outline-secondary">
+							<i class="fa-solid fa-pencil me-2"></i>
+							Editar
+						</a>
+						<a sec:authorize="hasRole('ADMIN')" th:href="@{/movies/deactivate/{id}(id=${movie.id})}"
+						   onclick="return confirm('¿Estás seguro de que quieres desactivar esta película?')"
+						   class="btn btn-outline-light">
+							<i class="fa-solid fa-ban me-2"></i>
+							Desactivar
+						</a>
+					</div>
+					<div class="collapse mt-4" id="movieTrailerCollapse">
+						<div class="ticket">
+							<p class="ticket-subtitle text-uppercase fw-bold mb-2">★ Trailer ★</p>
+							<div class="ratio ratio-16x9">
+								<iframe th:src="${movie.trailerUrl}" referrerpolicy="strict-origin-when-cross-origin"
+								        title="YouTube video player" allowfullscreen class="rounded"
+								        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share">
 								</iframe>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-		<div class="col-md-3">
-			<form th:action="@{/movies/{id}(id=${movie.id})}" method="get">
-				<label class="form-label fs-4 fw-bold" for="date">Selecciona fecha</label>
-				<div class="d-flex align-items-center mb-3">
-					<select class="form-select me-2" id="date" name="date" required>
-						<option
-								th:each="availableDate : ${availableDates}"
-								th:value="${availableDate}"
-								th:text="${availableDate}"
-								th:selected="${selectedDate != null and selectedDate == availableDate}">
-						</option>
-					</select>
-					<button type="submit" class="btn btn-primary">
-						<i class="fa-solid fa-magnifying-glass"></i>
-					</button>
-				</div>
-			</form>
-			<div class="card">
-				<div class="card-body m-2">
-					<h5 class="card-title mb-3">Sesiones</h5>
-					<div class="card" th:if="${projections != null}">
-						<div class="card-body">
+				<div class="col-12 col-lg-3">
+					<div class="ticket">
+						<p class="ticket-subtitle text-uppercase fw-bold mb-1">★ Taquilla ★</p>
+						<h2 class="ticket-title text-uppercase fw-bold mb-3">Sesiones</h2>
+						<form th:action="@{/movies/{id}(id=${movie.id})}" method="get" class="mb-4">
+							<label class="text-black form-label fw-bold" for="date">Selecciona fecha</label>
+							<div class="d-flex gap-2">
+								<select class="form-select" id="date" name="date" required>
+									<option th:each="availableDate : ${availableDates}"
+									        th:value="${availableDate}"
+									        th:text="${availableDate}"
+									        th:selected="${selectedDate != null and selectedDate == availableDate}">
+									</option>
+								</select>
+								<button type="submit" class="btn btn-primary">
+									<i class="fa-solid fa-magnifying-glass"></i>
+								</button>
+							</div>
+						</form>
+						<hr class="ticket-hr">
+						<div th:if="${projections != null}">
 							<div th:if="${#lists.isEmpty(projections)}" class="text-muted">
 								No hay sesiones disponibles
 							</div>
 							<div th:each="entry : ${projectionsByRoom}" class="mb-3">
-								<h6 th:text="${entry.key.screentype.label}"
-								    class="fw-bold">
+								<h6 class="fw-bold text-flux-dark" th:text="${entry.key.screentype.label}">
+									Sala
 								</h6>
 								<div class="d-flex flex-wrap gap-2">
-									<a th:each="projection : ${entry.value}"
-									   th:href="@{/sessions/{id}(id=${projection.id})}"
+									<a th:each="projection : ${entry.value}" th:href="@{/sessions/{id}(id=${projection.id})}"
 									   class="btn btn-outline-primary btn-sm"
 									   th:text="${#temporals.format(projection.startTime, 'HH:mm')}">
 									</a>
 								</div>
 							</div>
 						</div>
+						<p class="ticket-subtitle text-center mt-4 mb-0">★ VIVE EL CINE ★</p>
 					</div>
 				</div>
 			</div>
-
 		</div>
-	</div>
-	<!-- Opiniones -->
-	<div class="d-flex align-items-center mb-3">
-		<h2 class="fs-3 fw-bold mb-0">
-			<i class="fa-regular fa-comments text-primary me-2"></i>
-			Opiniones de nuestros usuarios
-		</h2>
-		<a sec:authorize="isAuthenticated()" th:href="@{/reviews/new(movieId=${movie.id})}"
-		   class="btn btn-success ms-3">
-			<i class="fa-solid fa-plus"></i>
-			Escribir reseña
-		</a>
-	</div>
-
-	<div th:if="${reviews.isEmpty()}" class="alert alert-light border">
-		<i class="fa-regular fa-face-smile me-1"></i>
-		Nadie ha comentado todavía, sé el primero en escribir una opinión.
-	</div>
-	<div class="row row-cols-1 row-cols-md-2 g-3" th:unless="${reviews.isEmpty()}">
-		<div class="col" th:each="review : ${reviews}">
-			<div class="card h-100 shadow-sm">
-				<div class="card-body">
-					<h5 class="card-title"
-					    th:text="${review.title}">Título</h5>
-					<p class="card-text" th:text="${review.description}">Descripción</p>
-					<span class="badge bg-warning text-dark">
-						<i class="fa-solid fa-star me-1"></i>
-						<span th:text="${review.rating + ' / 5'}"></span>
-					</span>
-				</div>
-				<div class="card-footer text-muted small bg-transparent">
-					<i class="fa-regular fa-calendar me-1"></i>
-					<span th:text="${review.creationDate}"></span>
+	</section>
+	<section class="container">
+		<div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+			<h2 class="fs-3 fw-bold mb-0">
+				<i class="fa-regular fa-comments text-primary me-2"></i>
+				Opiniones de nuestros usuarios
+			</h2>
+			<a sec:authorize="isAuthenticated()" th:href="@{/reviews/new(movieId=${movie.id})}" class="btn btn-primary">
+				<i class="fa-solid fa-plus me-2"></i>
+				Escribir reseña
+			</a>
+		</div>
+		<div th:if="${reviews.isEmpty()}" class="ticket">
+			<i class="fa-regular fa-face-smile me-1 text-primary"></i>
+			Nadie ha comentado todavía, sé el primero en escribir una opinión.
+		</div>
+		<div class="row row-cols-1 row-cols-md-2 g-4" th:unless="${reviews.isEmpty()}">
+			<div class="col" th:each="review : ${reviews}">
+				<div class="ticket h-100">
+					<h5 class="fw-bold text-uppercase mb-2" th:text="${review.title}">Título</h5>
+					<p th:text="${review.description}">Descripción</p>
+					<hr class="ticket-hr">
+					<div class="d-flex justify-content-between align-items-center">
+						<span class="badge text-bg-primary">
+							<i class="fa-solid fa-star me-1"></i>
+							<span th:text="${review.rating + ' / 5'}"></span>
+						</span>
+						<small class="text-muted" th:text="${review.creationDate}"></small>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</section>
 </main>
 
 <footer th:replace="~{layout/footer :: footer}"></footer>
@@ -181,3 +169,5 @@
 
 </body>
 </html>
+
+

@@ -3,21 +3,206 @@
 
 :root {
     /*Paleta de color*/
-    --flux-dark:#2D2724;
-    --flux-cream:#F3E8C7;
-    --flux-red:#952D0E;
-    --flux-copper:#CD8562;
-    --flux-gold:#FFC438;
+    --flux-dark: #2D2724;
+    --flux-cream: #F3E8C7;
+    --flux-red: #952D0E;
+    --flux-copper: #CD8562;
+    --flux-gold :#FFC438;
 
-    /*Colores del hero*/
-    --hero-bg: var(--flux-dark);
-    --hero-color: var(--flux-cream);
-    --hero-title-highlight-bg: linear-gradient(90deg, var(--flux-red), var(--flux-copper));
+    /*Paleta de color RGB*/
+    --flux-dark-rgb: 45,39,36;
+    --flux-paper-rgb: 243,232,199;
+    --flux-red-rgb: 149,45,14;
+    --flux-copper-rgb: 205,133,98;
+    --flux-gold-rgb: 255,196,56;
+
+    /*Variables Bootstrap*/
+    --bs-primary: var(--flux-red);
+    --bs-primary-rgb: var(--flux-red-rgb);
+
+    --bs-secondary: var(--flux-gold);
+    --bs-secondary-rgb: var(--flux-gold-rgb);
+
+    --bs-dark: var(--flux-dark);
+    --bs-dark-rgb: var(--flux-dark-rgb);
+}
+
+body {
+    font-family: 'Roboto', system-ui, -apple-system, sans-serif;
+    font-weight: 400;
+    background-image: url("../images/flux-pattern.svg");
+    background-repeat: repeat;
+    background-size: 300px;
+}
+
+h1, h2, h3, .navbar-brand {
+    font-weight: 700;
+}
+
+.navbar-brand img {
+    object-fit: contain;
+}
+
+.card-restaurant:hover {
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
+    transform: translateY(-2px);
+    transition: all .15s ease-in-out;
+}
+
+
+.text-flux-dark {
+    color: var(--flux-dark);
+}
+
+.text-accent {
+    --bs-text-opacity: 1;
+    color: rgba(var(--flux-copper-rgb), var(--bs-text-opacity)) !important;
+}
+
+.text-dark {
+    color: var(--flux-dark) !important;
+}
+
+.btn-dark {
+    --bs-btn-color: var(--flux-cream);
+
+    --bs-btn-bg: var(--flux-dark);
+    --bs-btn-border-color: var(--flux-dark);
+
+    --bs-btn-hover-color: var(--flux-cream);
+    --bs-btn-hover-bg: color-mix(in srgb, var(--flux-dark) 90%, white);
+    --bs-btn-hover-border-color: color-mix(in srgb, var(--flux-dark) 90%, white);
+
+    --bs-btn-active-color: var(--flux-cream);
+    --bs-btn-active-bg: color-mix(in srgb, var(--flux-dark) 80%, white);
+    --bs-btn-active-border-color: color-mix(in srgb, var(--flux-dark) 80%, white);
+
+    --bs-btn-disabled-color: var(--flux-cream);
+    --bs-btn-disabled-bg: var(--flux-dark);
+    --bs-btn-disabled-border-color: var(--flux-dark);
+}
+
+.btn-outline-dark {
+    --bs-btn-color: var(--flux-dark);
+    --bs-btn-border-color: var(--flux-dark);
+
+    --bs-btn-hover-color: var(--flux-cream);
+    --bs-btn-hover-bg: var(--flux-dark);
+    --bs-btn-hover-border-color: var(--flux-dark);
+
+    --bs-btn-active-color: var(--flux-cream);
+    --bs-btn-active-bg: color-mix(in srgb, var(--flux-dark) 90%, white);
+    --bs-btn-active-border-color: color-mix(in srgb, var(--flux-dark) 90%, white);
+
+    --bs-btn-disabled-color: var(--flux-dark);
+    --bs-btn-disabled-border-color: var(--flux-dark);
+}
+
+.btn-primary {
+    --bs-btn-bg: var(--flux-red);
+    --bs-btn-border-color: var(--flux-red);
+
+    --bs-btn-hover-bg: color-mix(in srgb, var(--flux-red) 85%, black);
+    --bs-btn-hover-border-color: color-mix(in srgb, var(--flux-red) 85%, black);
+
+    --bs-btn-active-bg: color-mix(in srgb, var(--flux-red) 70%, black);
+    --bs-btn-active-border-color: color-mix(in srgb, var(--flux-red) 70%, black);
+
+    --bs-btn-disabled-bg: var(--flux-red);
+    --bs-btn-disabled-border-color: var(--flux-red);
+}
+
+.btn-outline-primary {
+    --bs-btn-color: var(--flux-red);
+    --bs-btn-border-color: var(--flux-red);
+
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--flux-red);
+    --bs-btn-hover-border-color: var(--flux-red);
+
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: color-mix(in srgb, var(--flux-red) 85%, black);
+    --bs-btn-active-border-color: color-mix(in srgb, var(--flux-red) 85%, black);
+
+    --bs-btn-disabled-color: var(--flux-red);
+    --bs-btn-disabled-border-color: var(--flux-red);
+}
+
+.btn-secondary {
+
+    --bs-btn-color: var(--flux-dark);
+
+    --bs-btn-bg: var(--flux-gold);
+    --bs-btn-border-color: var(--flux-gold);
+
+    --bs-btn-hover-color: var(--flux-dark);
+    --bs-btn-hover-bg: color-mix(in srgb, var(--flux-gold) 85%, black);
+    --bs-btn-hover-border-color: color-mix(in srgb, var(--flux-gold) 85%, black);
+
+    --bs-btn-active-color: var(--flux-dark);
+    --bs-btn-active-bg: color-mix(in srgb, var(--flux-gold) 70%, black);
+    --bs-btn-active-border-color: color-mix(in srgb, var(--flux-gold) 70%, black);
+
+    --bs-btn-disabled-color: var(--flux-dark);
+    --bs-btn-disabled-bg: var(--flux-gold);
+    --bs-btn-disabled-border-color: var(--flux-gold);
+}
+
+.btn-outline-secondary {
+    --bs-btn-color: var(--flux-gold);
+    --bs-btn-border-color: var(--flux-gold);
+
+    --bs-btn-hover-color: black;
+    --bs-btn-hover-bg: var(--flux-gold);
+    --bs-btn-hover-border-color: var(--flux-gold);
+
+    --bs-btn-active-color: black;
+    --bs-btn-active-bg: color-mix(in srgb, var(--flux-gold) 85%, black);
+    --bs-btn-active-border-color: color-mix(in srgb, var(--flux-gold) 85%, black);
+
+    --bs-btn-disabled-color: var(--flux-gold);
+    --bs-btn-disabled-border-color: var(--flux-gold);
+}
+
+.btn-accent {
+
+    --bs-btn-color: var(--flux-dark);
+
+    --bs-btn-bg: var(--flux-copper);
+    --bs-btn-border-color: var(--flux-copper);
+
+    --bs-btn-hover-color: var(--flux-dark);
+    --bs-btn-hover-bg: color-mix(in srgb, var(--flux-copper) 90%, black);
+    --bs-btn-hover-border-color: color-mix(in srgb, var(--flux-copper) 90%, black);
+
+    --bs-btn-active-color: var(--flux-dark);
+    --bs-btn-active-bg: color-mix(in srgb, var(--flux-copper) 80%, black);
+    --bs-btn-active-border-color: color-mix(in srgb, var(--flux-copper) 80%, black);
+
+    --bs-btn-disabled-color: var(--flux-dark);
+    --bs-btn-disabled-bg: var(--flux-copper);
+    --bs-btn-disabled-border-color: var(--flux-copper);
+}
+
+.btn-outline-accent {
+    --bs-btn-color: var(--flux-copper);
+    --bs-btn-border-color: var(--flux-copper);
+
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--flux-copper);
+    --bs-btn-hover-border-color: var(--flux-copper);
+
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: color-mix(in srgb, var(--flux-copper) 85%, black);
+    --bs-btn-active-border-color: color-mix(in srgb, var(--flux-copper) 85%, black);
+
+    --bs-btn-disabled-color: var(--flux-copper);
+    --bs-btn-disabled-border-color: var(--flux-copper);
 }
 
 .hero {
-    background-color: var(--hero-bg);
-    color: var(--hero-color);
+    background-color: var(--flux-dark);
+    color: white;
 }
 
 .hero-bg-img {
@@ -33,23 +218,13 @@
 }
 
 .hero-title-highlight {
-    background: var(--hero-title-highlight-bg);
+    background: linear-gradient(90deg, var(--flux-red), var(--flux-copper));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .hero-subtitle {
     padding-right: 3rem;
-}
-
-@media (max-width: 576px) {
-    .hero-title {
-        padding: 0 1rem;
-        margin-bottom: 1.5rem;
-    }
-    .hero-subtitle {
-        padding: 0 3rem 0 1rem;
-    }
 }
 
 .ticket {
@@ -71,12 +246,37 @@
 
 .ticket::before {
     top: -10px;
-    background-image: radial-gradient(circle at 50% 0%, transparent 10px, #F3E8C7 10px);
+    background-image: radial-gradient(circle at 100% 0%, transparent 10px, #F3E8C7 10px);
 }
 
 .ticket::after {
     bottom: -10px;
-    background-image: radial-gradient(circle at 50% 100%, transparent 10px, #F3E8C7 10px);
+    background-image: radial-gradient(circle at 100% 100%, transparent 10px, #F3E8C7 10px);
+}
+
+.ticket-subtitle {
+    color: var(--flux-red);
+    font-size: 0.7rem;
+    letter-spacing: 0.125rem;
+}
+
+.ticket-title {
+    color: var(--flux-dark);
+    font-size: 1.3rem;
+}
+
+.ticket-hr {
+    border-color: var(--flux-copper);
+    opacity: 0.4;
+}
+
+.ticket-brand{
+    position: absolute;
+    top: -3rem;
+    right: -1rem;
+    width: 7.5rem;
+    height: auto;
+    pointer-events: none;
 }
 
 .ribbon {
@@ -100,22 +300,99 @@
 .ribbon-success    { background-color: #198754; color: #fff; }
 .ribbon-dark       { background-color: #212529; color: #fff; }
 
-body {
-    font-family: 'Roboto', system-ui, -apple-system, sans-serif;
-    font-weight: 400;
-    background-color: #f8f9fa;
+.flux-navbar{
+
+    background-color: var(--flux-dark);
+    border-bottom: 2px solid var(--flux-copper);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
 
-h1, h2, h3, .navbar-brand {
+.flux-navbar .navbar-brand{
+    color: var(--flux-cream);
     font-weight: 700;
+    letter-spacing: .08rem;
 }
 
-.navbar-brand img {
-    object-fit: contain;
+.flux-navbar .navbar-brand:hover{
+    color: var(--flux-gold);
 }
 
-.card-restaurant:hover {
-    box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
-    transform: translateY(-2px);
-    transition: all .15s ease-in-out;
+.flux-navbar .nav-link{
+    color: var(--flux-cream);
+    font-weight: 500;
+    margin-inline: .25rem;
+    transition: .2s;
+}
+
+.flux-navbar .nav-link:hover{
+    color: var(--flux-gold);
+}
+
+.flux-navbar .nav-link.active{
+    color: var(--flux-gold);
+    position: relative;
+}
+
+.flux-navbar .nav-link.active::after{
+    content:"";
+    position:absolute;
+    bottom:-.4rem;
+    left:15%;
+    right:15%;
+    height:2px;
+    background-color: var(--flux-red);
+}
+
+.flux-navbar-user{
+    color: var(--flux-cream);
+}
+
+.flux-navbar-user img{
+    border-color: var(--flux-copper) !important;
+}
+
+.movies-toolbar{
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--flux-copper) 35%, transparent);
+}
+
+.movies-toolbar hr{
+    border-color: var(--flux-copper);
+    opacity: .25;
+}
+
+.dropdown-menu{
+    background-color: var(--flux-cream);
+    border-color: color-mix(in srgb, var(--flux-copper) 40%, transparent);
+}
+
+.dropdown-item:hover{
+    background-color: color-mix(in srgb, var(--flux-gold) 15%, white);
+}
+
+.seat-row {
+    display: grid;
+    grid-template-columns: 3.5rem repeat(10, minmax(0, 1fr));
+    gap: clamp(.25rem, 1vw, .5rem);
+    align-items: center;
+    margin-bottom: .5rem;
+}
+
+.seat-row-label {
+    font-weight: 700;
+    color: var(--flux-red);
+    white-space: nowrap;
+    font-size: clamp(.7rem, 2.4vw, .9rem);
+}
+
+.seat-button {
+    width: 100%;
+    aspect-ratio: 1;
+    min-width: 0;
+    padding: 0;
+    font-size: clamp(.65rem, 2.5vw, 1rem);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }

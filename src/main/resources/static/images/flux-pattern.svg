@@ -1,0 +1,109 @@
+<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+
+    <defs>
+
+        <!-- Ticket FluxFilms -->
+
+        <g id="flux-ticket">
+
+            <!-- Borde exterior -->
+
+            <path d="
+                M0 8
+                C4 8 4 0 8 0
+                H42
+                C46 0 46 8 50 8
+                V22
+                C46 22 46 30 42 30
+                H8
+                C4 30 4 22 0 22
+                Z"
+                  fill="none"
+                  stroke="#CD8562"
+                  stroke-width="1.2"/>
+
+            <!-- Borde interior -->
+
+            <rect
+                    x="4"
+                    y="4"
+                    width="42"
+                    height="22"
+                    rx="2"
+                    fill="none"
+                    stroke="#CD8562"
+                    stroke-width="0.6"/>
+
+            <!-- Flux -->
+
+            <circle cx="25" cy="14" r="1.2" fill="#CD8562"/>
+
+            <line
+                    x1="25"
+                    y1="14"
+                    x2="16"
+                    y2="7"
+                    stroke="#CD8562"
+                    stroke-width="0.5"/>
+
+            <line
+                    x1="25"
+                    y1="14"
+                    x2="34"
+                    y2="7"
+                    stroke="#CD8562"
+                    stroke-width="0.5"/>
+
+            <line
+                    x1="25"
+                    y1="14"
+                    x2="25"
+                    y2="23"
+                    stroke="#CD8562"
+                    stroke-width="0.5"/>
+
+            <circle cx="16" cy="7" r="0.8" fill="#CD8562"/>
+            <circle cx="34" cy="7" r="0.8" fill="#CD8562"/>
+            <circle cx="25" cy="23" r="0.8" fill="#CD8562"/>
+
+        </g>
+
+    </defs>
+
+    <g opacity="0.15">
+
+        <use href="#flux-ticket"
+             transform="translate(35 35) rotate(-12)"/>
+
+        <use href="#flux-ticket"
+             transform="translate(175 30) rotate(9)"/>
+
+        <use href="#flux-ticket"
+             transform="translate(95 115) rotate(5)"/>
+
+        <use href="#flux-ticket"
+             transform="translate(215 150) rotate(-15)"/>
+
+        <use href="#flux-ticket"
+             transform="translate(25 215) rotate(12)"/>
+
+        <use href="#flux-ticket"
+             transform="translate(145 235) rotate(-8)"/>
+
+        <!-- Repetición para bordes -->
+
+        <use href="#flux-ticket"
+             transform="translate(-265 30) rotate(9)"/>
+
+        <use href="#flux-ticket"
+             transform="translate(335 30) rotate(9)"/>
+
+        <use href="#flux-ticket"
+             transform="translate(145 -65) rotate(-8)"/>
+
+        <use href="#flux-ticket"
+             transform="translate(145 535) rotate(-8)"/>
+
+    </g>
+
+</svg>
