@@ -396,3 +396,24 @@ h1, h2, h3, .navbar-brand {
     align-items: center;
     justify-content: center;
 }
+
+.ticket-combo {
+    padding: .75rem;
+    border: 1px solid color-mix(in srgb, var(--flux-copper) 45%, transparent);
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, .35);
+    color: var(--flux-dark);
+    transition: .15s ease-in-out;
+}
+
+.ticket-combo small {
+    color: rgba(var(--flux-dark-rgb), .65);
+    line-height: 1.2;
+}
+
+.ticket-combo:hover,
+.ticket-combo.selected-combo {
+    border-color: var(--flux-red);
+    background-color: color-mix(in srgb, var(--flux-gold) 18%, white);
+}
+

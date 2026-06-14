@@ -5,169 +5,182 @@
 
 <nav th:replace="~{layout/navbar :: navbar}"></nav>
 
-<main class="container flex-grow-1 my-4">
+<main class="container flex-grow-1 mb-5">
 
-    <h1 class="mb-4">
-        <i class="fa-solid fa-ticket text-primary me-2"></i> Ticket seleccionado 😎
-    </h1>
+	<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+		<div>
+			<p class="ticket-subtitle text-uppercase fw-bold mb-1">Compra FluxFilms</p>
+			<h1 class="h3 fw-bold mb-0">Ticket seleccionado</h1>
+		</div>
+		<a th:href="@{/tickets}" class="btn btn-outline-primary btn-sm">
+			<i class="fa-solid fa-arrow-left me-1"></i>
+			Cancelar
+		</a>
+	</div>
 
-    <form th:action="@{/tickets}" method="post" th:object="${ticket}">
-        <input type="hidden" th:field="*{id}">
-<!--        <input type="hidden" id="priceComboHidden" th:field="*{priceCombo}">-->
+	<form th:action="@{/tickets}" method="post" th:object="${ticket}">
+		<input type="hidden" th:field="*{id}">
+		<input type="hidden" id="priceComboHidden" th:field="*{priceCombo}">
 
-        <!-- Datos del ticket compactos -->
-        <div class="card shadow-sm border-0 mb-4">
-            <div class="card-header bg-success text-white">
-                <h5 class="mb-0"><i class="fa-solid fa-ticket me-2"></i>Datos del ticket</h5>
-            </div>
-            <div class="card-body">
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <label class="form-label form-label-sm">Función</label>
-                        <input type="text" class="form-control form-control-sm" readonly
-                               th:value="${ticket.session != null ? ticket.session.movie.title + ' - '
-                               + ticket.session.language + ' - ' + #temporals.format(ticket.session.startTime,
-                               'dd/MM/yyyy HH:mm') : ''}">
-                        <input type="hidden" th:field="*{session.id}">
-                    </div>
-                    <div class="col-md-2">
-                        <label class="form-label form-label-sm">Fila</label>
-                        <input type="text" class="form-control form-control-sm"
-                               th:field="*{seatRow}" placeholder="A, B, C..." required readonly>
-                    </div>
-                    <div class="col-md-2">
-                        <label class="form-label form-label-sm">Asiento</label>
-                        <input type="number" class="form-control form-control-sm"
-                               th:field="*{seatNumber}" min="1" required readonly>
-                    </div>
-                    <div class="col-md-2">
-                        <label class="form-label form-label-sm">Precio</label>
-                        <div class="input-group input-group-sm">
-                            <input type="number" class="form-control form-control-sm"
-                                   th:field="*{price}" step="0.1" min="0" readonly>
-                            <span class="input-group-text">€</span>
-                        </div>
-                    </div>
+		<div class="row g-4 align-items-start">
+			<div class="col-12 col-lg-8">
+				<div class="ticket mb-4">
+					<div class="d-flex flex-column flex-sm-row gap-3">
+						<div class="flex-shrink-0">
+							<img th:if="${ticket.session != null and ticket.session.movie.imageUrl != null}"
+							     th:src="${ticket.session.movie.imageUrl}"
+							     th:alt="${ticket.session.movie.title}"
+							     class="rounded object-fit-cover"
+							     style="width: 108px; height: 152px;">
+							<div th:unless="${ticket.session != null and ticket.session.movie.imageUrl != null}"
+							     class="rounded bg-dark d-flex align-items-center justify-content-center"
+							     style="width: 108px; height: 152px;">
+								<i class="fa-solid fa-film fa-2x text-secondary"></i>
+							</div>
+						</div>
 
-                    <!-- Usuario (solo admin) -->
-                    <div class="col-md-6" sec:authorize="hasRole('ADMIN')">
-                        <label class="form-label form-label-sm">Usuario cliente</label>
-                        <select class="form-select form-select-sm" th:field="*{user}" required>
-                            <option value=""></option>
-                            <option th:each="user : ${users}"
-                                    th:value="${user.id}"
-                                    th:text="${user.id + ' - ' + user.username + ' - ' + user.email}">
-                            </option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
+						<div class="flex-grow-1 min-w-0">
+							<p class="ticket-subtitle text-uppercase fw-bold mb-1">Entrada</p>
+							<h2 class="h4 fw-bold text-uppercase text-flux-dark mb-2"
+							    th:text="${ticket.session != null ? ticket.session.movie.title : 'Sin funcion'}">
+								Pelicula
+							</h2>
 
-        <!-- Combos de comida -->
-        <div class="card shadow-sm border-0 mb-4">
-            <div class="card-header bg-warning text-dark">
-                <h5 class="mb-0"><i class="fa-solid fa-popcorn me-2"></i>Agrega tu combo favorito (Opcional)🍿🥤</h5>
-            </div>
-            <div class="card-body">
-                <p class="text-muted small mb-3">Selecciona un combo para añadirlo a tu ticket.</p>
-                <div class="row g-3 justify-content-center">
+							<input type="hidden" th:field="*{session.id}">
 
-                    <!-- Sin combo -->
-<!--                    <div class="col-md-3">-->
-<!--                        <label class="w-100 h-100">-->
-<!--                            <input type="radio" name="priceCombo" value="" class="d-none" checked>-->
-<!--                            <div class="combo-card text-center p-3 border rounded-3 h-100"-->
-<!--                                 style="cursor:pointer;">-->
-<!--                                <div style="font-size: 3rem;">❌</div>-->
-<!--                                <h6 class="fw-bold mt-2">Sin combo</h6>-->
-<!--                                <p class="text-muted small mb-2">Solo el ticket</p>-->
-<!--                                <span class="badge bg-secondary fs-6">0 €</span>-->
-<!--                            </div>-->
-<!--                        </label>-->
-<!--                    </div>-->
+							<div class="row g-2 small mb-3">
+								<div class="col-12 col-md-6">
+									<span class="text-muted d-block">Funcion</span>
+									<strong th:text="${ticket.session != null ? ticket.session.language + ' - ' + #temporals.format(ticket.session.startTime, 'dd/MM/yyyy HH:mm') : '-'}">
+										Funcion
+									</strong>
+								</div>
+								<input type="hidden" th:field="*{seatRow}">
+								<input type="hidden" th:field="*{seatNumber}">
+								<input type="hidden" th:field="*{price}">
+								<div class="col-4 col-md-2">
+									<span class="text-muted d-block">Fila</span>
+									<strong th:text="*{seatRow}">A</strong>
+								</div>
 
-                    <!-- Combo 1 -->
-                    <div class="col-md-3">
-                        <label class="w-100 h-100">
-                            <input type="radio" name="priceCombo" value="8" class="d-none">
-                            <div class="combo-card text-center p-3 border rounded-3 h-100"
-                                 style="cursor:pointer;">
-                                <img th:src="@{/images/combo1.png}" alt="Palomitas y bebida"
-                                     class="img-fluid rounded mb-2" style="max-height: 150px; object-fit: cover; width: 100%;">
-                                <h6 class="fw-bold mt-2">Palomitas + Bebida</h6>
-                                <p class="text-muted small mb-2">El clásico del cine</p>
-                                <span class="badge bg-success fs-6">8 €</span>
-                            </div>
-                        </label>
-                    </div>
+								<div class="col-4 col-md-2">
+									<span class="text-muted d-block">Asiento</span>
+									<strong th:text="*{seatNumber}">1</strong>
+								</div>
 
-                    <!-- Combo 2 -->
-                    <div class="col-md-3">
-                        <label class="w-100 h-100">
-                            <input type="radio" name="priceCombo" value="10" class="d-none">
-                            <div class="combo-card text-center p-3 border rounded-3 h-100"
-                                 style="cursor:pointer;">
-                                <img th:src="@{/images/combo2.png}" alt="Palomitas, bebida y lacasitos"
-                                     class="img-fluid rounded mb-2" style="max-height: 150px; object-fit: cover; width: 100%;">
-                                <h6 class="fw-bold mt-2">Palomitas + Bebida + Lacasitos</h6>
-                                <p class="text-muted small mb-2">Para los más golosos</p>
-                                <span class="badge bg-success fs-6">10 €</span>
-                            </div>
-                        </label>
-                    </div>
+								<div class="col-4 col-md-2">
+									<span class="text-muted d-block">Precio</span>
+									<strong>
+										<span th:text="*{price}">0</span> EUR
+									</strong>
+								</div>
+							</div>
 
-                    <!-- Combo 3 -->
-                    <div class="col-md-3">
-                        <label class="w-100 h-100">
-                            <input type="radio" name="priceCombo" value="15" class="d-none">
-                            <div class="combo-card text-center p-3 border rounded-3 h-100"
-                                 style="cursor:pointer;">
-                                <img th:src="@{/images/combo3.png}" alt="Hamburguesa, bebida y patatas"
-                                     class="img-fluid rounded mb-2" style="max-height: 150px; object-fit: cover; width: 100%;">
-                                <h6 class="fw-bold mt-2">Hamburguesa + Bebida + Patatas</h6>
-                                <p class="text-muted small mb-2">¿Con hambre? ¡Ni loc@!</p>
-                                <span class="badge bg-success fs-6">15 €</span>
-                            </div>
-                        </label>
-                    </div>
+							<div sec:authorize="hasRole('ADMIN')" class="mt-3">
+								<label class="form-label form-label-sm" for="user">Usuario cliente</label>
+								<select id="user" class="form-select form-select-sm" th:field="*{user}" required>
+									<option value=""></option>
+									<option th:each="user : ${users}"
+									        th:value="${user.id}"
+									        th:text="${user.id + ' - ' + user.username + ' - ' + user.email}">
+									</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
 
-                </div>
-            </div>
-        </div>
+				<div class="ticket">
+					<div class="d-flex flex-wrap justify-content-between align-items-end gap-2 mb-3">
+						<div>
+							<p class="ticket-subtitle text-uppercase fw-bold mb-1">Combos</p>
+							<h2 class="h5 fw-bold text-uppercase text-flux-dark mb-0">Añade algo para la sala</h2>
+						</div>
+						<small class="text-muted">Pulsa otra vez para quitarlo</small>
+					</div>
 
+					<div class="row g-3">
+						<div class="col-12 col-md-4">
+							<button type="button"
+							        class="combo-card ticket-combo w-100 text-start"
+							        onclick="selectCombo(this, 8)">
+								<img th:src="@{/images/combo1.png}" alt="Palomitas y bebida"
+								     class="rounded img-fluid mb-2">
+								<span>
+                                    <strong>Palomitas + bebida</strong>
+                                    <small>Clasico</small>
+                                </span>
+								<b>8 EUR</b>
+							</button>
+						</div>
 
-        <!-- Resumen del precio -->
-        <div class="card shadow-sm border-0 mb-4">
-            <div class="card-header bg-dark text-white">
-                <h5 class="mb-0"><i class="fa-solid fa-euro-sign me-2"></i>Resumen del pedido</h5>
-            </div>
-            <div class="card-body">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span class="text-muted">Precio ticket</span>
-                        <span class="fw-semibold" th:text="|${#numbers.formatDecimal(ticket.price, 1, 2)} €|"></span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span class="text-muted">Combo seleccionado</span>
-                        <span class="fw-semibold text-muted">Se calculará al avanzar</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between fs-5">
-                        <span class="fw-bold">Precio base</span>
-                        <span class="fw-bold text-success" th:text="|${#numbers.formatDecimal(ticket.price, 1, 2)} €|"></span>
-                    </li>
-                </ul>
-            </div>
-        </div>
+						<div class="col-12 col-md-4">
+							<button type="button"
+							        class="combo-card ticket-combo w-100 text-start"
+							        onclick="selectCombo(this, 10)">
+								<img th:src="@{/images/combo2.png}" alt="Palomitas, bebida y lacasitos"
+								     class="rounded img-fluid mb-2">
+								<span>
+                                    <strong>Combo dulce</strong>
+                                    <small>Palomitas, bebida y lacasitos</small>
+                                </span>
+								<b>10 EUR</b>
+							</button>
+						</div>
 
-        <div class="d-flex gap-2">
-            <button type="submit" class="btn btn-success">
-                <i class="fa-solid fa-floppy-disk me-1"></i>Siguiente
-            </button>
-            <a th:href="@{/tickets}" class="btn btn-secondary">Cancelar</a>
-        </div>
+						<div class="col-12 col-md-4">
+							<button type="button"
+							        class="combo-card ticket-combo w-100 text-start"
+							        onclick="selectCombo(this, 15)">
+								<img th:src="@{/images/combo3.png}" alt="Hamburguesa, bebida y patatas"
+								     class="rounded img-fluid mb-2">
+								<span>
+                                    <strong>Combo cena</strong>
+                                    <small>Hamburguesa, bebida y patatas</small>
+                                </span>
+								<b>15 EUR</b>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
 
-    </form>
+			<div class="col-12 col-lg-4">
+				<div class="ticket position-sticky" style="top: 1rem;">
+					<p class="ticket-subtitle text-uppercase fw-bold mb-1">Resumen</p>
+					<h2 class="h5 fw-bold text-uppercase text-flux-dark mb-4">Pedido</h2>
+
+					<div class="d-grid gap-3 small">
+						<div class="d-flex justify-content-between gap-3">
+							<span class="text-muted">Entrada</span>
+							<strong id="resumenTicket">-</strong>
+						</div>
+						<div class="d-flex justify-content-between gap-3">
+							<span class="text-muted">Combo</span>
+							<strong id="resumenCombo">Sin combo</strong>
+						</div>
+						<hr class="ticket-hr my-0">
+						<div class="d-flex justify-content-between align-items-end gap-3">
+							<span class="fs-5 fw-bold text-flux-dark">Total</span>
+							<span class="fs-3 fw-bold text-flux-dark" id="resumenTotal">-</span>
+						</div>
+					</div>
+
+					<div class="d-grid gap-2 mt-4">
+						<button type="submit" class="btn btn-primary">
+							<i class="fa-solid fa-arrow-right me-2"></i>
+							Avanzar
+						</button>
+						<a th:href="@{/tickets}" class="btn btn-outline-primary">
+							Cancelar
+						</a>
+					</div>
+
+					<p class="ticket-subtitle text-center mt-4 mb-0">VIVE EL CINE</p>
+				</div>
+			</div>
+		</div>
+	</form>
 </main>
 
 <footer th:replace="~{layout/footer :: footer}"></footer>
