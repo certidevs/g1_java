@@ -166,22 +166,6 @@
 
 <footer th:replace="~{layout/footer :: footer}"></footer>
 <script th:replace="~{layout/footer :: scripts}"></script>
-<script>
-	document.addEventListener('DOMContentLoaded', () => {
-		const trailer = document.getElementById('movieTrailerCollapse');
-
-		if (!trailer) {
-			return;
-		}
-
-		trailer.addEventListener('shown.bs.collapse', () => {
-			trailer.scrollIntoView({
-				behavior: 'smooth',
-				block: 'center'
-			});
-		});
-	});
-</script>
 
 </body>
 </html>
