@@ -82,6 +82,17 @@ public class TicketController {
         Ticket ticket = ticketRepository.findById(id).orElseThrow();
         model.addAttribute("ticket", ticket);
 
+        Double precioCombo =
+                ticket.getPriceCombo() != null
+                        ? ticket.getPriceCombo()
+                        : 0.0;
+
+        Double precioEntrada =
+                ticket.getPrice() - precioCombo;
+
+        model.addAttribute("precioCombo", precioCombo);
+        model.addAttribute("precioEntrada", precioEntrada);
+
         // IVA del 10% para entradas de cine en España
         Double iva = ticket.getPrice() * 0.10;
         Double precioSinIva = ticket.getPrice() - iva;
@@ -208,6 +219,7 @@ public class TicketController {
 
         Double precioComida =
                 ticket.getPriceCombo() != null ? ticket.getPriceCombo() : 0.0;
+
         Double precioTotal = precioBase + precioComida;
         ticket.setPrice(precioTotal);
         ticketRepository.save(ticket);

@@ -106,8 +106,19 @@
                                 <span class="fw-semibold"><span th:text="${#numbers.formatDecimal(precioSinIva, 1, 2)}"></span> €</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between">
-                                <span class="text-muted"><i class="fa-solid fa-euro-sign me-2"></i>Precio total</span>
-                                <span class="fw-semibold" th:text="${#numbers.formatDecimal(ticket.price, 1, 2)}"></span>
+                                <span class="text-muted"><i class="fa-solid fa-ticket me-2"></i>Entrada</span>
+                                <span th:text="|${#numbers.formatDecimal(precioEntrada,1,2)} €|"></span>
+                            </li>
+
+                            <li class="list-group-item d-flex justify-content-between"
+                                th:if="${precioCombo > 0}">
+                                <span class="text-muted"><i class="fa-solid fa-bowl-food me-2"></i>Combo</span>
+                                <span th:text="|${#numbers.formatDecimal(precioCombo,1,2)} €|"></span>
+                            </li>
+
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span class="text-muted"><i class="fa-solid fa-credit-card me-2"></i>Total a Pagar</span>
+                                <span th:text="|${#numbers.formatDecimal(ticket.price,1,2)} €|"></span>
                             </li>
                         </ul>
                     </div>

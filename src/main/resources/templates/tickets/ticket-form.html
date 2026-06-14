@@ -13,7 +13,7 @@
 
     <form th:action="@{/tickets}" method="post" th:object="${ticket}">
         <input type="hidden" th:field="*{id}">
-        <input type="hidden" id="priceComboHidden" th:field="*{priceCombo}">
+<!--        <input type="hidden" id="priceComboHidden" th:field="*{priceCombo}">-->
 
         <!-- Datos del ticket compactos -->
         <div class="card shadow-sm border-0 mb-4">
@@ -70,42 +70,66 @@
                 <h5 class="mb-0"><i class="fa-solid fa-popcorn me-2"></i>Agrega tu combo favorito (Opcional)🍿🥤</h5>
             </div>
             <div class="card-body">
-                <p class="text-muted small mb-3">Haz clic en un combo para seleccionarlo. Vuelve a pulsar para deseleccionarlo.</p>
+                <p class="text-muted small mb-3">Selecciona un combo para añadirlo a tu ticket.</p>
                 <div class="row g-3 justify-content-center">
 
+                    <!-- Sin combo -->
+<!--                    <div class="col-md-3">-->
+<!--                        <label class="w-100 h-100">-->
+<!--                            <input type="radio" name="priceCombo" value="" class="d-none" checked>-->
+<!--                            <div class="combo-card text-center p-3 border rounded-3 h-100"-->
+<!--                                 style="cursor:pointer;">-->
+<!--                                <div style="font-size: 3rem;">❌</div>-->
+<!--                                <h6 class="fw-bold mt-2">Sin combo</h6>-->
+<!--                                <p class="text-muted small mb-2">Solo el ticket</p>-->
+<!--                                <span class="badge bg-secondary fs-6">0 €</span>-->
+<!--                            </div>-->
+<!--                        </label>-->
+<!--                    </div>-->
+
                     <!-- Combo 1 -->
-                    <div class="col-md-4">
-                    <div class="combo-card text-center p-3 border rounded-3 h-100"
-                         onclick="selectCombo(this, 8)" data-value="8" style="cursor:pointer; transition: all 0.2s;">
-                        <img th:src="@{/images/combo1.png}" alt="Palomitas y bebida"
-                             class="img-fluid rounded mb-2" style="max-height: 150px; object-fit: cover; width: 100%;">
-                        <h6 class="fw-bold mt-2">Palomitas + Bebida</h6>
-                        <p class="text-muted small mb-2">El clásico del cine</p>
-                        <span class="badge bg-success fs-6">8 €</span>
+                    <div class="col-md-3">
+                        <label class="w-100 h-100">
+                            <input type="radio" name="priceCombo" value="8" class="d-none">
+                            <div class="combo-card text-center p-3 border rounded-3 h-100"
+                                 style="cursor:pointer;">
+                                <img th:src="@{/images/combo1.png}" alt="Palomitas y bebida"
+                                     class="img-fluid rounded mb-2" style="max-height: 150px; object-fit: cover; width: 100%;">
+                                <h6 class="fw-bold mt-2">Palomitas + Bebida</h6>
+                                <p class="text-muted small mb-2">El clásico del cine</p>
+                                <span class="badge bg-success fs-6">8 €</span>
+                            </div>
+                        </label>
                     </div>
-                    </div>
+
                     <!-- Combo 2 -->
-                    <div class="col-md-4">
-                        <div class="combo-card text-center p-3 border rounded-3 h-100"
-                             onclick="selectCombo(this, 10)" data-value="8" style="cursor:pointer; transition: all 0.2s;">
-                            <img th:src="@{/images/combo2.png}" alt="Palomitas, bebida y lacasitos"
-                                 class="img-fluid rounded mb-2" style="max-height: 150px; object-fit: cover; width: 100%;">
-                            <h6 class="fw-bold mt-2">Palomitas + Bebida + Lacasitos</h6>
-                            <p class="text-muted small mb-2">Para los más golosos</p>
-                            <span class="badge bg-success fs-6">10 €</span>
-                        </div>
+                    <div class="col-md-3">
+                        <label class="w-100 h-100">
+                            <input type="radio" name="priceCombo" value="10" class="d-none">
+                            <div class="combo-card text-center p-3 border rounded-3 h-100"
+                                 style="cursor:pointer;">
+                                <img th:src="@{/images/combo2.png}" alt="Palomitas, bebida y lacasitos"
+                                     class="img-fluid rounded mb-2" style="max-height: 150px; object-fit: cover; width: 100%;">
+                                <h6 class="fw-bold mt-2">Palomitas + Bebida + Lacasitos</h6>
+                                <p class="text-muted small mb-2">Para los más golosos</p>
+                                <span class="badge bg-success fs-6">10 €</span>
+                            </div>
+                        </label>
                     </div>
 
                     <!-- Combo 3 -->
-                    <div class="col-md-4">
-                        <div class="combo-card text-center p-3 border rounded-3 h-100"
-                             onclick="selectCombo(this, 15)" data-value="8" style="cursor:pointer; transition: all 0.2s;">
-                            <img th:src="@{/images/combo3.png}" alt="Hamburguesa, bebida y patatas"
-                                 class="img-fluid rounded mb-2" style="max-height: 150px; object-fit: cover; width: 100%;">
-                            <h6 class="fw-bold mt-2">Hamburguesa + Bebida + patatas</h6>
-                            <p class="text-muted small mb-2">¿Hambre? ¡Ni loc@!</p>
-                            <span class="badge bg-success fs-6">15 €</span>
-                        </div>
+                    <div class="col-md-3">
+                        <label class="w-100 h-100">
+                            <input type="radio" name="priceCombo" value="15" class="d-none">
+                            <div class="combo-card text-center p-3 border rounded-3 h-100"
+                                 style="cursor:pointer;">
+                                <img th:src="@{/images/combo3.png}" alt="Hamburguesa, bebida y patatas"
+                                     class="img-fluid rounded mb-2" style="max-height: 150px; object-fit: cover; width: 100%;">
+                                <h6 class="fw-bold mt-2">Hamburguesa + Bebida + Patatas</h6>
+                                <p class="text-muted small mb-2">¿Con hambre? ¡Ni loc@!</p>
+                                <span class="badge bg-success fs-6">15 €</span>
+                            </div>
+                        </label>
                     </div>
 
                 </div>
@@ -122,15 +146,15 @@
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item d-flex justify-content-between">
                         <span class="text-muted">Precio ticket</span>
-                        <span class="fw-semibold" id="resumenTicket">-</span>
+                        <span class="fw-semibold" th:text="|${#numbers.formatDecimal(ticket.price, 1, 2)} €|"></span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between">
                         <span class="text-muted">Combo seleccionado</span>
-                        <span class="fw-semibold" id="resumenCombo">Sin combo</span>
+                        <span class="fw-semibold text-muted">Se calculará al avanzar</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between fs-5">
-                        <span class="fw-bold">Total</span>
-                        <span class="fw-bold text-success" id="resumenTotal">-</span>
+                        <span class="fw-bold">Precio base</span>
+                        <span class="fw-bold text-success" th:text="|${#numbers.formatDecimal(ticket.price, 1, 2)} €|"></span>
                     </li>
                 </ul>
             </div>
@@ -138,7 +162,7 @@
 
         <div class="d-flex gap-2">
             <button type="submit" class="btn btn-success">
-                <i class="fa-solid fa-floppy-disk me-1"></i>Avanzar
+                <i class="fa-solid fa-floppy-disk me-1"></i>Siguiente
             </button>
             <a th:href="@{/tickets}" class="btn btn-secondary">Cancelar</a>
         </div>
@@ -149,45 +173,46 @@
 <footer th:replace="~{layout/footer :: footer}"></footer>
 <script th:replace="~{layout/footer :: scripts}"></script>
 
-<script>
-    // Precio base del ticket
-    const precioTicket = parseFloat(document.getElementById('price').value) || 0;
-    document.getElementById('resumenTicket').textContent = precioTicket.toFixed(2) + ' €';
-    document.getElementById('resumenTotal').textContent = precioTicket.toFixed(2) + ' €';
+<!--<script>-->
 
-    function selectCombo(card, value) {
-        const allCards = document.querySelectorAll('.combo-card');
-        const hidden = document.getElementById('priceComboHidden');
+<!--    // Precio base del ticket-->
+<!--    const precioTicket = parseFloat(document.getElementById('price').value) || 0;-->
+<!--    document.getElementById('resumenTicket').textContent = precioTicket.toFixed(2) + ' €';-->
+<!--    document.getElementById('resumenTotal').textContent = precioTicket.toFixed(2) + ' €';-->
 
-        if (card.classList.contains('selected-combo')) {
-            card.classList.remove('selected-combo');
-            card.style.backgroundColor = '';
-            card.style.borderColor = '';
-            card.style.transform = '';
-            hidden.value = '';
-            document.getElementById('resumenCombo').textContent = 'Sin combo';
-            document.getElementById('resumenTotal').textContent = precioTicket.toFixed(2) + ' €';
-            return;
-        }
+<!--    function selectCombo(card, value) {-->
+<!--        const allCards = document.querySelectorAll('.combo-card');-->
+<!--        const hidden = document.getElementById('priceComboHidden');-->
 
-        allCards.forEach(c => {
-            c.classList.remove('selected-combo');
-            c.style.backgroundColor = '';
-            c.style.borderColor = '';
-            c.style.transform = '';
-        });
+<!--        if (card.classList.contains('selected-combo')) {-->
+<!--            card.classList.remove('selected-combo');-->
+<!--            card.style.backgroundColor = '';-->
+<!--            card.style.borderColor = '';-->
+<!--            card.style.transform = '';-->
+<!--            hidden.value = '';-->
+<!--            document.getElementById('resumenCombo').textContent = 'Sin combo';-->
+<!--            document.getElementById('resumenTotal').textContent = precioTicket.toFixed(2) + ' €';-->
+<!--            return;-->
+<!--        }-->
 
-        card.classList.add('selected-combo');
-        card.style.backgroundColor = '#d1e7dd';
-        card.style.borderColor = '#198754';
-        card.style.transform = 'scale(1.03)';
-        hidden.value = value;
+<!--        allCards.forEach(c => {-->
+<!--            c.classList.remove('selected-combo');-->
+<!--            c.style.backgroundColor = '';-->
+<!--            c.style.borderColor = '';-->
+<!--            c.style.transform = '';-->
+<!--        });-->
 
-        const total = precioTicket + value;
-        document.getElementById('resumenCombo').textContent = value.toFixed(2) + ' €';
-        document.getElementById('resumenTotal').textContent = total.toFixed(2) + ' €';
-    }
-</script>
+<!--        card.classList.add('selected-combo');-->
+<!--        card.style.backgroundColor = '#d1e7dd';-->
+<!--        card.style.borderColor = '#198754';-->
+<!--        card.style.transform = 'scale(1.03)';-->
+<!--        hidden.value = value;-->
+
+<!--        const total = precioTicket + value;-->
+<!--        document.getElementById('resumenCombo').textContent = value.toFixed(2) + ' €';-->
+<!--        document.getElementById('resumenTotal').textContent = total.toFixed(2) + ' €';-->
+<!--    }-->
+<!--</script>-->
 
 </body>
 </html>
