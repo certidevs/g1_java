@@ -7,312 +7,278 @@
 
 <nav th:replace="~{layout/navbar :: navbar}"></nav>
 
-<main class="container flex-grow-1 my-4">
+<main class="container flex-grow-1 mb-5">
 
-    <!-- Breadcrumb -->
-    <nav aria-label="breadcrumb" class="mb-3">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a th:href="@{/tickets}" class="text-decoration-none">
-                    <i class="fa-solid fa-ticket me-1"></i>Tickets
-                </a>
-            </li>
-            <li class="breadcrumb-item active" aria-current="page">
-                Ticket #<span th:text="${ticket.id}"></span>
-            </li>
-        </ol>
-    </nav>
+	<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+		<div>
+			<p class="ticket-subtitle text-uppercase fw-bold mb-1">Entrada FluxFilms</p>
+			<h1 class="h3 fw-bold mb-0">
+				Ticket #<span th:text="${ticket.id}">0</span>
+			</h1>
+		</div>
 
-    <!-- Cabecera -->
-    <div class="card shadow-sm border-0 mb-4">
-        <div class="card-body">
-            <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
-                <div>
-                    <h1 class="h3 mb-1">
-                        <i class="fa-solid fa-receipt text-success me-2"></i>
-                        ticket #<span th:text="${ticket.id}"></span>
-                    </h1>
-                    <div class="text-muted small">
-                        <i class="fa-regular fa-clock me-1"></i>
-                        <strong>Comprado:</strong>
-                        <span th:text="${#temporals.format(ticket.purchaseTime, 'dd/MM/yyyy HH:mm')}">Fecha compra</span>
-                    </div>
-                </div>
-                <div class="d-flex gap-2 align-items-center">
+		<div class="d-flex flex-wrap align-items-center gap-2">
+            <span class="badge fs-6 px-3 py-2"
+                  th:classappend="${ticket.status.name() == 'IN_PROGRESS' ? 'text-bg-secondary' : (ticket.status.name() == 'CANCELLED' ? 'text-bg-dark' : (ticket.status.name() == 'FINISHED' ? 'text-bg-primary' : 'text-bg-secondary'))}"
+                  th:text="${ticket.status.name() == 'IN_PROGRESS' ? 'En proceso' : (ticket.status.name() == 'CANCELLED' ? 'Cancelado' : (ticket.status.name() == 'FINISHED' ? 'Finalizado' : 'Pagado'))}">
+            </span>
+			<a th:href="@{/tickets}" class="btn btn-outline-primary btn-sm">
+				<i class="fa-solid fa-arrow-left me-1"></i>
+				Volver
+			</a>
+		</div>
+	</div>
 
-                                <span class="badge fs-6 px-3 py-2"
-                                      th:classappend="${ticket.status.name() == 'IN_PROGRESS' ? 'bg-warning text-dark' : (ticket.status.name() == 'CANCELLED' ? 'bg-info text-dark' : (ticket.status.name() == 'FINISHED' ? 'bg-info text-dark' : 'bg-success'))}"
-                                      th:text="${ticket.status.name() == 'IN_PROGRESS' ? 'En proceso' : (ticket.status.name() == 'CANCELLED' ? 'Cancelado' : (ticket.status.name() == 'FINISHED' ? 'Finalizado' : 'Pagado'))}"></span>
+	<div th:if="${message}" class="alert alert-success my-3" th:text="${message}"></div>
 
+	<div class="row g-4 align-items-stretch">
+		<div class="col-12 col-lg-8">
+			<div class="ticket h-100">
+				<div class="d-flex flex-column flex-sm-row gap-3">
+					<div class="flex-shrink-0">
+						<img th:if="${ticket.session.movie.imageUrl != null}"
+						     th:src="${ticket.session.movie.imageUrl}"
+						     th:alt="${ticket.session.movie.title}"
+						     class="rounded object-fit-cover"
+						     style="width: 108px; height: 152px;">
+						<div th:unless="${ticket.session.movie.imageUrl != null}"
+						     class="rounded bg-dark d-flex align-items-center justify-content-center"
+						     style="width: 108px; height: 152px;">
+							<i class="fa-solid fa-film fa-2x text-secondary"></i>
+						</div>
+					</div>
 
+					<div class="flex-grow-1 min-w-0">
+						<div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-3">
+							<div>
+								<p class="ticket-subtitle text-uppercase fw-bold mb-1">Resumen del ticket</p>
+								<h2 class="h4 fw-bold text-uppercase text-flux-dark mb-1"
+								    th:text="${ticket.session.movie.title}">
+									Pelicula
+								</h2>
+								<small class="text-muted">
+									<i class="fa-regular fa-calendar me-1"></i>
+									<span th:text="${#temporals.format(ticket.session.startTime, 'dd/MM/yyyy HH:mm')}">
+                                        01/01/2026 20:00
+                                    </span>
+								</small>
+							</div>
 
-                    <a th:href="@{/tickets}" class="btn btn-outline-secondary btn-sm">
-                        <i class="fa-solid fa-arrow-left me-1"></i> Volver
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
+							<div class="text-sm-end">
+								<small class="text-muted d-block">Total</small>
+								<span class="fs-3 fw-bold text-flux-dark">
+                                    <span th:text="${#numbers.formatDecimal(ticket.price, 1, 2)}">0,00</span> EUR
+                                </span>
+							</div>
+						</div>
 
-    <div th:if="${message}" class="alert alert-success my-3" th:text="${message}"></div>
+						<div class="row g-2 small">
+							<div class="col-6 col-md-3">
+								<span class="text-muted d-block">Sala</span>
+								<strong th:text="${ticket.session.room.name}">Sala</strong>
+							</div>
+							<div class="col-6 col-md-3">
+								<span class="text-muted d-block">Butaca</span>
+								<strong th:text="${ticket.seatRow + ticket.seatNumber}">A1</strong>
+							</div>
+							<div class="col-6 col-md-3">
+								<span class="text-muted d-block">Idioma</span>
+								<strong th:text="${ticket.session.language}">ESP</strong>
+							</div>
+							<div class="col-6 col-md-3">
+								<span class="text-muted d-block">Pantalla</span>
+								<strong th:text="${ticket.session.room.screentype.label}">IMAX</strong>
+							</div>
+							<div class="col-6 col-md-3">
+								<span class="text-muted d-block">Duracion</span>
+								<strong th:text="${ticket.session.movie.duration + ' min'}">120 min</strong>
+							</div>
+							<div class="col-6 col-md-3">
+								<span class="text-muted d-block">Anuncios</span>
+								<strong th:text="${ticket.session.numAds != null ? ticket.session.numAds + ' min' : '-'}">-</strong>
+							</div>
+							<div class="col-6 col-md-3" th:if="${ticket.purchaseTime != null}">
+								<span class="text-muted d-block">Compra</span>
+								<strong th:text="${#temporals.format(ticket.purchaseTime, 'dd/MM/yyyy HH:mm')}">
+									Fecha
+								</strong>
+							</div>
+							<div class="col-6 col-md-3" th:if="${ticket.status.name() == 'FINISHED'}">
+								<span class="text-muted d-block">Fin estimado</span>
+								<strong th:text="${#temporals.format(ticket.session.startTime.plusMinutes(ticket.session.movie.duration + ticket.session.numAds), 'dd/MM/yyyy HH:mm')}">
+									Fin
+								</strong>
+							</div>
+						</div>
 
-    <div class="row g-3 mb-4">
+						<hr class="ticket-hr">
 
-        <!-- Ticket siempre col-md-8 si FINISHED, col-md-7 si no -->
-        <div th:classappend="${ticket.status.name() == 'FINISHED'} ? 'col-md-8' : 'col-md-7'"
-             class="col-12">
-            <div class="card shadow-sm border-0">
-                <div class="card-header bg-success text-white">
-                    <h5 class="mb-0">
-                        <i class="fa-solid fa-ticket me-2"></i>Ticket
-                    </h5>
-                </div>
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img th:if="${ticket.session.movie.imageUrl != null}"
-                             th:src="${ticket.session.movie.imageUrl}"
-                             th:alt="${ticket.session.movie.title}"
-                             class="img-fluid object-fit-cover rounded-start"
-                             style="height: 100%; max-height: 400px; width: 100%;">
-                        <div th:unless="${ticket.session.movie.imageUrl != null}"
-                             class="bg-secondary d-flex align-items-center justify-content-center h-100">
-                            <i class="fa-solid fa-film fa-3x text-white"></i>
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <ul class="list-group list-group-flush h-100">
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span class="text-muted"><i class="fa-solid fa-film me-2"></i>Título de película</span>
-                                <span class="fw-semibold" th:text="${ticket.session.movie.title}"></span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span class="text-muted"><i class="fa-solid fa-clock me-2"></i>Función</span>
-                                <span th:text="${#temporals.format(ticket.session.startTime, 'dd/MM/yyyy HH:mm')}"></span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span class="text-muted"><i class="fa-solid fa-door-open me-2"></i>Sala</span>
-                                <span class="fw-semibold" th:text="${ticket.session.room.name}"></span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span class="text-muted"><i class="fa-solid fa-chair me-2"></i>Asiento</span>
-                                <span class="fw-semibold" th:text="${ticket.seatRow + ticket.seatNumber}"></span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span class="text-muted"><i class="fa-solid fa-percent me-2"></i>IVA (10%)</span>
-                                <span class="fw-semibold"><span th:text="${#numbers.formatDecimal(iva, 1, 2)}"></span> €</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span class="text-muted"><i class="fa-solid fa-building me-2"></i>Base imponible</span>
-                                <span class="fw-semibold"><span th:text="${#numbers.formatDecimal(precioSinIva, 1, 2)}"></span> €</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span class="text-muted"><i class="fa-solid fa-ticket me-2"></i>Entrada</span>
-                                <span class="fw-semibold" th:text="${#numbers.formatDecimal(precioEntrada, 1, 2)}"></span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between"
-                                th:if="${precioCombo > 0}">
-                                <span class="text-muted"><i class="fa-solid fa-bowl-food me-2"></i>Combo</span>
-                                <span class="fw-semibold" th:text="${#numbers.formatDecimal(precioCombo, 1, 2)}"></span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span class="text-muted"><i class="fa-solid fa-euro-sign me-2"></i>Total</span>
-                                <span class="fw-semibold" th:text="${#numbers.formatDecimal(ticket.price, 1, 2)}"></span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+						<div class="row g-2 align-items-end small">
+							<div class="col-4">
+								<span class="text-muted d-block">Base</span>
+								<strong>
+									<span th:text="${#numbers.formatDecimal(precioSinIva, 1, 2)}">0,00</span> EUR
+								</strong>
+							</div>
+							<div class="col-4">
+								<span class="text-muted d-block">IVA 10%</span>
+								<strong>
+									<span th:text="${#numbers.formatDecimal(iva, 1, 2)}">0,00</span> EUR
+								</strong>
+							</div>
+							<div class="col-4 text-end">
+								<span class="ticket-subtitle text-uppercase fw-bold">FluxFilms</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-        <!-- Mensaje duración - solo FINISHED -->
-        <div class="col-md-4" th:if="${ticket.status.name() == 'FINISHED'}">
-            <div class="h-100 p-3 text-center d-flex flex-column align-items-center justify-content-center"
-                 style="background: linear-gradient(135deg, #1a1a2e, #16213e); color: white; border-radius: 16px;">
-                <i class="fa-solid fa-clapperboard fa-2x mb-3 text-warning"></i>
-                <h5 class="fw-bold text-warning mb-1">¡Todo listo! 🎬</h5>
-                <p class="text-white-50 small mb-3">Organiza bien tu tiempo</p>
-                <div class="mb-3">
-                    <div class="text-white-50 small mb-1">
-                        <i class="fa-solid fa-circle-play me-1 text-success"></i>Inicio
-                    </div>
-                    <div class="fs-5 fw-bold text-success"
-                         th:text="${#temporals.format(ticket.session.startTime, 'dd/MM/yyyy HH:mm')}">
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <div class="text-white-50 small mb-1">
-                        <i class="fa-solid fa-circle-stop me-1 text-primary"></i>Fin
-                    </div>
-                    <div class="fs-5 fw-bold text-primary"
-                         th:text="${#temporals.format(ticket.session.startTime.plusMinutes(ticket.session.movie.duration + ticket.session.numAds), 'dd/MM/yyyy HH:mm')}">
-                    </div>
-                </div>
-            </div>
-        </div>
+		<div class="col-12 col-lg-4">
+			<div class="ticket h-100">
+				<div th:if="${ticket.user != null}">
+					<p class="ticket-subtitle text-uppercase fw-bold mb-1">Cliente</p>
+					<div class="d-flex align-items-center gap-3 mb-3">
+						<div th:unless="${ticket.user.imageUrl}"
+						     class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center flex-shrink-0"
+						     style="width: 52px; height: 52px;">
+							<i class="fa-solid fa-user text-primary"></i>
+						</div>
+						<img th:if="${ticket.user.imageUrl}"
+						     th:src="${ticket.user.imageUrl}"
+						     class="rounded-circle object-fit-cover flex-shrink-0"
+						     width="52"
+						     height="52"
+						     alt="Foto perfil">
+						<div class="min-w-0">
+							<h2 class="h6 fw-bold mb-1" th:text="${ticket.user.username}">Usuario</h2>
+							<p class="text-muted small mb-0 text-break" th:text="${ticket.user.email}">email</p>
+						</div>
+					</div>
 
-        <!-- Cliente al lado del ticket cuando IN_PROGRESS -->
-        <div class="col-md-5" th:if="${ticket.user != null and ticket.status.name() != 'FINISHED'}">
-            <div class="card shadow-sm border-0 h-100">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0">
-                        <i class="fa-solid fa-user me-2"></i> Cliente
-                    </h5>
-                </div>
-                <div class="card-body text-center pb-2">
-                    <div th:unless="${ticket.user.imageUrl}" class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center mb-2"
-                         style="width: 64px; height: 64px;">
-                        <i class="fa-solid fa-user fa-2x text-primary"></i>
-                    </div>
-                    <div th:if="${ticket.user.imageUrl}" class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center mb-2"
-                         style="width: 64px; height: 64px;">
-                        <img th:src="${ticket.user.imageUrl}"
-                             class="rounded-circle object-fit-cover"
-                             width="64" height="64" alt="Foto perfil">
-                    </div>
-                    <h5 class="card-title mb-0" th:text="${ticket.user.username}"></h5>
-                    <p class="text-muted small mb-0">
-                        <i class="fa-solid fa-crown text-warning me-1"></i> Crack cineasta
-                    </p>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span class="text-muted"><i class="fa-solid fa-envelope me-2"></i>Email</span>
-                        <span class="fw-semibold small" th:text="${ticket.user.email}"></span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span class="text-muted"><i class="fa-solid fa-receipt me-2"></i>Compras</span>
-                        <span class="fw-semibold" th:text="${countUserTickets}"></span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span class="text-muted"><i class="fa-solid fa-receipt me-2"></i>Dinero Gastado</span>
-                        <span class="fw-semibold" th:text="|${#numbers.formatDecimal(totalMoneyUserSpent, 1, 2)} €|"></span>
-                    </li>
-                </ul>
-            </div>
-        </div>
+					<div class="d-flex justify-content-between small mb-2">
+                        <span class="text-muted">
+                            <i class="fa-solid fa-receipt me-1 text-primary"></i>
+                            Compras
+                        </span>
+						<strong th:text="${countUserTickets}">0</strong>
+					</div>
+					<div class="d-flex justify-content-between small">
+                        <span class="text-muted">
+                            <i class="fa-solid fa-coins me-1 text-primary"></i>
+                            Gasto total
+                        </span>
+						<strong>
+							<span th:text="${#numbers.formatDecimal(totalMoneyUserSpent, 1, 2)}">0,00</span> EUR
+						</strong>
+					</div>
+				</div>
 
-        <!-- QR - solo FINISHED -->
-        <div class="col-md-6" th:if="${ticket.status.name() == 'FINISHED'}">
-            <div class="card shadow-sm border-0 h-100">
-                <div class="card-header bg-dark text-white">
-                    <h5 class="mb-0">
-                        <i class="fa-solid fa-qrcode me-2"></i>Código QR
-                    </h5>
-                </div>
-                <div class="card-body text-center d-flex flex-column align-items-center justify-content-center gap-3">
-                    <img th:src="'data:image/png;base64,' + ${qrCode}"
-                         alt="Código QR del ticket"
-                         class="img-fluid"
-                         style="max-width: 200px;" />
-                    <span th:if="${ticket.currentUses >= ticket.maxUses}" class="badge bg-danger fs-6">
-                    <i class="fa-solid fa-circle-xmark me-1"></i>Ticket ya utilizado
-                </span>
-                    <span th:unless="${ticket.currentUses >= ticket.maxUses}" class="badge bg-success fs-6">
-                    <i class="fa-solid fa-circle-check me-1"></i>Válido
-                </span>
-                    <p class="text-muted small mb-0">Muestra este QR en la entrada de la sala</p>
-                </div>
-            </div>
-        </div>
+				<div th:unless="${ticket.user != null}">
+					<p class="ticket-subtitle text-uppercase fw-bold mb-1">Cliente</p>
+					<p class="text-muted small mb-0">Este ticket todavia no tiene usuario asignado.</p>
+				</div>
 
-        <!-- Cliente abajo - solo FINISHED -->
-        <div class="col-md-6" th:if="${ticket.user != null and ticket.status.name() == 'FINISHED'}">
-            <div class="card shadow-sm border-0 h-100">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0">
-                        <i class="fa-solid fa-user me-2"></i> Cliente
-                    </h5>
-                </div>
-                <div class="card-body text-center pb-2">
-                    <div th:unless="${ticket.user.imageUrl}" class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center mb-2"
-                         style="width: 64px; height: 64px;">
-                        <i class="fa-solid fa-user fa-2x text-primary"></i>
-                    </div>
-                    <div th:if="${ticket.user.imageUrl}" class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center mb-2"
-                         style="width: 64px; height: 64px;">
-                        <img th:src="${ticket.user.imageUrl}"
-                             class="rounded-circle object-fit-cover"
-                             width="64" height="64" alt="Foto perfil">
-                    </div>
-                    <h5 class="card-title mb-0" th:text="${ticket.user.username}"></h5>
-                    <p class="text-muted small mb-0">
-                        <i class="fa-solid fa-crown text-warning me-1"></i> Crack cineasta
-                    </p>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span class="text-muted"><i class="fa-solid fa-envelope me-2"></i>Email</span>
-                        <span class="fw-semibold small" th:text="${ticket.user.email}"></span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span class="text-muted"><i class="fa-solid fa-receipt me-2"></i>Compras</span>
-                        <span class="fw-semibold" th:text="${countUserTickets}"></span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span class="text-muted"><i class="fa-solid fa-receipt me-2"></i>Dinero Gastado</span>
-                        <span class="fw-semibold" th:text="|${#numbers.formatDecimal(totalMoneyUserSpent, 1, 2)} €|"></span>
-                    </li>
-                </ul>
-            </div>
-        </div>
+				<hr class="ticket-hr">
 
-    </div>
+				<div th:if="${ticket.status.name() == 'FINISHED'}" class="d-flex align-items-center gap-3">
+					<img th:src="'data:image/png;base64,' + ${qrCode}"
+					     alt="Codigo QR del ticket"
+					     class="rounded bg-white p-1 flex-shrink-0"
+					     style="width: 96px; height: 96px;">
+					<div>
+						<p class="ticket-subtitle text-uppercase fw-bold mb-1">Acceso</p>
+						<span th:if="${ticket.currentUses >= ticket.maxUses}" class="badge text-bg-dark">
+                            <i class="fa-solid fa-circle-xmark me-1"></i>
+                            Utilizado
+                        </span>
+						<span th:unless="${ticket.currentUses >= ticket.maxUses}" class="badge text-bg-primary">
+                            <i class="fa-solid fa-circle-check me-1"></i>
+                            Valido
+                        </span>
+						<p class="text-muted small mt-2 mb-0">Muestra el QR en sala.</p>
+					</div>
+				</div>
 
-    <div class="card shadow-sm border-0 mb-4" th:if="${ticket.status.name() != 'FINISHED'}">
-        <div class="card-body">
-            <h5 class="mb-3">Sección de pago</h5>
+				<div th:if="${ticket.status.name() != 'FINISHED'}">
+					<p class="ticket-subtitle text-uppercase fw-bold mb-1">Pago pendiente</p>
+					<p class="text-muted small mb-3">Completa el pago para generar el QR.</p>
+					<a href="#paymentSection" class="btn btn-primary btn-sm w-100">
+						<i class="fa-solid fa-credit-card me-1"></i>
+						Ir al pago
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
 
-            <div th:if="${error}" class="alert alert-danger my-3" th:text="${error}"></div>
+	<div id="paymentSection" class="ticket mt-4" th:if="${ticket.status.name() != 'FINISHED'}">
+		<div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-3">
+			<div>
+				<p class="ticket-subtitle text-uppercase fw-bold mb-1">Pago</p>
+				<h2 class="h5 fw-bold text-uppercase text-flux-dark mb-0">Finalizar compra</h2>
+			</div>
+			<div class="fs-5 fw-bold text-flux-dark">
+				<span th:text="${#numbers.formatDecimal(ticket.price, 1, 2)}">0,00</span> EUR
+			</div>
+		</div>
 
-            <form th:action="@{/tickets/{id}/finish(id=${ticket.id})}"
-                  th:object="${paymentForm}" method="post" class="row g-3">
+		<div th:if="${error}" class="alert alert-danger my-3" th:text="${error}"></div>
 
+		<form th:action="@{/tickets/{id}/finish(id=${ticket.id})}"
+		      th:object="${paymentForm}"
+		      method="post"
+		      class="row g-3">
 
-                <div class="col-md-6">
-                    <label class="form-label" for="cardOwner">Titular de la tarjeta</label>
-                    <input type="text" id="cardOwner" name="cardOwner"
-                           class="form-control" required autofocus>
-                    <small class="text-muted">Tu nombre completo</small>
-                </div>
+			<div class="col-12 col-lg-4">
+				<label class="form-label" for="cardOwner">Titular</label>
+				<input type="text" id="cardOwner"
+				       th:field="*{cardOwner}"
+				       class="form-control"
+				       autocomplete="cc-name"
+				       required autofocus>
+			</div>
 
-                <div class="col-md-6">
-                    <label class="form-label" for="cardNumber">Número de la tarjeta</label>
-                    <input type="text" id="cardNumber" name="cardNumber"
-                           class="form-control" maxlength="16" required>
-                    <small class="text-muted">Formato: 1111222233334444</small>
-                </div>
+			<div class="col-12 col-lg-4">
+				<label class="form-label" for="cardNumber">Numero de tarjeta</label>
+				<input type="text" id="cardNumber"
+				       th:field="*{cardNumber}"
+				       class="form-control"
+				       inputmode="numeric"
+				       autocomplete="cc-number"
+				       pattern="[0-9]{16}"
+				       maxlength="16"
+				       placeholder="1111222233334444"
+				       required>
+			</div>
 
-                <div class="col-md-4">
-                    <label class="form-label" for="cardExpirationDate">Fecha expiración tarjeta</label>
-                    <input type="text" id="cardExpirationDate" name="cardExpirationDate"
-                           class="form-control" maxlength="5" required>
-                    <small class="text-muted">Formato: MM/YY</small>
-                </div>
+			<div class="col-6 col-lg-2">
+				<label class="form-label" for="cardExpirationDate">Caducidad</label>
+				<input type="text" id="cardExpirationDate"
+				       th:field="*{cardExpirationDate}"
+				       class="form-control"
+				       inputmode="numeric"
+				       autocomplete="cc-exp"
+				       pattern="[0-9]{2}/[0-9]{2}"
+				       maxlength="5"
+				       placeholder="MM/YY"
+				       required>
+			</div>
 
-                <div class="col-md-4">
-                    <label class="form-label" for="cardCode">CVV Código tarjeta</label>
-                    <input type="password" id="cardCode" name="cardCode"
-                           class="form-control" maxlength="3" required>
-                    <small class="text-muted">Formato: 111</small>
-                </div>
+			<div class="col-6 col-lg-2">
+				<label class="form-label" for="cardCode">CVV</label>
+				<input type="password" id="cardCode" name="cardCode" class="form-control" maxlength="3" required>
+			</div>
 
-
-                <div class="col-12 text-end">
-                    <button type="submit" class="btn btn-sm btn-success">
-                        <i class="fa-solid fa-credit-card"></i>
-                        Pagar y finalizar
-                    </button>
-                </div>
-
-            </form>
-        </div>
-    </div>
-
-
-
-
-
-
+			<div class="col-12 text-end">
+				<button type="submit" class="btn btn-primary">
+					<i class="fa-solid fa-credit-card me-2"></i>
+					Pagar y finalizar
+				</button>
+			</div>
+		</form>
+	</div>
 </main>
 
 <footer th:replace="~{layout/footer :: footer}"></footer>
