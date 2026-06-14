@@ -93,10 +93,6 @@
 								<span class="text-muted d-block">Duracion</span>
 								<strong th:text="${ticket.session.movie.duration + ' min'}">120 min</strong>
 							</div>
-							<div class="col-6 col-md-3">
-								<span class="text-muted d-block">Anuncios</span>
-								<strong th:text="${ticket.session.numAds != null ? ticket.session.numAds + ' min' : '-'}">-</strong>
-							</div>
 							<div class="col-6 col-md-3" th:if="${ticket.purchaseTime != null}">
 								<span class="text-muted d-block">Compra</span>
 								<strong th:text="${#temporals.format(ticket.purchaseTime, 'dd/MM/yyyy HH:mm')}">
