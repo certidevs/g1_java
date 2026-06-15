@@ -50,6 +50,18 @@ public class MovieController {
 
         List<Movie> movies = movieRepository.findActiveFiltering(directorName, genre, title, minAge, movieStatus, section);
 
+        for (Movie movie : movies) {
+
+            movie.setAvgRating(
+                    reviewRepository.calculateAverageRatingByMovieId(movie.getId())
+            );
+
+            movie.setCountReviews(
+                    reviewRepository.countByMovie_Id(movie.getId())
+            );
+
+        }
+
         movies.forEach(movieService::updateStatusByDate);
 
         model.addAttribute("movies", movies);

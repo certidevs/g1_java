@@ -60,4 +60,10 @@ public class Movie {
     @ManyToOne
     @JoinColumn(name = "directorId")
     private Director director;
+
+    @Transient
+    private Double avgRating;
+
+    @Transient
+    private Long countReviews;
 }

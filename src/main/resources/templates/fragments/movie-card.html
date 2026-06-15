@@ -27,8 +27,18 @@
 	</div>
 	<p class="text-uppercase fw-bold small text-primary mb-1" th:text="${'★ ' + movie.section.label + ' ★'}"></p>
 	<h5 class="fw-bold text-uppercase mb-3" th:text="${movie.title}">Nombre</h5>
+	<div class="d-flex align-items-center justify-content-between mb-3">
+		<div class="d-flex align-items-center gap-2">
+			<i class="fa-solid fa-star text-secondary"></i>
+			<span class="fw-bold"
+			      th:text="${movie.avgRating != null ? #numbers.formatDecimal(movie.avgRating, 1, 1) : '-'}">
+                0.0
+            </span>
+			<small class="text-muted">(<span th:text="${movie.countReviews}">0</span>)</small>
+		</div>
+	</div>
 	<span class="badge text-bg-dark" th:text="${movie.minAge.label}"></span>
-	<span class="badge btn btn-outline-primary text-primary me-1"
+	<span class="badge text-bg-primary me-1"
 	      th:each="genre : ${movie.genreSet}"
 	      th:text="${genre.label}">
 	</span>
