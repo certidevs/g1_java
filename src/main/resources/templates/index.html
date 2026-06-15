@@ -39,24 +39,53 @@
 						<p class="ticket-subtitle text-uppercase fw-bold mb-1">
 							★ ★ Acceso FluxFilms ★ ★
 						</p>
-						<h4 class="ticket-title text-uppercase fw-bold mb-3">
-							Accede a tu cuenta
-						</h4>
-						<img th:src="@{/images/logo.png}" alt="FluxFilms" class="ticket-brand">
-						<hr class="ticket-hr">
-						<p class="text-flux-dark text-center mb-4">
-							Inicia sesión o crea una cuenta desde cero
-						</p>
-						<div class="d-grid gap-3">
-							<a th:href="@{/login}" class="btn btn-outline-primary fw-bold">
-								<i class="fa-solid fa-user me-2"></i>
-								Iniciar sesión
-							</a>
-							<a th:href="@{/register}" class="btn btn-primary fw-bold">
-								<i class="fa-solid fa-user-plus me-2"></i>
-								Crear usuario
-							</a>
+
+						<!-- USUARIO NO AUTENTICADO -->
+						<div sec:authorize="!isAuthenticated()">
+							<h4 class="ticket-title text-uppercase fw-bold mb-3">
+								Accede a tu cuenta
+							</h4>
+							<img th:src="@{/images/logo.png}" alt="FluxFilms" class="ticket-brand">
+							<hr class="ticket-hr">
+							<p class="text-flux-dark text-center mb-4">
+								Inicia sesión o crea una cuenta desde cero
+							</p>
+							<div class="d-grid gap-3">
+								<a th:href="@{/login}" class="btn btn-outline-primary fw-bold">
+									<i class="fa-solid fa-user me-2"></i>
+									Iniciar sesión
+								</a>
+								<a th:href="@{/register}" class="btn btn-primary fw-bold">
+									<i class="fa-solid fa-user-plus me-2"></i>
+									Crear usuario
+								</a>
+							</div>
 						</div>
+
+						<!-- USUARIO AUTENTICADO -->
+						<div sec:authorize="isAuthenticated()">
+							<h4 class="ticket-title text-uppercase fw-bold mb-3">
+								¡Bienvenido de nuevo!
+							</h4>
+							<img th:src="@{/images/logo.png}" alt="FluxFilms" class="ticket-brand">
+							<hr class="ticket-hr">
+							<p class="text-flux-dark text-center mb-4">
+								Hola, <strong><span sec:authentication="name"></span></strong>. Tu butaca te espera.
+							</p>
+							<div class="d-grid gap-3">
+								<a th:href="@{/profile}" class="btn btn-primary fw-bold">
+									<i class="fa-solid fa-user me-2"></i>
+									Ir a mi perfil
+								</a>
+								<form th:action="@{/logout}" method="post" class="d-grid">
+									<button class="btn btn-outline-primary fw-bold">
+										<i class="fa-solid fa-sign-out me-2"></i>
+										Cerrar sesión
+									</button>
+								</form>
+							</div>
+						</div>
+
 						<hr class="ticket-hr mt-4">
 						<p class="ticket-subtitle text-center mt-3 mb-0">
 							★ VIVE EL CINE ★
