@@ -100,8 +100,8 @@
 								</strong>
 							</div>
 							<div class="col-6 col-md-3" th:if="${ticket.status.name() == 'FINISHED'}">
-								<span class="text-muted d-block">Fin estimado</span>
-								<strong th:text="${#temporals.format(ticket.session.startTime.plusMinutes(ticket.session.movie.duration + ticket.session.numAds), 'dd/MM/yyyy HH:mm')}">
+								<span class="text-muted d-block">Fin estimado de tu pelicula</span>
+								<strong th:text="${#temporals.format(ticket.session.startTime.plusMinutes(ticket.session.movie.duration), 'dd/MM/yyyy HH:mm')}">
 									Fin
 								</strong>
 							</div>
