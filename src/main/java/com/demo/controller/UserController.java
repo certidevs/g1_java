@@ -5,9 +5,16 @@ import com.demo.model.enums.Role;
 import com.demo.repository.UserRepository;
 import com.demo.service.FileService;
 import com.demo.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -115,5 +122,55 @@ public class UserController {
         model.addAttribute("user", userService.findById(user.getId())); // User
         model.addAttribute("userStats", userService.findStatsById(user.getId())); // UserStatsDTO
         return "users/user-detail";
+    }
+
+    @GetMapping("profile/edit")
+    public String editProfile(Model model, @AuthenticationPrincipal User user) {
+        User saved = userService.findById(user.getId());
+        user.setPassword(null);
+        model.addAttribute("user", saved);
+        return "users/profile-form";
+    }
+
+    @PostMapping("profile")
+    public String saveProfile(@ModelAttribute User userForm,
+                              RedirectAttributes ra,
+                              @RequestParam("imageFile") MultipartFile imageFile,
+                              @AuthenticationPrincipal User authenticatedUser,
+                              HttpServletRequest request,
+                              HttpServletResponse response) {
+
+        if (authenticatedUser == null || authenticatedUser.getId() == null) {
+            log.error("Error usuario {} intentando editar otro usuario {}", authenticatedUser, userForm);
+            ra.addFlashAttribute("error", "No tienes permisos");
+            return "redirect:/profile";
+        }
+        // evitar que el usuario pueda cambiar su id, rol, active para evitar escalada de privilegios
+        userForm.setId(authenticatedUser.getId());
+        userForm.setRole(authenticatedUser.getRole());
+        userForm.setActive(authenticatedUser.getActive());
+
+        // imagen
+        String imageUrl = fileService.store(imageFile);
+        userForm.setImageUrl(imageUrl != null ? imageUrl : authenticatedUser.getImageUrl());
+
+        User userUpdated = userService.update(userForm);
+
+        // refrescar Spring Security para que el principal/navbar muestren los datos nuevos
+        Authentication newAuth = new UsernamePasswordAuthenticationToken(
+                userUpdated,
+                userUpdated.getPassword(),
+                userUpdated.getAuthorities()
+        );
+
+        SecurityContext context = SecurityContextHolder.createEmptyContext();
+        context.setAuthentication(newAuth);
+
+        SecurityContextHolder.setContext(context);
+
+        new HttpSessionSecurityContextRepository().saveContext(context, request, response);
+
+        ra.addFlashAttribute("message", "usuario actualizado");
+        return  "redirect:/profile";
     }
 }
