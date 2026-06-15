@@ -124,6 +124,10 @@ public class MovieController {
             LocalDateTime end = date.atTime(LocalTime.MAX);
             List<Session> projections = sessionRepository.findByMovie_IdAndStartTimeBetween(id, start, end);
 
+            LocalDateTime now = LocalDateTime.now();
+
+            projections.removeIf(session -> session.getStartTime().isBefore(now));
+
             Map<Room, List<Session>> projectionsByRoom = new LinkedHashMap<>();
             for (Session session : projections) {
                 projectionsByRoom
