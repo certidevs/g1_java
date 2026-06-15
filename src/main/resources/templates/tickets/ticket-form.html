@@ -50,9 +50,9 @@
 
 							<div class="row g-2 small mb-3">
 								<div class="col-12 col-md-6">
-									<span class="text-muted d-block">Funcion</span>
+									<span class="text-muted d-block">Función</span>
 									<strong th:text="${ticket.session != null ? ticket.session.language + ' - ' + #temporals.format(ticket.session.startTime, 'dd/MM/yyyy HH:mm') : '-'}">
-										Funcion
+										Función
 									</strong>
 								</div>
 								<input type="hidden" th:field="*{seatRow}">
@@ -94,14 +94,14 @@
 					<div class="d-flex flex-wrap justify-content-between align-items-end gap-2 mb-3">
 						<div>
 							<p class="ticket-subtitle text-uppercase fw-bold mb-1">Combos</p>
-							<h2 class="h5 fw-bold text-uppercase text-flux-dark mb-0">Añade algo para la sala</h2>
+							<h2 class="h5 fw-bold text-uppercase text-flux-dark mb-0">Añade tu favorito</h2>
 						</div>
 						<small class="text-muted">Pulsa otra vez para quitarlo</small>
 					</div>
 
 					<div class="row g-3">
 						<div class="col-12 col-md-4">
-							<button type="button"
+							<button type="submit"
 							        class="combo-card ticket-combo w-100 text-start"
 							        onclick="selectCombo(this, 8)">
 								<img th:src="@{/images/combo1.png}" alt="Palomitas y bebida"
@@ -186,46 +186,46 @@
 <footer th:replace="~{layout/footer :: footer}"></footer>
 <script th:replace="~{layout/footer :: scripts}"></script>
 
-<!--<script>-->
+<script>
 
-<!--    // Precio base del ticket-->
-<!--    const precioTicket = parseFloat(document.getElementById('price').value) || 0;-->
-<!--    document.getElementById('resumenTicket').textContent = precioTicket.toFixed(2) + ' €';-->
-<!--    document.getElementById('resumenTotal').textContent = precioTicket.toFixed(2) + ' €';-->
+    // Precio base del ticket
+    const precioTicket = parseFloat(document.getElementById('price').value) || 0;
+    document.getElementById('resumenTicket').textContent = precioTicket.toFixed(2) + ' €';
+    document.getElementById('resumenTotal').textContent = precioTicket.toFixed(2) + ' €';
 
-<!--    function selectCombo(card, value) {-->
-<!--        const allCards = document.querySelectorAll('.combo-card');-->
-<!--        const hidden = document.getElementById('priceComboHidden');-->
+    function selectCombo(card, value) {
+        const allCards = document.querySelectorAll('.combo-card');
+        const hidden = document.getElementById('priceComboHidden');
 
-<!--        if (card.classList.contains('selected-combo')) {-->
-<!--            card.classList.remove('selected-combo');-->
-<!--            card.style.backgroundColor = '';-->
-<!--            card.style.borderColor = '';-->
-<!--            card.style.transform = '';-->
-<!--            hidden.value = '';-->
-<!--            document.getElementById('resumenCombo').textContent = 'Sin combo';-->
-<!--            document.getElementById('resumenTotal').textContent = precioTicket.toFixed(2) + ' €';-->
-<!--            return;-->
-<!--        }-->
+        if (card.classList.contains('selected-combo')) {
+            card.classList.remove('selected-combo');
+            card.style.backgroundColor = '';
+            card.style.borderColor = '';
+            card.style.transform = '';
+            hidden.value = '';
+            document.getElementById('resumenCombo').textContent = 'Sin combo';
+            document.getElementById('resumenTotal').textContent = precioTicket.toFixed(2) + ' €';
+            return;
+        }
 
-<!--        allCards.forEach(c => {-->
-<!--            c.classList.remove('selected-combo');-->
-<!--            c.style.backgroundColor = '';-->
-<!--            c.style.borderColor = '';-->
-<!--            c.style.transform = '';-->
-<!--        });-->
+        allCards.forEach(c => {
+            c.classList.remove('selected-combo');
+            c.style.backgroundColor = '';
+            c.style.borderColor = '';
+            c.style.transform = '';
+        });
 
-<!--        card.classList.add('selected-combo');-->
-<!--        card.style.backgroundColor = '#d1e7dd';-->
-<!--        card.style.borderColor = '#198754';-->
-<!--        card.style.transform = 'scale(1.03)';-->
-<!--        hidden.value = value;-->
+        card.classList.add('selected-combo');
+        card.style.backgroundColor = '#d1e7dd';
+        card.style.borderColor = '#198754';
+        card.style.transform = 'scale(1.03)';
+        hidden.value = value;
 
-<!--        const total = precioTicket + value;-->
-<!--        document.getElementById('resumenCombo').textContent = value.toFixed(2) + ' €';-->
-<!--        document.getElementById('resumenTotal').textContent = total.toFixed(2) + ' €';-->
-<!--    }-->
-<!--</script>-->
+        const total = precioTicket + value;
+        document.getElementById('resumenCombo').textContent = value.toFixed(2) + ' €';
+        document.getElementById('resumenTotal').textContent = total.toFixed(2) + ' €';
+    }
+</script>
 
 </body>
 </html>
