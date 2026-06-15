@@ -98,7 +98,8 @@
 								<select class="form-select" id="date" name="date" required>
 									<option th:each="availableDate : ${availableDates}"
 									        th:value="${availableDate}"
-									        th:text="${availableDate}"
+									        th:text="${#temporals.format(availableDate, 'EEEE') +
+									        ' (' + #temporals.format(availableDate, 'dd/MM') + ')'}"
 									        th:selected="${selectedDate != null and selectedDate == availableDate}">
 									</option>
 								</select>
