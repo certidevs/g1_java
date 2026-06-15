@@ -49,6 +49,8 @@
 					</div>
 
 					<div class="flex-grow-1 min-w-0">
+						<p class="gloria-hallelujah-regular">Nos importa tu tiempo,<br>
+							apunta bien la hora ;)</p>
 						<div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-3">
 							<div>
 								<p class="ticket-subtitle text-uppercase fw-bold mb-1">Resumen del ticket</p>
@@ -90,7 +92,7 @@
 								<strong th:text="${ticket.session.room.screentype.label}">IMAX</strong>
 							</div>
 							<div class="col-6 col-md-3">
-								<span class="text-muted d-block">Duracion</span>
+								<span class="text-muted d-block">Duración</span>
 								<strong th:text="${ticket.session.movie.duration + ' min'}">120 min</strong>
 							</div>
 							<div class="col-6 col-md-3" th:if="${ticket.purchaseTime != null}">
@@ -99,8 +101,12 @@
 									Fecha
 								</strong>
 							</div>
+							<div class="col-6 col-md-3">
+								<span class="text-muted d-block">Inicio</span>
+								<strong th:text="${#temporals.format(ticket.session.startTime, 'dd/MM/yyyy HH:mm')}">120 min</strong>
+							</div>
 							<div class="col-6 col-md-3" th:if="${ticket.status.name() == 'FINISHED'}">
-								<span class="text-muted d-block">Fin estimado de tu pelicula</span>
+								<span class="text-muted d-block">Fin de la sesión</span>
 								<strong th:text="${#temporals.format(ticket.session.startTime.plusMinutes(ticket.session.movie.duration), 'dd/MM/yyyy HH:mm')}">
 									Fin
 								</strong>
