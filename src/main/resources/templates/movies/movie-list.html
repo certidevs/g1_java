@@ -97,6 +97,15 @@
 					<a th:unless="${section == 'FLUX'}" th:href="@{/movies/flux}" class="ms-2 btn btn-secondary">
 						Ver emisiones Flux
 					</a>
+					<a th:if="${section == 'FLUX' and (param.genre != null or param.movieStatus != null or param.minAge != null)}"
+					   th:href="@{/movies/flux}" class="ms-2 btn btn-secondary">
+						Quitar filtros
+					</a>
+
+					<a th:if="${section != 'FLUX' and (param.genre != null or param.movieStatus != null or param.minAge != null)}"
+					   th:href="@{/movies/billboard}" class="ms-2 btn btn-primary">
+						Quitar filtros
+					</a>
 				</div>
 				<form class="d-flex gap-2" th:action="@{/movies}">
 					<input type="search" name="title" class="form-control" placeholder="Buscar película..."
