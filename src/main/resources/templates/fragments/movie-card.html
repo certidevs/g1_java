@@ -27,6 +27,11 @@
 	</div>
 	<p class="text-uppercase fw-bold small text-primary mb-1" th:text="${'★ ' + movie.section.label + ' ★'}"></p>
 	<h5 class="fw-bold text-uppercase mb-3" th:text="${movie.title}">Nombre</h5>
+	<span class="badge text-bg-dark" th:text="${movie.minAge.label}"></span>
+	<span class="badge btn btn-outline-primary text-primary me-1"
+	      th:each="genre : ${movie.genreSet}"
+	      th:text="${genre.label}">
+	</span>
 	<hr>
 	<div class="d-grid gap-2">
 		<a th:href="@{/movies/{id}(id=${movie.id}, date=${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')})}"
