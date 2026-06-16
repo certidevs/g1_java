@@ -1,5 +1,6 @@
 package com.demo.repository;
 
+import com.demo.dto.MovieStatsDTO;
 import com.demo.model.Director;
 import com.demo.model.Movie;
 import com.demo.model.enums.Genre;
@@ -28,8 +29,9 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     @Query("""
         SELECT m from Movie m
+        left join m.director d
         WHERE m.active =true
-        AND (:directorName IS NULL OR m.director.name = :directorName)
+        AND (:directorName IS NULL OR d.name = :directorName)
         AND (:genre IS NULL OR :genre MEMBER OF m.genreSet)
         AND (:title IS NULL OR :title = '' OR LOWER(m.title) LIKE LOWER(CONCAT('%', :title, '%')))
         AND (:minAge IS NULL OR m.minAge = :minAge)
@@ -53,4 +55,28 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     List<Movie> findInactiveFiltering(
             @Param("section") Section section
     );
+
+
+    // con DTO
+//    @Query("""
+//        SELECT new com.demo.dto.MovieStatsDTO(m, count(distinct r), avg(r.rating), count( distinct t))
+//        from Movie m
+//        left join Review r on r.movie = m
+//        left join Ticket t on t.session.movie = m and t.purchaseTime is not null
+//        group by m
+//    """)
+//    List<MovieStatsDTO> findActiveFilteringWithStatsDTO();
+
+    @Query("""
+        SELECT new com.demo.dto.MovieStatsDTO(
+            m,
+            (select count(r) from Review r where r.movie = m), 
+            (select avg(r.rating) from Review r where r.movie = m),
+            (select count(t) from Ticket t where t.session.movie = m and t.purchaseTime is not null),
+            (select coalesce(sum(t.price),0) from Ticket t where t.session.movie = m and t.purchaseTime is not null)
+            )
+        from Movie m
+    """)
+    List<MovieStatsDTO> findActiveFilteringWithStatsDTOSubselect();
+
 }

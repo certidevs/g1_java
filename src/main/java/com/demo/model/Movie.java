@@ -27,6 +27,7 @@ public class Movie {
 
     private String title;
 
+    @Builder.Default
     @Column(columnDefinition = "BOOLEAN DEFAULT true")
     private Boolean active = true;
 
