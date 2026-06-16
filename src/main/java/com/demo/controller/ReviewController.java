@@ -26,7 +26,7 @@ public class ReviewController {
     //getmapping reviews
     @GetMapping("reviews")
     public String reviews(Model model) {
-        model.addAttribute("reviews", reviewRepository.findAll());
+        model.addAttribute("reviews", reviewRepository.findAllByOrderByCreationDateDesc());
         model.addAttribute("users", userRepository.findAll());
         return "reviews/review-list";
     }

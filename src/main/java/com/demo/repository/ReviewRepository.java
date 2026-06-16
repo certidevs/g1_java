@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
-    List<Review> findByMovie_Title(String title);
+    List<Review> findAllByOrderByCreationDateDesc();
 
     List<Review> findByMovie_IdOrderByCreationDateDesc(Long movieId);
 
