@@ -146,7 +146,7 @@
 				</div>
 				<div class="card-footer text-muted small bg-transparent">
 					<i class="fa-regular fa-calendar me-1"></i>
-					<span th:text="${review.creationDate}"></span>
+					<span th:text="${#temporals.format(review.creationDate, 'dd/MM/yyyy')}"></span>
 				</div>
 			</div>
 		</div>
