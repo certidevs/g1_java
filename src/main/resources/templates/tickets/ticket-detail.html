@@ -49,7 +49,7 @@
 					</div>
 
 					<div class="flex-grow-1 min-w-0">
-						<p class="gloria-hallelujah-regular">Nos importa tu tiempo,<br>
+						<p class="gloria-hallelujah-regular text-primary">Nos importa tu tiempo,<br>
 							apunta bien la hora ;)</p>
 						<div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-3">
 							<div>
@@ -103,11 +103,15 @@
 							</div>
 							<div class="col-6 col-md-3">
 								<span class="text-muted d-block">Inicio</span>
-								<strong th:text="${#temporals.format(ticket.session.startTime, 'dd/MM/yyyy HH:mm')}">120 min</strong>
+								<strong th:text="${#temporals.format(ticket.session.startTime, 'dd/MM/yyyy HH:mm')}"
+								        class="text-primary">
+									120 min
+								</strong>
 							</div>
 							<div class="col-6 col-md-3" th:if="${ticket.status.name() == 'FINISHED'}">
 								<span class="text-muted d-block">Fin de la sesión</span>
-								<strong th:text="${#temporals.format(ticket.session.startTime.plusMinutes(ticket.session.movie.duration), 'dd/MM/yyyy HH:mm')}">
+								<strong th:text="${#temporals.format(ticket.session.startTime.plusMinutes(ticket.session.movie.duration), 'dd/MM/yyyy HH:mm')}"
+								        class="text-primary">
 									Fin
 								</strong>
 							</div>
