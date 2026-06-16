@@ -109,6 +109,8 @@ public class MovieController {
             @AuthenticationPrincipal User user
     ) {
         Movie movie = movieRepository.findById(id).orElseThrow();
+        movie.setAvgRating(reviewRepository.calculateAverageRatingByMovieId(movie.getId()));
+        movie.setCountReviews( reviewRepository.countByMovie_Id(movie.getId()));
         model.addAttribute("movie", movie);
         model.addAttribute("selectedDate", date);
 
@@ -116,8 +118,7 @@ public class MovieController {
         model.addAttribute("reviews", reviews);
 
         // agregar calculos de reviews:
-        model.addAttribute("avgRating", reviewRepository.calculateAverageRatingByMovieId(movie.getId()));
-        model.addAttribute("countReviews", reviewRepository.countByMovie_Id(movie.getId()));
+
 
         if(user != null) {
             model.addAttribute("favoriteMovieIds",
