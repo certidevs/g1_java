@@ -92,6 +92,9 @@
                             <p class="card-text">
                                 <strong>Pelicula:</strong> <span th:text="${ticket.session.movie.title}">Titulo</span>
                             </p>
+                            <p sec:authorize="hasRole('ADMIN')" class="card-text" th:if="${ticket.user != null}">
+                                <strong>Usuario:</strong> <span th:text="${ticket.user.username}">Usuario</span>
+                            </p>
                             <p class="card-text">
                                 <strong>ID:</strong> <span th:text="${ticket.id}">0</span>
                             </p>
@@ -102,7 +105,7 @@
                                 <strong>Número de Asiento:</strong> <span th:text="${ticket.seatNumber}">0</span>
                             </p>
                             <p class="card-text">
-                                <strong>Precio:</strong> <span class="fw-bold text-success">
+                                <strong>Total Pagado:</strong> <span class="fw-bold text-success">
                                 <span th:if="${ticket.price != null}"
                                       th:text="|${#numbers.formatDecimal(ticket.price, 1, 2)} €|">0,00 €</span>
                                 <span th:unless="${ticket.price != null}" class="text-muted small">Sin precio</span>

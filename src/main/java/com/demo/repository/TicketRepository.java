@@ -11,8 +11,6 @@ import java.util.List;
 
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
-    // Para admin: buscar tickets vendidos por fecha y hora
-    List<Ticket> findByPurchaseTime(LocalDateTime purchaseTime);
 
     List<Ticket> findBySession_Id(Long sessionId);
     List<Ticket> findByUser_IdOrderByPurchaseTime(Long id);
@@ -47,6 +45,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     AND (:price IS NULL OR t.price <= :price)
     AND (:startOfDay IS NULL OR t.purchaseTime >= :startOfDay)
     AND (:endOfDay IS NULL OR t.purchaseTime <= :endOfDay)
+    ORDER BY t.purchaseTime DESC
 """)
     List<Ticket> filterTickets(
             @Param("sessionId") Long sessionId,

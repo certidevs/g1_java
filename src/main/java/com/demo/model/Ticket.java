@@ -23,6 +23,7 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+//    private String userName;
     private String seatRow;
     private Integer seatNumber;
     private Double price; // session.room.price + extra comida - descuento
