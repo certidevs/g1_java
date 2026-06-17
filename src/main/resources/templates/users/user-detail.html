@@ -8,100 +8,163 @@
 <nav th:replace="~{layout/navbar :: navbar}"></nav>
 
 <main class="container flex-grow-1 my-4">
+	<div class="ticket mb-4">
 
-	<h1 class="mb-3">
-		<i class="fa-solid fa-user text-primary me-2"></i>
-		<span th:text="${'Usuario: ' + user.id}"></span>
-	</h1>
+		<p class="ticket-subtitle text-uppercase fw-bold mb-1">
+			★ Perfil FluxFilms ★
+		</p>
 
-	<div class="card shadow-sm mb-4">
+		<h1 class="ticket-title text-uppercase fw-bold mb-4">
+			<span th:text="${user.username}">Usuario</span>
+		</h1>
 
-		<div class="card-body">
-			<div class="text-center mb-3">
-				<img th:if="${user.imageUrl != null}" th:src="${user.imageUrl}" width="150" height="150"
-				     class="rounded-circle object-fit-cover img-thumbnail" alt="Foto perfil">
+		<div class="row align-items-center g-4">
+
+			<div class="col-auto">
+				<img th:if="${user.imageUrl != null}"
+				     th:src="${user.imageUrl}"
+				     width="150"
+				     height="150"
+				     class="rounded-circle object-fit-cover border border-3 border-secondary"
+				     alt="Foto perfil">
+				<img th:unless="${user.imageUrl != null}"
+				     th:src="@{/images/avatar.svg}"
+				     width="150"
+				     height="150"
+				     class="rounded-circle object-fit-cover border border-3 border-secondary"
+				     alt="Foto perfil">
 			</div>
-			<dl class="row mb-0">
-				<dt class="col-sm-3">ID</dt>
-				<dd class="col-sm-9" th:text="${user.id}"></dd>
-				<dt class="col-sm-3">Username</dt>
-				<dd class="col-sm-9" th:text="${user.username}"></dd>
-				<dt class="col-sm-3">Email</dt>
-				<dd class="col-sm-9" th:text="${user.email}"></dd>
-				<dt class="col-sm-3">Rol</dt>
-				<dd class="col-sm-9" th:text="${user.role}"></dd>
-			</dl>
+
+			<div class="col">
+
+				<div class="row g-3">
+
+					<div class="col-md-6">
+						<small class="ticket-subtitle d-block">ID</small>
+						<div class="fw-bold text-flux-dark"
+						     th:text="${user.id}">
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<small class="ticket-subtitle d-block">EMAIL</small>
+						<div class="fw-bold text-flux-dark"
+						     th:text="${user.email}">
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<small class="ticket-subtitle d-block">USUARIO</small>
+						<div class="fw-bold text-flux-dark"
+						     th:text="${user.username}">
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<small class="ticket-subtitle d-block">ROL</small>
+						<div class="fw-bold text-flux-dark"
+						     th:text="${user.role}">
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+
 		</div>
-		<div class="card-footer text-end">
-			<a th:href="@{/admin/users}" class="btn btn-sm btn-outline-secondary">
-				<i class="fa-solid fa-arrow-left me-1"></i> Volver
+
+		<hr class="ticket-hr my-4">
+
+		<div class="d-flex flex-wrap gap-2 justify-content-end">
+
+			<a th:href="@{/admin/users}"
+			   class="btn btn-outline-dark">
+				<i class="fa-solid fa-arrow-left me-2"></i>
+				Volver
 			</a>
-			<!-- ES MI perfil → edito mi perfil -->
+
 			<a sec:authorize="isAuthenticated()"
 			   th:if="${#authentication.principal.id == user.id}"
-			   th:href="@{/profile/edit}" class="btn btn-sm btn-outline-success">
-				<i class="fa-solid fa-user-pen me-1"></i> Editar mi perfil
+			   th:href="@{/profile/edit}"
+			   class="btn btn-accent">
+				<i class="fa-solid fa-user-pen me-2"></i>
+				Editar perfil
 			</a>
 
-			<!-- Soy admin viendo a OTRA persona -->
-			<a sec:authorize="hasRole('ADMIN')"
-			   th:if="${#authentication.principal.id != user.id}"
-			   th:href="@{/admin/users/edit/{id}(id=${user.id})}" class="btn btn-sm btn-outline-success">
-				<i class="fa-solid fa-user-pen me-1"></i> Editar
-			</a>
-			<!-- Desactivar: solo admin y NUNCA a sí mismo -->
-			<a sec:authorize="hasRole('ADMIN')"
-			   th:if="${#authentication.principal.id != user.id}"
-			   th:href="@{/admin/users/deactivate/{id}(id=${user.id})}" class="btn btn-sm btn-outline-danger">
-				<i class="fa-solid fa-trash me-1"></i> Desactivar
-			</a>
+			<form sec:authorize="isAuthenticated()"
+			      th:if="${#authentication.principal.id == user.id}"
+			      th:action="@{/logout}"
+			      method="post"
+			      class="d-inline">
+
+				<button class="btn btn-outline-primary">
+					<i class="fa-solid fa-right-from-bracket me-2"></i>
+					Cerrar sesión
+				</button>
+
+			</form>
+
+		</div>
+
+		<p class="ticket-subtitle text-center mt-4 mb-0">
+			★ VIVE EL CINE ★
+		</p>
+
+	</div>
+
+	<div class="row g-3 mb-5">
+
+		<div class="col-md-4">
+			<div class="ticket text-center">
+				<p class="ticket-subtitle text-uppercase fw-bold mb-1">
+					★ Reviews ★
+				</p>
+				<h2 class="display-6 fw-bold text-flux-dark"
+				    th:text="${userStats.countReviews()}">
+				</h2>
+				<p class="mb-0 text-muted">Reseñas escritas</p>
+			</div>
+		</div>
+
+		<div class="col-md-4">
+			<div class="ticket text-center">
+				<p class="ticket-subtitle text-uppercase fw-bold mb-1">
+					★ Cine ★
+				</p>
+				<h2 class="display-6 fw-bold text-flux-dark"
+				    th:text="${userStats.countTickets()}">
+				</h2>
+				<p class="mb-0 text-muted">Películas visionadas</p>
+			</div>
+		</div>
+
+		<div class="col-md-4">
+			<div class="ticket text-center">
+				<p class="ticket-subtitle text-uppercase fw-bold mb-1">
+					★ Gasto ★
+				</p>
+				<h2 class="display-6 fw-bold text-flux-dark">
+					<span th:text="${#numbers.formatDecimal(userStats.moneySpent(),1,2)}"></span> €
+				</h2>
+				<p class="mb-0 text-muted">Total gastado</p>
+			</div>
 		</div>
 
 	</div>
 
-	<div class="row g-3 mb-4">
-		<div class="col-md-4">
-			<div class="card text-center shadow-sm">
-				<div class="card-body">
-					<i class="fa-solid fa-star text-warning"></i>
-					<h3 class="card-title my-2" th:text="${userStats.countReviews()}"></h3>
-					<!-- se puede mostrar también la nota media de sus reseñas AVG(r.rating) -->
-					<p class="card-text text-muted">Reseñas escritas</p>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-4">
-			<div class="card text-center shadow-sm">
-				<div class="card-body">
-					<i class="fa-solid fa-ticket text-primary"></i>
-					<h3 class="card-title my-2" th:text="${userStats.countTickets()}"></h3>
-					<p class="card-text text-muted">Películas visionadas</p>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-4">
-			<div class="card text-center shadow-sm">
-				<div class="card-body">
-					<i class="fa-solid fa-euro text-primary"></i>
-					<h3 class="card-title my-2">
-						<span th:text="${#numbers.formatDecimal(userStats.moneySpent(), 1, 2)}"></span> €
-					</h3>
-					<p class="card-text text-muted">Total gastado</p>
-				</div>
-			</div>
-		</div>
+	<div class="mt-5 mb-3">
+		<p class="ticket-subtitle text-uppercase fw-bold mb-1">
+			★ Historial tickets ★
+		</p>
+		<h2 class="ticket-title fw-bold text-uppercase mb-0"></h2>
 	</div>
-
-	<h2 class="mt-5">
-		<i class="fa-solid fa-ticket text-primary me-2"></i> Tickets de este usuario
-	</h2>
 	<div th:if="${userStats.tickets().isEmpty()}" class="alert alert-light border">
 		<i class="fa-regular fa-face-smile me-1"></i>
 		Este fenómeno no ha visto una sóla peli, le irán más los libros.
 	</div>
 	<div class="row row-cols-1 row-cols-md-2 g-3" th:unless="${userStats.tickets().isEmpty()}">
 		<div class="col" th:each="ticket : ${userStats.tickets()}">
-			<div class="card h-100 shadow-sm">
+			<div class="card h-100 border-0 shadow-sm" style="background-color: rgba(255,255,255,.75);">
 				<div class="card-body">
 					<dl class="row mb-0">
 						<dt class="col-sm-6">ID</dt>
@@ -126,20 +189,23 @@
 		</div>
 	</div>
 
-	<h2 class="mt-5">
-		<i class="fa-regular fa-comments text-primary me-2"></i> Reviews de este usuario
-	</h2>
+	<div class="mt-5 mb-3">
+		<p class="ticket-subtitle text-uppercase fw-bold mb-1">
+			★ Historial reseñas ★
+		</p>
+		<h2 class="ticket-title fw-bold text-uppercase mb-0"></h2>
+	</div>
 	<div th:if="${userStats.reviews().isEmpty()}" class="alert alert-light border">
 		<i class="fa-regular fa-face-smile me-1"></i>
 		Este fenómeno no ha escrito nada todavía.
 	</div>
 	<div class="row row-cols-1 row-cols-md-2 g-3" th:unless="${userStats.reviews().isEmpty()}">
 		<div class="col" th:each="review : ${userStats.reviews()}">
-			<div class="card h-100 shadow-sm">
+			<div class="card h-100 border-0 shadow-sm" style="background-color: rgba(255,255,255,.75);">
 				<div class="card-body">
 					<h5 class="card-title" th:text="${review.title}">Título</h5>
 					<p class="card-text" th:text="${review.description}">Descripción</p>
-					<span class="badge bg-warning text-dark">
+					<span class="badge btn-secondary">
                         <i class="fa-solid fa-star me-1"></i>
                         <span th:text="${review.rating + ' / 5'}"></span>
                     </span>
@@ -152,27 +218,32 @@
 		</div>
 	</div>
 
-	<h2 class="mt-5">
-		<i class="fa-solid fa-heart text-danger me-2"></i> Tus pelis favoritas
-	</h2>
+	<div class="mt-5 mb-3">
+		<p class="ticket-subtitle text-uppercase fw-bold mb-1">
+			★ Películas favoritas ★
+		</p>
+		<h2 class="ticket-title fw-bold text-uppercase mb-0"></h2>
+	</div>
 	<div th:if="${userStats.favoriteMovies().isEmpty()}" class="alert alert-light border">
 		<i class="fa-regular fa-heart me-1"></i>
 		Este usuario aún no ha marcado restaurantes favoritos.
 	</div>
 	<div class="row row-cols-1 row-cols-md-3 g-3" th:unless="${userStats.favoriteMovies().isEmpty()}">
 		<div class="col" th:each="fav : ${userStats.favoriteMovies()}">
-			<div class="card h-100 shadow-sm">
-				<div class="card-body">
-					<h5 class="card-title">
-						<i class="fa-solid fa-store text-primary me-2"></i>
-						<a th:href="@{/movies/{id}(id=${fav.movie.id})}"
-						   th:text="${fav.movie.title}">Película</a>
-					</h5>
-					<small class="text-muted">
-						Marcado el
-						<span th:text="${#temporals.format(fav.createdAt, 'dd/MM/yyyy')}"></span>
-					</small>
-				</div>
+			<div class="ticket h-100">
+				<h5 class="fw-bold text-uppercase mb-2">
+					<a class="text-decoration-none text-flux-dark"
+					   th:href="@{/movies/{id}(id=${fav.movie.id})}"
+					   th:text="${fav.movie.title}">
+					</a>
+				</h5>
+
+				<hr class="ticket-hr">
+
+				<small class="text-muted">
+					Añadida el
+					<span th:text="${#temporals.format(fav.createdAt,'dd/MM/yyyy')}"></span>
+				</small>
 			</div>
 		</div>
 	</div>
