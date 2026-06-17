@@ -78,7 +78,7 @@ Todo con autenticación real, control de acceso por roles, subida de imágenes y
 |-----------------------------|-----------------------------------------------------------------------------------------|
 | **Movie**                   | Película: título, sinopsis, duración, género, clasificación, fecha de estreno e imagen. |
 | **Room**                    | Sala de cine con capacidad, tipo de pantalla y distribución de asientos.                |
-| **Session**                 |                                                                                         |
+| **Session**                 | Funciones con nombre película, hora, sala, idioma y tipo de pantalla                    |
 | **Ticket** / **TicketLine** | Entrada y sus líneas (película), con total, estado, combo y datos de pago.              |                                          |
 | **Review**                  | Reseña con puntuación 1-5 sobre una película.                                           |
 | **User**                    | Usuario con rol (`ROLE_USER` / `ROLE_ADMIN`), implementa `UserDetails`.                 |
